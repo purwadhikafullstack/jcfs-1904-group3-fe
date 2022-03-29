@@ -1,6 +1,6 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
-import "./carousel.css";
+import "./style.css";
 
 function CompCarousel() {
   return (

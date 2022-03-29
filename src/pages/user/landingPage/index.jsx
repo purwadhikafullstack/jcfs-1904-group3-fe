@@ -1,5 +1,5 @@
 import React from "react";
-import Carousel from "../../../component/carousel/carousel";
+import Carousel from "../../../component/carousel";
 import { Container } from "@mui/material";
 
 function landingPage() {

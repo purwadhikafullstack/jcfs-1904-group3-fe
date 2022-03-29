@@ -8,7 +8,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ProfileIcon from "@mui/icons-material/AccountCircle";
 import { styled, alpha } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
-import "./muiNavbar.css";
+import "./style.css";
 
 function MuiNavBar() {
   const [value, setValue] = useState("");
