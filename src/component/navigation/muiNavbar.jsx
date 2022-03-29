@@ -61,16 +61,24 @@ function MuiNavBar() {
     },
   }));
   return (
-    <>
+    <div className="navBar">
       <Container
         maxWidth="none"
         style={{
           display: "flex",
           justifyContent: "space-between",
           paddingInline: 50,
+          paddingTop: 20,
+          paddingBottom: 20,
         }}
       >
-        <Stack direction="row" p={3} className="transition" alignItems="center">
+        <Stack
+          direction="row"
+          p={3}
+          className="transition"
+          alignItems="center"
+          style={{ padding: 0 }}
+        >
           <img
             src="https://i.imgur.com/WYBghfu.png"
             alt="Logo"
@@ -113,6 +121,7 @@ function MuiNavBar() {
           style={{
             display: "flex",
             paddingInline: 50,
+            paddingBottom: 20,
           }}
           className="categoryListParent"
         >
@@ -179,6 +188,7 @@ function MuiNavBar() {
           style={{
             display: "flex",
             paddingInline: 50,
+            paddingBottom: 20,
           }}
           className="categoryListParent"
         >
@@ -216,7 +226,7 @@ function MuiNavBar() {
           </Button>
         </Container>
       )}
-    </>
+    </div>
   );
 }
 

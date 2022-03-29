@@ -20,3 +20,10 @@
 .btn-effect:hover::after {
   transform: scale(1, 1);
 }
+.navBar {
+  position: fixed;
+  background-color: white;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+}
