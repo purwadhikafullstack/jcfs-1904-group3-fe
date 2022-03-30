@@ -7,7 +7,7 @@ import ProductCard from "./component/productCard";
 function App() {
   return (
     <Router>
-      {/* <MuiNavBar /> */}
+      <MuiNavBar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/productList" element={<ProductListPage />} />

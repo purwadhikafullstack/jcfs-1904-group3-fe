@@ -1,15 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import axios from "../../../utils/axios";
+import ListingProducts from "./components/listingProducts";
 
 function Index() {
-  const [age, setAge] = React.useState("");
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [sortedProducts, setSortedProducts] = useState([]);
+  const [paginationState, setPaginationState] = useState({
+    page: 1,
+    lastPage: 0,
+    itemsPerPage: 5,
+  });
+  const [age, setAge] = useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get("/products");
+      const { data } = res;
+      setProducts(data);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   return (
     <div
       style={{
@@ -31,6 +56,11 @@ function Index() {
           </Select>
         </FormControl>
       </div>
+      {products.length ? (
+        <ListingProducts products={products} />
+      ) : (
+        <h1>Loading......</h1>
+      )}
     </div>
   );
 }
