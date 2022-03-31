@@ -8,7 +8,11 @@ function listingProducts(props) {
     console.log(products);
     return products.map((product) => <ProductCard product={product} />);
   };
-  return <div className=" d-flex flex-wrap col-9 ">{renderProducts()}</div>;
+  return (
+    <div className="col-12 " style={{ display: "flex", flexWrap: "wrap" }}>
+      {renderProducts()}
+    </div>
+  );
 }
 
 export default listingProducts;

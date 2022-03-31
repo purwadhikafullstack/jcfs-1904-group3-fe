@@ -3,6 +3,7 @@ import LandingPage from "./pages/user/landingPage";
 import MuiNavBar from "./component/navigation";
 import ProductListPage from "./pages/user/productList";
 import ProductCard from "./component/productCard";
+import ProductDetail from "./pages/user/productDetail";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/productList" element={<ProductListPage />} />
         <Route path="/test" element={<ProductCard />} />
+        <Route path="productDetail/:id" element={<ProductDetail />} />
       </Routes>
     </Router>
   );

@@ -25,7 +25,7 @@ function Index() {
     try {
       const res = await axios.get("/products");
       const { data } = res;
-      setProducts(data);
+      setProducts(data.result);
     } catch (error) {
       console.log({ error });
     }
@@ -56,11 +56,13 @@ function Index() {
           </Select>
         </FormControl>
       </div>
-      {products.length ? (
-        <ListingProducts products={products} />
-      ) : (
-        <h1>Loading......</h1>
-      )}
+      <div>
+        {products.length ? (
+          <ListingProducts products={products} />
+        ) : (
+          <h1>Loading......</h1>
+        )}
+      </div>
     </div>
   );
 }
