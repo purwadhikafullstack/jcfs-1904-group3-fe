@@ -7,22 +7,8 @@ function Index() {
   const params = useParams();
   const [products, setProducts] = useState([]);
   const [slicedProducts, setSlicedProducts] = useState({});
-  const [colors, setColors] = useState([]);
-  const [colorPaginationState, setColorPaginationState] = useState({
-    page: 1,
-    maxPage: 0,
-    itemPerPage: 1,
-  });
-
-  const getColorFilter = () => {
-    const results = products.map((value) => {
-      return value.variant;
-    });
-    setColorPaginationState({
-      ...colorPaginationState,
-      maxPage: results.length,
-    });
-  };
+  const [variants, setVariants] = useState([]);
+  const [selectedVariant, setSelectedVariant] = useState("");
 
   const fetchProducts = async () => {
     try {
@@ -31,14 +17,11 @@ function Index() {
       });
       const { data } = res;
       setProducts(data.result);
-      const colorMap = data.result.map((value) => {
+      const variantMap = data.result.map((value) => {
         return value.variant;
       });
-      setColorPaginationState({
-        ...colorPaginationState,
-        maxPage: colorMap.length,
-      });
-      setColors(colorMap);
+      setVariants(variantMap);
+      setSelectedVariant(variantMap[0]);
     } catch (error) {
       console.log({ error });
     }
@@ -50,24 +33,24 @@ function Index() {
 
   useEffect(() => {
     sliceData();
-  }, [colorPaginationState]);
+    console.log(selectedVariant);
+  }, [selectedVariant]);
 
   const sliceData = () => {
-    const { page, itemPerPage } = colorPaginationState;
-    const startIndex = (page - 1) * itemPerPage;
-    const endIndex = startIndex + itemPerPage;
-    const slicedResult = products.slice(startIndex, endIndex);
-    setSlicedProducts(slicedResult);
+    products.forEach((value) => {
+      if (value.variant === selectedVariant) {
+        setSlicedProducts(value);
+      }
+    });
   };
 
   return (
     <div style={{ paddingTop: 200 }}>
-      {colors.length && (
+      {slicedProducts && (
         <ProductDetailCard
-          colors={colors}
+          variants={variants}
           slicedProducts={slicedProducts}
-          colorPaginationState={colorPaginationState}
-          setColorPaginationState={setColorPaginationState}
+          setSelectedVariant={setSelectedVariant}
         />
       )}
     </div>

@@ -1,27 +1,28 @@
 import React, { useEffect } from "react";
 import { Button } from "@mui/material";
 import { width } from "@mui/system";
+import "./style.css";
 
 function Index(props) {
-  const { page, maxPage, ItemPerPage } = props.colorPaginationState;
-  const { colors } = props;
+  const { variants, setSelectedVariant } = props;
   const { image, price, productName, variant, qtyAvailable } =
-    props.slicedProducts[0];
+    props.slicedProducts;
+
+  const variantSelection = (e) => {
+    setSelectedVariant(e.target.value);
+  };
 
   const imageButtonMapping = () => {
-    return colors.map((value) => {
-      const lowercased = value.toLowerCase();
-      console.log(lowercased);
+    return variants.map((value) => {
+      const colorLowerCased = value.toLowerCase();
+
       return (
-        <Button
-          variant="contained"
-          sx={{
-            borderRadius: "50%",
-            width: 50,
-            height: 50,
-            backgroundColor: lowercased,
-          }}
-        ></Button>
+        <button
+          className="roundButton"
+          value={value}
+          onClick={variantSelection}
+          style={{ backgroundColor: colorLowerCased }}
+        ></button>
       );
     });
   };
@@ -50,7 +51,7 @@ function Index(props) {
               >
                 -
               </button>
-              <strong className="text-center mx-4">10</strong>
+              <strong className="text-center mx-4">{qtyAvailable}</strong>
               <button
                 //   onClick={() => {
                 //     quantityBtnHandler("increment");
