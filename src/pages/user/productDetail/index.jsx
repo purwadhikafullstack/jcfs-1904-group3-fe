@@ -33,7 +33,6 @@ function Index() {
 
   useEffect(() => {
     sliceData();
-    console.log(selectedVariant);
   }, [selectedVariant]);
 
   const sliceData = () => {

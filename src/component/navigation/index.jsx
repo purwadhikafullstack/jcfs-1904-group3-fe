@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
+import { useNavigate } from "react-router-dom";
+import { Container, Button, Stack, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ProfileIcon from "@mui/icons-material/AccountCircle";
 import { styled, alpha } from "@mui/material/styles";
@@ -11,12 +9,17 @@ import { grey } from "@mui/material/colors";
 import "./style.css";
 
 function MuiNavBar() {
+  const navigate = useNavigate();
   const [value, setValue] = useState("");
 
   const handleChange = (e) => {
     setValue(e);
   };
 
+  const categoryNavigate = (e) => {
+    const category = e.target.value;
+    navigate(`/productList/${category}`);
+  };
   const searchBarColor = grey[100];
 
   const Search = styled("div")(({ theme }) => ({
@@ -127,7 +130,7 @@ function MuiNavBar() {
         >
           <Button
             variant="text"
-            href=""
+            value="sofa"
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
@@ -135,7 +138,7 @@ function MuiNavBar() {
           </Button>
           <Button
             variant="text"
-            href=""
+            value="Chairs"
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
@@ -143,7 +146,7 @@ function MuiNavBar() {
           </Button>
           <Button
             variant="text"
-            href=""
+            onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
@@ -151,7 +154,7 @@ function MuiNavBar() {
           </Button>
           <Button
             variant="text"
-            href=""
+            onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
@@ -159,7 +162,7 @@ function MuiNavBar() {
           </Button>
           <Button
             variant="text"
-            href=""
+            onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
@@ -167,7 +170,7 @@ function MuiNavBar() {
           </Button>
           <Button
             variant="text"
-            href=""
+            onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
@@ -175,7 +178,7 @@ function MuiNavBar() {
           </Button>
           <Button
             variant="text"
-            href=""
+            onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
@@ -194,15 +197,17 @@ function MuiNavBar() {
         >
           <Button
             variant="text"
-            href=""
+            value="Home"
+            onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
-            House
+            Home
           </Button>
           <Button
             variant="text"
-            href=""
+            value="Office"
+            onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
@@ -210,7 +215,7 @@ function MuiNavBar() {
           </Button>
           <Button
             variant="text"
-            href=""
+            onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
@@ -218,11 +223,11 @@ function MuiNavBar() {
           </Button>
           <Button
             variant="text"
-            href=""
+            onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
-            kids
+            Kids
           </Button>
         </Container>
       )}

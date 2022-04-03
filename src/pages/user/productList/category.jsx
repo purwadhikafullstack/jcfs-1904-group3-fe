@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 import {
   Select,
   Button,
@@ -10,6 +12,7 @@ import axios from "../../../utils/axios";
 import ListingProducts from "./components/listingProducts";
 
 function Index() {
+  const params = useParams();
   const [products, setProducts] = useState([]);
   const [sortedProducts, setSortedProducts] = useState([]);
   const [paginationState, setPaginationState] = useState({
@@ -21,8 +24,11 @@ function Index() {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("/products");
+      const res = await axios.get("/products", {
+        params: { category: params.category },
+      });
       const { data } = res;
+      console.log("jalan ulang");
       setProducts(data.result);
       setSortedProducts(data.result);
       setPaginationState({
@@ -89,6 +95,10 @@ function Index() {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    fetchProducts();
+  }, [params]);
+
   return (
     <div
       style={{
@@ -99,7 +109,7 @@ function Index() {
         alignItems: "center",
       }}
     >
-      <h1>Product List</h1>
+      <h1>{params.category}</h1>
       <div>
         <FormControl style={{ width: 220 }}>
           <InputLabel id="demo-simple-select-label">SortBy</InputLabel>
@@ -139,7 +149,7 @@ function Index() {
             onClick={btnNextPageHandler}
             variant="contained"
             sx={{ backgroundColor: "black" }}
-            disabled={page === maxPage && true}
+            disabled={page == maxPage && true}
           >
             {">"}
           </Button>
