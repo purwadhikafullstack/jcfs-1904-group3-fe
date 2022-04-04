@@ -20,19 +20,24 @@ function Index() {
     maxPage: 0,
     itemsPerPage: 9,
   });
-  const { page, maxPage } = paginationState;
+  const { page, maxPage, itemsPerPage } = paginationState;
 
   const fetchProducts = async () => {
     try {
       const res = await axios.get("/products", {
-        params: { category: params.category },
+        params: {
+          category: params.category,
+          page: page,
+          itemsPerPage: itemsPerPage,
+        },
       });
-      const { data } = res;
-      setProducts(data.result);
-      setSortedProducts(data.result);
+      const { result, dataCount } = res.data;
+      console.log(dataCount);
+      setProducts(result);
+      setSortedProducts(result);
       setPaginationState({
         ...paginationState,
-        maxPage: Math.ceil(data.result.length / paginationState.itemsPerPage),
+        maxPage: Math.ceil(dataCount[0].total / paginationState.itemsPerPage),
       });
     } catch (error) {
       console.log({ error });
@@ -97,6 +102,10 @@ function Index() {
   useEffect(() => {
     fetchProducts();
   }, [params]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [page]);
 
   return (
     <div
