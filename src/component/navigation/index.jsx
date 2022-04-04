@@ -11,9 +11,19 @@ import "./style.css";
 function MuiNavBar() {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   const handleChange = (e) => {
     setValue(e);
+  };
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchValue(value);
+  };
+
+  const enterSearch = (e) => {
+    if (e.code === "Enter") navigate(`/productList/search/${searchValue}`);
   };
 
   const categoryNavigate = (e) => {
@@ -75,13 +85,7 @@ function MuiNavBar() {
           paddingBottom: 20,
         }}
       >
-        <Stack
-          direction="row"
-          p={3}
-          className="transition"
-          alignItems="center"
-          style={{ padding: 0 }}
-        >
+        <Stack direction="row" p={3} alignItems="center" style={{ padding: 0 }}>
           <img
             src="https://i.imgur.com/WYBghfu.png"
             alt="Logo"
@@ -102,15 +106,7 @@ function MuiNavBar() {
           >
             Needs
           </Button>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+          <input type="text" onChange={handleSearch} onKeyPress={enterSearch} />
         </Stack>
         <Stack direction="row" alignItems="center">
           <ShoppingCartIcon sx={{ m: 2 }} />

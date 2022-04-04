@@ -22,10 +22,27 @@ function Index() {
   });
   const { page, maxPage } = paginationState;
 
+  const keyWordModify = () => {
+    const copy = [params.keyWord];
+    const result = [];
+
+    copy.map((value, index) => {
+      if (index == 0) {
+        result.push("%");
+      }
+      if (index == copy.length - 1) {
+        result.push(value, "%");
+      } else {
+        result.push(value);
+      }
+    });
+    return result.join("");
+  };
+
   const fetchProducts = async () => {
     try {
       const res = await axios.get("/products", {
-        params: { category: params.category },
+        params: { search: keyWordModify() },
       });
       const { data } = res;
       setProducts(data.result);
