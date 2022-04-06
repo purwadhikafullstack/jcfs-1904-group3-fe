@@ -132,7 +132,7 @@ function Index() {
         alignItems: "center",
       }}
     >
-      <h1>{params.category}</h1>
+      <h1>{params.keyWord}</h1>
       <div>
         <FormControl style={{ width: 220 }}>
           <InputLabel id="demo-simple-select-label">SortBy</InputLabel>

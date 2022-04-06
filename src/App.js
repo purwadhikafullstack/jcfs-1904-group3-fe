@@ -1,17 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/user/landingPage";
-import MuiNavBar from "./component/navigation";
+import MuiNavBar from "./component/navigation/users";
 import ProductList from "./pages/user/productList";
 import ProductListCategory from "./pages/user/productList/category";
 import ProductListSearch from "./pages/user/productList/search";
 import ProductCard from "./component/productCard";
 import ProductDetail from "./pages/user/productDetail";
-import Test from "./pages/test";
+import Test from "./pages/admin/warehouseAdmin/inputProducts/index";
 
 function App() {
   return (
     <Router>
-      <MuiNavBar />
+      {/* <MuiNavBar /> */}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/productList" element={<ProductList />} />

@@ -54,7 +54,7 @@ function Test() {
 
   return (
     <div style={{ marginTop: 200 }}>
-      {/* <Search>
+      <Search>
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
@@ -64,7 +64,7 @@ function Test() {
           onChange={handleSearch}
           inputProps={{ "aria-label": "search" }}
         />
-      </Search> */}
+      </Search>
       <input type="text" onChange={handleSearch} onKeyPress={enterSearch} />
     </div>
   );

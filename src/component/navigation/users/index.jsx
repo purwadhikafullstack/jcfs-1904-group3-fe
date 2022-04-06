@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Button, Stack, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -9,6 +9,7 @@ import { grey } from "@mui/material/colors";
 import "./style.css";
 
 function MuiNavBar() {
+  const location = useLocation();
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -23,7 +24,13 @@ function MuiNavBar() {
   };
 
   const enterSearch = (e) => {
-    if (e.code === "Enter") navigate(`/productList/search/${searchValue}`);
+    if (e.code === "Enter") {
+      if (!searchValue) {
+        navigate(`/productList/`);
+      } else {
+        navigate(`/productList/search/${searchValue}`);
+      }
+    }
   };
 
   const categoryNavigate = (e) => {
@@ -73,6 +80,7 @@ function MuiNavBar() {
       },
     },
   }));
+
   return (
     <div className="navBar">
       <Container
