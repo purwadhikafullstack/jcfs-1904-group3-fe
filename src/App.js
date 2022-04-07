@@ -14,17 +14,17 @@ function App() {
       {/* <MuiNavBar /> */}
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/productList" element={<ProductList />} />
+        <Route path="/product-list" element={<ProductList />} />
         <Route
-          path="/productList/:category"
+          path="/product-list/:category"
           element={<ProductListCategory />}
         />
         <Route
-          path="/productList/search/:keyWord"
+          path="/product-list/search/:keyWord"
           element={<ProductListSearch />}
         />
         <Route path="/test" element={<Test />} />
-        <Route path="productDetail/:id" element={<ProductDetail />} />
+        <Route path="product-detail/:id" element={<ProductDetail />} />
       </Routes>
     </Router>
   );

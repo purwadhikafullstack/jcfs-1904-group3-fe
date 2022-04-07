@@ -18,7 +18,16 @@ function Index(props) {
     maxPage: 0,
     itemsPerPage: 1,
   });
-  const { productName, productId, price, image, variant } = product;
+  const {
+    productName,
+    productId,
+    price,
+    image,
+    variant,
+    qtyTotal,
+    size,
+    variantId,
+  } = product;
   const { page, itemsPerPage, maxPage } = paginationState;
 
   const fetchCategories = async () => {
@@ -46,6 +55,7 @@ function Index(props) {
       });
       setProductCategory(resGetCategory.data.result);
       const { result, dataCount } = resGetProducts.data;
+
       setProducts(result[0]);
       setPaginationState({
         ...paginationState,
@@ -54,6 +64,9 @@ function Index(props) {
     } catch (error) {
       console.log({ error });
     }
+  };
+  const handleChange = (e) => {
+    setProducts({ ...product, [e.target.name]: e.target.value });
   };
   const btnPrevPageHandler = () => {
     setPaginationState({ ...paginationState, page: page - 1 });
@@ -66,6 +79,24 @@ function Index(props) {
       return <td>{value.categoryName}</td>;
     });
   };
+  const onSaveProduct = async () => {
+    try {
+      const res = await axios.put("/products", {
+        productData: {
+          productName,
+          color: variant,
+          price,
+          qtyTotal,
+        },
+        productId,
+        variantId,
+      });
+      alert(res.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -125,37 +156,52 @@ function Index(props) {
 
               <label>Product Name</label>
               <input
-                name="keyword"
+                name="productName"
+                value={productName}
+                onChange={handleChange}
                 type="text"
                 placeholder="Enter Product Name"
                 className="Input"
               />
               <label>Product Color</label>
               <input
-                name="keyword"
+                name="variant"
                 type="text"
+                value={variant}
+                onChange={handleChange}
                 placeholder="Enter Product Name"
                 className="Input"
               />
               <label>Product Warehouse</label>
-              <select name="category" className="form-control">
-                <option value="">All Items</option>
-                <option value="kaos">Kaos</option>
-                <option value="celana">Celana</option>
-                <option value="aksesoris">Aksesoris</option>
+              <select name="warehouseId" className="form-control">
+                <option value="1">1</option>
               </select>
             </div>
             <div className="editor-form-content-two">
-              <label>Product Size</label>
+              <label>Product size</label>
+              <select
+                name="warehouseId"
+                disabled={size === null ? "true" : "false"}
+                className="form-control"
+              >
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="XL">L</option>
+              </select>
+              <label>Product Price</label>
               <input
-                name="keyword"
+                value={price}
+                onChange={handleChange}
+                name="price"
                 type="text"
                 placeholder="Enter Product Name"
                 className="Input"
               />
               <label>Product Quantity</label>
               <input
-                name="keyword"
+                name="qtyTotal"
+                value={qtyTotal}
+                onChange={handleChange}
                 type="text"
                 placeholder="Enter Product Name"
                 className="Input"
@@ -164,6 +210,13 @@ function Index(props) {
               <div className="input-image">
                 <input type="file" className="input-image-button" />
               </div>
+              <Button
+                onClick={onSaveProduct}
+                variant="contained"
+                className="button-add-category"
+              >
+                Save
+              </Button>
             </div>
           </div>
         </div>

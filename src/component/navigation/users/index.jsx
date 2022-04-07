@@ -4,6 +4,7 @@ import { Container, Button, Stack, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ProfileIcon from "@mui/icons-material/AccountCircle";
+import { TextField, InputAdornment } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 import "./style.css";
@@ -26,16 +27,16 @@ function MuiNavBar() {
   const enterSearch = (e) => {
     if (e.code === "Enter") {
       if (!searchValue) {
-        navigate(`/productList/`);
+        navigate(`/product-list/`);
       } else {
-        navigate(`/productList/search/${searchValue}`);
+        navigate(`/product-list/search/${searchValue}`);
       }
     }
   };
 
   const categoryNavigate = (e) => {
     const category = e.target.value;
-    navigate(`/productList/${category}`);
+    navigate(`/product-list/${category}`);
   };
   const searchBarColor = grey[100];
 
@@ -114,7 +115,20 @@ function MuiNavBar() {
           >
             Needs
           </Button>
-          <input type="text" onChange={handleSearch} onKeyPress={enterSearch} />
+          <TextField
+            defaultValue={searchValue}
+            onChange={handleSearch}
+            onKeyPress={enterSearch}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            variant="standard"
+          />
+          {/* <input type="text" onChange={handleSearch} onKeyPress={enterSearch} /> */}
         </Stack>
         <Stack direction="row" alignItems="center">
           <ShoppingCartIcon sx={{ m: 2 }} />
