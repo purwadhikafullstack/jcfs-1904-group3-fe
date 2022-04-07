@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "../../../../../utils/axios";
 import { Table } from "react-bootstrap";
 import { Button } from "@mui/material";
-import ProductList from "../component/productList";
+import CreateIcon from "@mui/icons-material/Create";
+import ProductList from "./component/productList";
 import "./style.css";
 function Index(props) {
   const { setSelectedProductId } = props;
@@ -59,14 +60,19 @@ function Index(props) {
   }, [page]);
   return (
     <div>
+      <div className="table-header">
+        <Button style={{ width: "290px" }} variant="contained" color="success">
+          Add products
+        </Button>
+      </div>
       <div className="table-container">
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>id</th>
-              <th>Products Name</th>
-              <th>inspect</th>
-              <th>Manage</th>
+              <th className="row-1">id</th>
+              <th className="row-2">Products Name</th>
+              <th className="row-3">inspect</th>
+              <th className="row-4">Manage</th>
             </tr>
           </thead>
           <tbody>

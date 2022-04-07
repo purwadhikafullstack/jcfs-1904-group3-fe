@@ -12,13 +12,13 @@ function Index() {
       <div className="Selector">
         <Selector setSelectedProductId={setSelectedProductId} />
       </div>
-      <div className="Editor">
+      {/* <div className="Editor">
         {selectedProductId ? (
           <Editor selectedProductId={selectedProductId} />
         ) : (
           <h1>Select Products To edit</h1>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
