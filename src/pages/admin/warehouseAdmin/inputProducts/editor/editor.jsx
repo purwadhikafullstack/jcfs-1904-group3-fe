@@ -100,9 +100,6 @@ function Index(props) {
   useEffect(() => {
     fetchCategories();
   }, []);
-  useEffect(() => {
-    fetchProducts();
-  }, [selectedProductId]);
 
   useEffect(() => {
     fetchProducts();

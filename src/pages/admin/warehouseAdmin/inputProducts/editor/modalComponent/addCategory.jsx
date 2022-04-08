@@ -28,13 +28,14 @@ function Index(props) {
 
   useEffect(() => {
     console.log(category);
-  }, [category]);
+    console.log(productId);
+  }, []);
   return (
     <Modal
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
-      centered
+      style={{ backgroundColor: "grey" }}
     >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">

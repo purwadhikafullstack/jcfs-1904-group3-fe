@@ -45,9 +45,13 @@
 }
 .button-add-category {
   background-color: green !important;
-  width: 50%;
 }
 .button-delete-category {
   background-color: red !important;
   width: 50%;
+}
+
+.show-selected-category {
+  border: 1px solid black;
+  height: 30%;
 }

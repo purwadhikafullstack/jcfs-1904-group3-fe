@@ -3,10 +3,12 @@ import axios from "../../../../../utils/axios";
 import { Table } from "react-bootstrap";
 import { Button } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
-import ProductList from "./component/productList";
+import ProductList from "../component/productList";
+import EditProductModal from "../editor/editProductModal";
 import "./style.css";
 function Index(props) {
-  const { setSelectedProductId } = props;
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [modalShowEditProduct, setModalShowEditProduct] = useState(false);
   const [products, setProducts] = useState([]);
   const [paginationState, setPaginationState] = useState({
     page: 1,
@@ -38,19 +40,21 @@ function Index(props) {
   const btnNextPageHandler = () => {
     setPaginationState({ ...paginationState, page: page + 1 });
   };
+  const onClickModalEditProducts = (e) => {
+    setModalShowEditProduct(true);
+    setSelectedProduct(e.target.value);
+  };
   const renderProducts = () => {
     return products.map((value) => {
       return (
         <ProductList
           products={value}
-          selectProductToEdit={selectProductToEdit}
+          onClickModalEditProducts={onClickModalEditProducts}
         />
       );
     });
   };
-  const selectProductToEdit = (e) => {
-    setSelectedProductId(e.target.value);
-  };
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -58,6 +62,9 @@ function Index(props) {
   useEffect(() => {
     fetchProducts();
   }, [page]);
+  useEffect(() => {
+    console.log(selectedProduct);
+  }, [selectedProduct]);
   return (
     <div>
       <div className="table-header">
@@ -65,6 +72,16 @@ function Index(props) {
           Add products
         </Button>
       </div>
+
+      {selectedProduct ? (
+        <EditProductModal
+          show={modalShowEditProduct}
+          onHide={() => setModalShowEditProduct(false)}
+          selectedProduct={selectedProduct}
+        />
+      ) : (
+        <h1>hellow</h1>
+      )}
       <div className="table-container">
         <Table striped bordered hover>
           <thead>
