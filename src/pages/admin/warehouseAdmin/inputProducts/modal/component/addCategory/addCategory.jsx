@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
-import axios from "../../../../../../utils/axios";
 
 function Index(props) {
   const {
@@ -47,13 +46,13 @@ function Index(props) {
   return (
     <Modal
       {...props}
-      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       style={{ backgroundColor: "grey" }}
+      centered
     >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
-          Add Category To Products
+          Add Category To Product
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

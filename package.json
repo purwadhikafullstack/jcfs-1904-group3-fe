@@ -17,6 +17,7 @@
     "axios": "^0.26.1",
     "dotenv": "^16.0.0",
     "font-awesome": "^4.7.0",
+    "formik": "^2.2.9",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.2.2",

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Badge } from "react-bootstrap";
 import axios from "../../../../../../utils/axios";
-import AddCategoryModal from "../component/addCategory";
+import AddCategoryModal from "../component/addCategory/addCategory";
+import AddVariantModal from "../component/addVariant/addVariant";
 
 import "./style.css";
 
@@ -13,6 +14,7 @@ function Index(props) {
   const [newCategory, setNewCategory] = useState([]);
   const [deleteCategory, setDeleteCategory] = useState([]);
   const [modalShowAddCategory, setModalShowAddCategory] = useState(false);
+  const [modalShowAddVariant, setModalShowAddVariant] = useState(false);
   const [paginationState, setPaginationState] = useState({
     page: 1,
     maxPage: 0,
@@ -126,7 +128,6 @@ function Index(props) {
         "danger",
         "warning",
         "info",
-
         "dark",
       ];
       var color = colors[Math.floor(Math.random() * colors.length)];
@@ -173,6 +174,7 @@ function Index(props) {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      style={{ backgroundColor: "grey" }}
     >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -185,11 +187,7 @@ function Index(props) {
       <Modal.Body>
         <div className="editor-form-content">
           <div className="editor-form-content-one">
-            <label>Category Name</label>
-            <div className="show-selected-category">
-              {showSelectedProductCategory()}
-            </div>
-            <p></p>
+            <label>Product Name</label>
             <input
               name="productName"
               value={productName}
@@ -207,26 +205,6 @@ function Index(props) {
               placeholder="Enter Product Name"
               className="Input"
             />
-            <label>Product Warehouse</label>
-            <select
-              name="warehouseId"
-              className="form-control"
-              style={{ marginBottom: "50px" }}
-            >
-              <option value="1">1</option>
-            </select>
-          </div>
-          <div className="editor-form-content-two">
-            <label>Product size</label>
-            <select
-              name="warehouseId"
-              disabled={size === null ? "true" : "false"}
-              className="form-control"
-            >
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="XL">L</option>
-            </select>
             <label>Product Price</label>
             <input
               value={price}
@@ -245,6 +223,26 @@ function Index(props) {
               placeholder="Enter Product Name"
               className="Input"
             />
+          </div>
+          <div className="editor-form-content-two">
+            <label>Category List</label>
+            <div className="show-selected-category">
+              {showSelectedProductCategory()}
+            </div>
+            <label>Product size</label>
+            <select
+              name="warehouseId"
+              disabled={size === null ? "true" : "false"}
+              className="form-control"
+            >
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="XL">L</option>
+            </select>
+            <label>Product Warehouse</label>
+            <select name="warehouseId" className="form-control">
+              <option value="1">1</option>
+            </select>
             <label>Product Image</label>
             <div className="input-image">
               <input type="file" className="input-image-button" />
@@ -266,11 +264,18 @@ function Index(props) {
         <Button
           onClick={btnNextPageHandler}
           variant="contained"
-          style={{ marginRight: "30px" }}
+          style={{ marginRight: "12%" }}
           disabled={page === maxPage && true}
         >
           {">"}
         </Button>
+        <Button variant="success" onClick={() => setModalShowAddVariant(true)}>
+          Add variant
+        </Button>
+        <AddVariantModal
+          show={modalShowAddVariant}
+          onHide={() => setModalShowAddVariant(false)}
+        />
         <Button variant="success" onClick={() => setModalShowAddCategory(true)}>
           Add category
         </Button>

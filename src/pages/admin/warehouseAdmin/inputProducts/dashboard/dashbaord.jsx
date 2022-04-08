@@ -3,7 +3,7 @@ import axios from "../../../../../utils/axios";
 import { Table } from "react-bootstrap";
 import { Button } from "@mui/material";
 import ProductList from "./component/productList";
-import EditProductModal from "../modal/editProduct/editProduct";
+import EditProductModal from "../modal/editProduct";
 import "./style.css";
 function Index(props) {
   const [selectedProduct, setSelectedProduct] = useState("");
