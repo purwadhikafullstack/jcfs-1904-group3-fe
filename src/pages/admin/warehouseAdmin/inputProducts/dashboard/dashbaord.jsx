@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "../../../../../utils/axios";
 import { Table } from "react-bootstrap";
 import { Button } from "@mui/material";
-import CreateIcon from "@mui/icons-material/Create";
-import ProductList from "../component/productList";
-import EditProductModal from "../editor/editProductModal";
+import ProductList from "./component/productList";
+import EditProductModal from "../modal/editProduct/editProduct";
 import "./style.css";
 function Index(props) {
   const [selectedProduct, setSelectedProduct] = useState("");
@@ -62,9 +61,7 @@ function Index(props) {
   useEffect(() => {
     fetchProducts();
   }, [page]);
-  useEffect(() => {
-    console.log(selectedProduct);
-  }, [selectedProduct]);
+
   return (
     <div>
       <div className="table-header">

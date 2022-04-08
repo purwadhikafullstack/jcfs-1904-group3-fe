@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Badge } from "react-bootstrap";
-import axios from "../../../../../utils/axios";
-import { Table } from "react-bootstrap";
-import AddCategoryModal from "./modalComponent/addCategory";
+import axios from "../../../../../../utils/axios";
+import AddCategoryModal from "../component/addCategory";
 
 import "./style.css";
 
@@ -55,7 +54,6 @@ function Index(props) {
       });
       setSelectedProductCategory(resGetCategory.data.result);
       const { result, dataCount } = resGetProducts.data;
-      console.log(result);
       setProducts(result[0]);
       setPaginationState({
         ...paginationState,
@@ -83,10 +81,21 @@ function Index(props) {
       console.log(error);
     }
   };
-  const showAllCategoryMapping = () => {
-    return allCategoryList.map((value) => {
-      return <option value={value.id}>{value.categoryName}</option>;
-    });
+
+  const onDeleteButton = async (e) => {
+    const categoryId = e.target.value;
+    try {
+      const res = await axios.delete("/products/category", {
+        headers: {},
+        data: {
+          productId,
+          categoryId: categoryId,
+        },
+      });
+      alert(res.data.message);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const showSelectedProductCategory = () => {
     return selectedProductCategory.map((value) => {
@@ -106,6 +115,8 @@ function Index(props) {
         <Badge bg={color} style={{ color: "white", margin: "3px" }}>
           {value.categoryName}
           <button
+            value={value.categoryId}
+            onClick={onDeleteButton}
             style={{ backgroundColor: "inherit", border: 0, color: "white" }}
           >
             ⤬
@@ -124,11 +135,8 @@ function Index(props) {
   const handleChange = (e) => {
     setProducts({ ...product, [e.target.name]: e.target.value });
   };
-  const selectedCategory = (e) => {
-    console.log(e.target.value);
-  };
+
   useEffect(() => {
-    fetchProducts();
     fetchCategories();
   }, []);
 
@@ -228,7 +236,7 @@ function Index(props) {
         <Button
           onClick={btnPrevPageHandler}
           variant="contained"
-          disabled={page == 1 && true}
+          disabled={page === 1 && true}
         >
           {"<"}
         </Button>
@@ -246,12 +254,16 @@ function Index(props) {
         <Button variant="success" onClick={() => setModalShowAddCategory(true)}>
           Add category
         </Button>
-        <AddCategoryModal
-          show={modalShowAddCategory}
-          onHide={() => setModalShowAddCategory(false)}
-          categoryList={allCategoryList}
-          productId={productId}
-        />
+        {productId ? (
+          <AddCategoryModal
+            show={modalShowAddCategory}
+            onHide={() => setModalShowAddCategory(false)}
+            categoryList={allCategoryList}
+            productId={productId}
+          />
+        ) : (
+          <p>....loading</p>
+        )}
 
         <Button onClick={onSaveProduct} variant="danger">
           Save

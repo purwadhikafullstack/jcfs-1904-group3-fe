@@ -10,6 +10,7 @@ function Index(props) {
     setCategory(e.target.value);
   };
   const onAddButton = async () => {
+    console.log(productId);
     try {
       const res = await axios.post("/products/category", {
         productId,
@@ -26,10 +27,6 @@ function Index(props) {
     });
   };
 
-  useEffect(() => {
-    console.log(category);
-    console.log(productId);
-  }, []);
   return (
     <Modal
       {...props}

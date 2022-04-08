@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Selector from "./selector/selector.jsx";
-import Editor from "./editor/editor";
+import Selector from "./dashboard/dashbaord.jsx";
 import "./style.css";
 function Index() {
   const [selectedProductId, setSelectedProductId] = useState("");
@@ -10,15 +9,8 @@ function Index() {
   return (
     <div style={{ display: "flex" }}>
       <div className="Selector">
-        <Selector setSelectedProductId={setSelectedProductId} />
+        <Selector />
       </div>
-      {/* <div className="Editor">
-        {selectedProductId ? (
-          <Editor selectedProductId={selectedProductId} />
-        ) : (
-          <h1>Select Products To edit</h1>
-        )}
-      </div> */}
     </div>
   );
 }
