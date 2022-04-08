@@ -10,6 +10,8 @@ function Index(props) {
   const [product, setProducts] = useState({});
   const [allCategoryList, setAllCategoryList] = useState([]);
   const [selectedProductCategory, setSelectedProductCategory] = useState([]);
+  const [newCategory, setNewCategory] = useState([]);
+  const [deleteCategory, setDeleteCategory] = useState([]);
   const [modalShowAddCategory, setModalShowAddCategory] = useState(false);
   const [paginationState, setPaginationState] = useState({
     page: 1,
@@ -75,6 +77,27 @@ function Index(props) {
         productId,
         variantId,
       });
+      if (newCategory.length) {
+        newCategory.map(async (value) => {
+          const res = await axios.post("/products/category", {
+            productId: value.productId,
+            categoryId: value.categoryId,
+          });
+        });
+        setNewCategory([]);
+      }
+      if (deleteCategory.length) {
+        deleteCategory.map(async (value) => {
+          const res = await axios.delete("/products/category", {
+            headers: {},
+            data: {
+              productId: value.productId,
+              categoryId: value.categoryId,
+            },
+          });
+        });
+        setDeleteCategory([]);
+      }
       alert(res.data.message);
       onHide();
     } catch (error) {
@@ -84,18 +107,15 @@ function Index(props) {
 
   const onDeleteButton = async (e) => {
     const categoryId = e.target.value;
-    try {
-      const res = await axios.delete("/products/category", {
-        headers: {},
-        data: {
-          productId,
-          categoryId: categoryId,
-        },
-      });
-      alert(res.data.message);
-    } catch (error) {
-      console.log(error);
-    }
+    const deleteData = { productId: productId, categoryId: categoryId };
+    setDeleteCategory([...deleteCategory, deleteData]);
+    const removeDeletedData = [];
+    selectedProductCategory.filter((value) => {
+      if (value.categoryId != categoryId) {
+        removeDeletedData.push(value);
+      }
+    });
+    setSelectedProductCategory(removeDeletedData);
   };
   const showSelectedProductCategory = () => {
     return selectedProductCategory.map((value) => {
@@ -260,6 +280,10 @@ function Index(props) {
             onHide={() => setModalShowAddCategory(false)}
             categoryList={allCategoryList}
             productId={productId}
+            setSelectedProductCategory={setSelectedProductCategory}
+            selectedProductCategory={selectedProductCategory}
+            newCategory={newCategory}
+            setNewCategory={setNewCategory}
           />
         ) : (
           <p>....loading</p>

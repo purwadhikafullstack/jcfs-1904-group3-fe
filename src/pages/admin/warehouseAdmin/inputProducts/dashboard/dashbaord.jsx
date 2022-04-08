@@ -77,7 +77,7 @@ function Index(props) {
           selectedProduct={selectedProduct}
         />
       ) : (
-        <h1>hellow</h1>
+        <></>
       )}
       <div className="table-container">
         <Table striped bordered hover>

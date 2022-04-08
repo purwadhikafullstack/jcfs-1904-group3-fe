@@ -3,27 +3,44 @@ import { Modal, Button } from "react-bootstrap";
 import axios from "../../../../../../utils/axios";
 
 function Index(props) {
-  const { categoryList, productId } = props;
-  const [category, setCategory] = useState("");
+  const {
+    categoryList,
+    productId,
+    setSelectedProductCategory,
+    selectedProductCategory,
+    setNewCategory,
+    newCategory,
+    onHide,
+  } = props;
+  const [category, setCategory] = useState({
+    productId: "",
+    categoryId: "",
+    categoryName: "",
+  });
 
   const selectedCategory = (e) => {
-    setCategory(e.target.value);
+    const value = e.target.value.split(",");
+    const id = parseInt(value[0]);
+    const categoryName = value[1];
+    setCategory({
+      ...category,
+      productId: productId,
+      categoryId: id,
+      categoryName,
+    });
   };
   const onAddButton = async () => {
-    console.log(productId);
-    try {
-      const res = await axios.post("/products/category", {
-        productId,
-        categoryId: parseInt(category),
-      });
-      alert(res.data.message);
-    } catch (error) {
-      console.log(error);
-    }
+    setSelectedProductCategory([...selectedProductCategory, category]);
+    setNewCategory([...newCategory, category]);
+    onHide();
   };
   const categoryMapping = () => {
     return categoryList.map((value) => {
-      return <option value={value.id}>{value.categoryName}</option>;
+      return (
+        <option value={[value.id, value.categoryName]}>
+          {value.categoryName}
+        </option>
+      );
     });
   };
 
@@ -50,7 +67,7 @@ function Index(props) {
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={onAddButton}>Add</Button>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button onClick={onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
   );
