@@ -275,6 +275,7 @@ function Index(props) {
         <AddVariantModal
           show={modalShowAddVariant}
           onHide={() => setModalShowAddVariant(false)}
+          productId={productId}
         />
         <Button variant="success" onClick={() => setModalShowAddCategory(true)}>
           Add category
