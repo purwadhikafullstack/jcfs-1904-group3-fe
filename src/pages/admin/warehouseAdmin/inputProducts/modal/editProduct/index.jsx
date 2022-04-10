@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Badge } from "react-bootstrap";
 import axios from "../../../../../../utils/axios";
-import AddCategoryModal from "../component/addCategory/addCategory";
+import AddCategoryModal from "./addCategory/addCategory";
 import AddVariantModal from "../component/addVariant/addVariant";
 
 import "./style.css";

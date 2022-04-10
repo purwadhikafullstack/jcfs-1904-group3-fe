@@ -4,10 +4,12 @@ import { Table } from "react-bootstrap";
 import { Button } from "@mui/material";
 import ProductList from "./component/productList";
 import EditProductModal from "../modal/editProduct";
+import AddProductModal from "../modal/addProduct/stepOne";
 import "./style.css";
 function Index(props) {
   const [selectedProduct, setSelectedProduct] = useState("");
   const [modalShowEditProduct, setModalShowEditProduct] = useState(false);
+  const [modalShowAddProduct, setModalShowAddProduct] = useState(false);
   const [products, setProducts] = useState([]);
   const [paginationState, setPaginationState] = useState({
     page: 1,
@@ -65,10 +67,23 @@ function Index(props) {
   return (
     <div>
       <div className="table-header">
-        <Button style={{ width: "290px" }} variant="contained" color="success">
+        <Button
+          style={{ width: "290px" }}
+          variant="contained"
+          color="success"
+          onClick={() => {
+            setModalShowAddProduct(true);
+          }}
+        >
           Add products
         </Button>
       </div>
+      <AddProductModal
+        show={modalShowAddProduct}
+        onHide={() => {
+          setModalShowAddProduct(false);
+        }}
+      />
 
       {selectedProduct ? (
         <EditProductModal
