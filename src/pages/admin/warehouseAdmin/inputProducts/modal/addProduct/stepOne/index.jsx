@@ -11,7 +11,7 @@ function Index(props) {
   const [modalShowStepTwo, setModalShowStepTwo] = useState(false);
   const [fetchCategoryList, setFetchCategoryList] = useState([]);
   const [productName, setProductName] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [addedCategories, setAddedCategories] = useState([]);
   const [addedVariants, setAddedVariants] = useState([]);
   const [categoryForm, setCategoryForm] = useState({
     categoryId: "",
@@ -51,19 +51,18 @@ function Index(props) {
   const onAddCategory = () => {
     if (categoryForm.categoryId) {
       var isNotDuplicate;
-      selectedCategories.filter((value) => {
+      addedCategories.filter((value) => {
         if (value.categoryName != categoryForm.categoryName) {
           isNotDuplicate = true;
         } else {
           isNotDuplicate = false;
         }
       });
-      if (!selectedCategories.length) {
-        setSelectedCategories([...selectedCategories, categoryForm]);
+      if (!addedCategories.length) {
+        setAddedCategories([...addedCategories, categoryForm]);
       }
       if (isNotDuplicate) {
-        console.log("akhir");
-        setSelectedCategories([...selectedCategories, categoryForm]);
+        setAddedCategories([...addedCategories, categoryForm]);
       }
     }
   };
@@ -84,16 +83,16 @@ function Index(props) {
   const onDeleteCategoryButton = (e) => {
     const categoryId = e.target.value;
     const removeDeletedData = [];
-    selectedCategories.filter((value) => {
+    addedCategories.filter((value) => {
       if (value.categoryId != categoryId) {
         removeDeletedData.push(value);
       }
     });
-    setSelectedCategories(removeDeletedData);
+    setAddedCategories(removeDeletedData);
   };
 
   const showSelectedProductCategory = () => {
-    return selectedCategories.map((value) => {
+    return addedCategories.map((value) => {
       var colors = [
         "primary",
         "secondary",
@@ -136,6 +135,57 @@ function Index(props) {
         </Badge>
       );
     });
+  };
+
+  const submitNewProduct = async () => {
+    try {
+      if (productName) {
+        if (addedCategories.length) {
+          if (addedVariants.length) {
+            const postProduct = await axios.post("/products", { productName });
+            const newProductId = postProduct.data.id;
+
+            addedCategories.map(async (value) => {
+              const res = await axios.post("/products/category", {
+                productId: newProductId,
+                categoryId: value.categoryId,
+              });
+            });
+
+            addedVariants.map(async (value) => {
+              const variantData = {
+                productId: newProductId,
+                color: value.color,
+                price: value.price,
+                quantity: value.quantity,
+                size: value.size,
+                warehouseId: value.warehouseId,
+              };
+              const resData = await axios.post(
+                "/products/variant",
+                variantData
+              );
+              const { resultGet } = resData.data;
+              const newVariantId = resultGet[0].id;
+              const variantImage = new FormData();
+              variantImage.append("image", value.image);
+              variantImage.append("id", newVariantId);
+              if (resData.data.message) {
+                const resImage = await axios.post(
+                  "/products/variant/image",
+                  variantImage
+                );
+              }
+            });
+            setProductName("");
+            setAddedCategories([]);
+            setAddedVariants([]);
+            onHide();
+            alert("Product berhasil di tambahkan");
+          }
+        }
+      }
+    } catch (error) {}
   };
 
   const onDeleteVariantButton = (e) => {
@@ -193,7 +243,7 @@ function Index(props) {
           setAddedVariants={setAddedVariants}
           addedVariants={addedVariants}
         />
-        <Button>Submit</Button>
+        <Button onClick={submitNewProduct}>Submit</Button>
         <Button>Close</Button>
       </Modal.Footer>
     </Modal>
