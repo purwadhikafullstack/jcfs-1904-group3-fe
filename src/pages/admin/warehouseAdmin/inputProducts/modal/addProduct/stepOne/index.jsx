@@ -3,12 +3,16 @@ import { Modal, Button, Badge } from "react-bootstrap";
 import { useFormik } from "formik";
 import "./style.css";
 import axios from "../../../../../../../utils/axios";
+import StepTwo from "../stepTwo";
+import { colors } from "@mui/material";
 
 function Index(props) {
   const { onHide, productId } = props;
+  const [modalShowStepTwo, setModalShowStepTwo] = useState(false);
   const [fetchCategoryList, setFetchCategoryList] = useState([]);
   const [productName, setProductName] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [addedVariants, setAddedVariants] = useState([]);
   const [categoryForm, setCategoryForm] = useState({
     categoryId: "",
     categoryName: "",
@@ -46,7 +50,21 @@ function Index(props) {
   };
   const onAddCategory = () => {
     if (categoryForm.categoryId) {
-      setSelectedCategories([...selectedCategories, categoryForm]);
+      var isNotDuplicate;
+      selectedCategories.filter((value) => {
+        if (value.categoryName != categoryForm.categoryName) {
+          isNotDuplicate = true;
+        } else {
+          isNotDuplicate = false;
+        }
+      });
+      if (!selectedCategories.length) {
+        setSelectedCategories([...selectedCategories, categoryForm]);
+      }
+      if (isNotDuplicate) {
+        console.log("akhir");
+        setSelectedCategories([...selectedCategories, categoryForm]);
+      }
     }
   };
   const selectedCategory = (e) => {
@@ -61,6 +79,17 @@ function Index(props) {
 
   const productNameChange = (e) => {
     setProductName(e.target.value);
+  };
+
+  const onDeleteCategoryButton = (e) => {
+    const categoryId = e.target.value;
+    const removeDeletedData = [];
+    selectedCategories.filter((value) => {
+      if (value.categoryId != categoryId) {
+        removeDeletedData.push(value);
+      }
+    });
+    setSelectedCategories(removeDeletedData);
   };
 
   const showSelectedProductCategory = () => {
@@ -82,6 +111,7 @@ function Index(props) {
           <button
             value={value.categoryId}
             style={{ backgroundColor: "inherit", border: 0, color: "white" }}
+            onClick={onDeleteCategoryButton}
           >
             ⤬
           </button>
@@ -90,13 +120,38 @@ function Index(props) {
     });
   };
 
+  const showAddedVariants = () => {
+    return addedVariants.map((value) => {
+      const { color } = value;
+      return (
+        <Badge bg="primary" style={{ color: "white", margin: "3px" }}>
+          {color}
+          <button
+            value={color}
+            style={{ backgroundColor: "inherit", border: 0, color: "white" }}
+            onClick={onDeleteVariantButton}
+          >
+            ⤬
+          </button>
+        </Badge>
+      );
+    });
+  };
+
+  const onDeleteVariantButton = (e) => {
+    const color = e.target.value;
+    const removeDeletedData = [];
+    addedVariants.filter((value) => {
+      if (value.color != color) {
+        removeDeletedData.push(value);
+      }
+    });
+    setAddedVariants(removeDeletedData);
+  };
+
   useEffect(() => {
     fetchCategories();
   }, []);
-
-  useEffect(() => {
-    console.log(selectedCategories);
-  }, [selectedCategories]);
 
   return (
     <Modal {...props} centered style={{ backgroundColor: "grey" }}>
@@ -125,11 +180,21 @@ function Index(props) {
           >
             {categoryMapping()}
           </select>
+          <label className="label">Added Variant</label>
+          <div className="show-selected-category">{showAddedVariants()}</div>
         </form>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={onAddCategory}>Add Category</Button>
-        <Button>Save Changes</Button>
+        <Button onClick={() => setModalShowStepTwo(true)}>Add Variant</Button>
+        <StepTwo
+          show={modalShowStepTwo}
+          onHide={() => setModalShowStepTwo(false)}
+          setAddedVariants={setAddedVariants}
+          addedVariants={addedVariants}
+        />
+        <Button>Submit</Button>
+        <Button>Close</Button>
       </Modal.Footer>
     </Modal>
   );

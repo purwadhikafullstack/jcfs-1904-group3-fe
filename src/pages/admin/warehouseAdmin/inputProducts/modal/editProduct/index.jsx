@@ -107,7 +107,7 @@ function Index(props) {
     }
   };
 
-  const onDeleteButton = async (e) => {
+  const onDeleteButton = (e) => {
     const categoryId = e.target.value;
     const deleteData = { productId: productId, categoryId: categoryId };
     setDeleteCategory([...deleteCategory, deleteData]);
