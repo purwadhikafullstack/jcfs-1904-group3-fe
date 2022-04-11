@@ -22,7 +22,7 @@ function Index(props) {
         >
           Edit
         </button>
-        <button className="button">Delete</button>
+        <button className="button">🗑️</button>
       </td>
     </tr>
   );

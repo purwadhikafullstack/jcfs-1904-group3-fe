@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Badge } from "react-bootstrap";
 import axios from "../../../../../../utils/axios";
-import AddCategoryModal from "./addCategory/addCategory";
-import AddVariantModal from "../component/addVariant/addVariant";
+import AddCategoryModal from "./addCategory";
+import AddVariantModal from "./addVariant/addVariant";
 
 import "./style.css";
 
@@ -13,6 +13,7 @@ function Index(props) {
   const [selectedProductCategory, setSelectedProductCategory] = useState([]);
   const [newCategory, setNewCategory] = useState([]);
   const [deleteCategory, setDeleteCategory] = useState([]);
+  const [newImage, setNewImage] = useState("");
   const [modalShowAddCategory, setModalShowAddCategory] = useState(false);
   const [modalShowAddVariant, setModalShowAddVariant] = useState(false);
   const [paginationState, setPaginationState] = useState({
@@ -100,6 +101,16 @@ function Index(props) {
         });
         setDeleteCategory([]);
       }
+      if (newImage) {
+        const variantImage = new FormData();
+        variantImage.append("image", newImage);
+        variantImage.append("id", variantId);
+
+        const resImage = await axios.post(
+          "/products/variant/image",
+          variantImage
+        );
+      }
       alert(res.data.message);
       onHide();
     } catch (error) {
@@ -168,6 +179,7 @@ function Index(props) {
   useEffect(() => {
     fetchProducts();
   }, [selectedProduct]);
+
   return (
     <Modal
       {...props}
@@ -245,7 +257,13 @@ function Index(props) {
             </select>
             <label>Product Image</label>
             <div className="input-image">
-              <input type="file" className="input-image-button" />
+              <input
+                onChange={(event) => {
+                  setNewImage(event.target.files[0]);
+                }}
+                type="file"
+                className="input-image-button"
+              />
             </div>
           </div>
         </div>

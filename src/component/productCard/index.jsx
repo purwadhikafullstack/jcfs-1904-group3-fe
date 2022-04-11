@@ -4,7 +4,7 @@ import "./style.css";
 function Index(props) {
   const { productName, productId, price, image } = props.product;
 
-  const link = `http://localhost:3000/productDetail/${productId}`;
+  const link = `http://localhost:3000/product-detail/${productId}`;
   // useEffect(() => {
   //   console.log(productName, productId, price, image);
   // }, []);

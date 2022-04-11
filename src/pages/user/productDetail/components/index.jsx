@@ -36,7 +36,7 @@ function Index(props) {
       <div className="container">
         <div className="row mt-3">
           <div className="col-6">
-            <img style={{ width: "100%" }} src={image} alt="" />
+            <img className="image" src={image} alt="" />
           </div>
           <div className="col-6 d-flex flex-column justify-content-center">
             <h4>{productName}</h4>

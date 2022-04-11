@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import "./style.css";
-import axios from "../../../../../../../utils/axios";
+import axios from "../../../../../../../../utils/axios";
 
 function Index(props) {
   const { onHide, productId } = props;

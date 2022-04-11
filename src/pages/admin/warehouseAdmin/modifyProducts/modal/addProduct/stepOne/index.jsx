@@ -198,7 +198,12 @@ function Index(props) {
     });
     setAddedVariants(removeDeletedData);
   };
-
+  const onCloseButton = () => {
+    setProductName("");
+    setAddedCategories([]);
+    setAddedVariants([]);
+    onHide();
+  };
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -244,7 +249,7 @@ function Index(props) {
           addedVariants={addedVariants}
         />
         <Button onClick={submitNewProduct}>Submit</Button>
-        <Button>Close</Button>
+        <Button onClick={onCloseButton}>Close</Button>
       </Modal.Footer>
     </Modal>
   );

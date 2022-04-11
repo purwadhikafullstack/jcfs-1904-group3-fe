@@ -1,3 +1,10 @@
+.dashboard-container {
+  display: flex;
+}
+.dashboard {
+  flex: 6;
+}
+
 .admin-product-image {
   height: 80px;
 }
