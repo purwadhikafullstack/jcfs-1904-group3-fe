@@ -14,7 +14,11 @@ import ListingProducts from "./components/listingProducts";
 function Index() {
   const params = useParams();
   const [products, setProducts] = useState([]);
-  const [sortedProducts, setSortedProducts] = useState([]);
+  const [sortMethod, setSortMethod] = useState({
+    sortBy: "",
+    order: "",
+  });
+
   const [paginationState, setPaginationState] = useState({
     page: 1,
     maxPage: 0,
@@ -29,12 +33,12 @@ function Index() {
           category: params.category,
           page: page,
           itemsPerPage: itemsPerPage,
+          sortBy: sortMethod.sortBy,
+          order: sortMethod.order,
         },
       });
       const { result, dataCount } = res.data;
-      console.log(dataCount);
       setProducts(result);
-      setSortedProducts(result);
       setPaginationState({
         ...paginationState,
         maxPage: Math.ceil(dataCount[0].total / paginationState.itemsPerPage),
@@ -46,46 +50,24 @@ function Index() {
 
   const sortProducts = (e) => {
     const sortValue = e.target.value;
-    const rawData = [...products];
 
     switch (sortValue) {
       case "default":
+        setSortMethod({ sortBy: "", order: "" });
         break;
       case "lowPrice":
-        rawData.sort((a, b) => a.price - b.price);
+        setSortMethod({ sortBy: "price", order: "asc" });
         break;
       case "highPrice":
-        rawData.sort((a, b) => b.price - a.price);
+        setSortMethod({ sortBy: "price", order: "desc" });
         break;
       case "az":
-        rawData.sort((a, b) => {
-          // a : Kaos
-          // b : Celana
-          // b --> a
-
-          if (a.productName < b.productName) {
-            return -1;
-          } else if (a.productName > b.productName) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
+        setSortMethod({ sortBy: "productName", order: "asc" });
         break;
       case "za":
-        rawData.sort((a, b) => {
-          if (a.productName < b.productName) {
-            return 1;
-          } else if (a.productName > b.productName) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
+        setSortMethod({ sortBy: "productName", order: "desc" });
         break;
     }
-
-    setSortedProducts(rawData);
   };
 
   const btnPrevPageHandler = () => {
@@ -101,11 +83,7 @@ function Index() {
 
   useEffect(() => {
     fetchProducts();
-  }, [params]);
-
-  useEffect(() => {
-    fetchProducts();
-  }, [page]);
+  }, [params, page, sortMethod]);
 
   return (
     <div
@@ -131,9 +109,9 @@ function Index() {
         </FormControl>
       </div>
       <div>
-        {sortedProducts.length ? (
+        {products.length ? (
           <ListingProducts
-            products={sortedProducts}
+            products={products}
             paginationState={paginationState}
           />
         ) : (
