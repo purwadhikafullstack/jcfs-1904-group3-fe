@@ -36,9 +36,9 @@ function SalesReport() {
       ];
       const month = months[index];
 
-      const revenue = parseInt(value.totalAmount);
+      const Rupiah = parseInt(value.totalAmount);
 
-      mappingResult.push({ month, revenue });
+      mappingResult.push({ month, Rupiah });
     });
     setChartData(mappingResult);
   };
@@ -55,7 +55,7 @@ function SalesReport() {
         <Chart
           data={chartData}
           title="Total Revenue"
-          dataKeyLine="revenue"
+          dataKeyLine="Rupiah"
           dataKeyX="month"
         />
       </div>

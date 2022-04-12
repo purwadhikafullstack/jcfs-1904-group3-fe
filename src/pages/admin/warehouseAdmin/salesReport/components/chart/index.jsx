@@ -5,6 +5,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  YAxis,
 } from "recharts";
 import "./style.css";
 
@@ -15,6 +16,7 @@ function Chart({ title, data, dataKeyLine, dataKeyX }) {
       <ResponsiveContainer width="100%" aspect={4 / 1}>
         <LineChart data={data}>
           <XAxis dataKey={dataKeyX} stroke="#5550bd" />
+          <YAxis />
           <Line type="monotone" dataKey={dataKeyLine} stroke="#5550bd" />
           <Tooltip />
         </LineChart>
