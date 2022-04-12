@@ -32,10 +32,12 @@ function Sidebar() {
               <Timeline className="sidebarIcon" />
               Analytics
             </li>
-            <li className="sidebarListItem">
-              <TrendingUp className="sidebarIcon" />
-              Sales
-            </li>
+            <Link to="/admin/sales-report" className="link">
+              <li className="sidebarListItem">
+                <TrendingUp className="sidebarIcon" />
+                Sales
+              </li>
+            </Link>
           </ul>
         </div>
         <div className="sidebarMenu">

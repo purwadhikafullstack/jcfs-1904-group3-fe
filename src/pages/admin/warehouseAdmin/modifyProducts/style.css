@@ -1,5 +1,6 @@
 .dashboard-container {
   display: flex;
+  margin-top: 20px;
 }
 .dashboard {
   flex: 6;
@@ -16,8 +17,12 @@
   width: 100%;
   height: 800px;
 }
+.button-container {
+  display: flex;
+}
 .admin-product-button {
   width: 100%;
+  justify-content: center;
 }
 .table-data {
   text-align: center;

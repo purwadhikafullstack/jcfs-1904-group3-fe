@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Badge } from "react-bootstrap";
-import { useFormik } from "formik";
 import "./style.css";
 import axios from "../../../../../../../utils/axios";
 import StepTwo from "../stepTwo";
-import { colors } from "@mui/material";
 
 function Index(props) {
-  const { onHide, productId } = props;
+  const { onHide } = props;
   const [modalShowStepTwo, setModalShowStepTwo] = useState(false);
   const [fetchCategoryList, setFetchCategoryList] = useState([]);
-  const [productName, setProductName] = useState("");
+  const [addedProductName, setAddedProductName] = useState("");
   const [addedCategories, setAddedCategories] = useState([]);
   const [addedVariants, setAddedVariants] = useState([]);
   const [categoryForm, setCategoryForm] = useState({
@@ -28,6 +26,7 @@ function Index(props) {
     }
   };
 
+  // Mapping all the available category
   const categoryMapping = () => {
     return fetchCategoryList.map((value, index) => {
       if (index === 0) {
@@ -48,6 +47,7 @@ function Index(props) {
       }
     });
   };
+
   const onAddCategory = () => {
     if (categoryForm.categoryId) {
       var isNotDuplicate;
@@ -66,7 +66,10 @@ function Index(props) {
       }
     }
   };
-  const selectedCategory = (e) => {
+
+  // onChange selected category has a value of two string consisting of id and categoryName
+  // example : ["1","Chair"]
+  const onSelectedCategory = (e) => {
     const value = e.target.value.split(",");
     const id = parseInt(value[0]);
     const categoryName = value[1];
@@ -76,11 +79,12 @@ function Index(props) {
     });
   };
 
-  const productNameChange = (e) => {
-    setProductName(e.target.value);
+  const onAddedProductName = (e) => {
+    setAddedProductName(e.target.value);
   };
 
-  const onDeleteCategoryButton = (e) => {
+  // Push everything except the selected category
+  const onDeleteCategory = (e) => {
     const categoryId = e.target.value;
     const removeDeletedData = [];
     addedCategories.filter((value) => {
@@ -91,6 +95,7 @@ function Index(props) {
     setAddedCategories(removeDeletedData);
   };
 
+  // Mapping category form state in a badge with a delete button
   const showSelectedProductCategory = () => {
     return addedCategories.map((value) => {
       var colors = [
@@ -110,7 +115,7 @@ function Index(props) {
           <button
             value={value.categoryId}
             style={{ backgroundColor: "inherit", border: 0, color: "white" }}
-            onClick={onDeleteCategoryButton}
+            onClick={onDeleteCategory}
           >
             ⤬
           </button>
@@ -119,6 +124,7 @@ function Index(props) {
     });
   };
 
+  // Show variant state in form of badge with delete button
   const showAddedVariants = () => {
     return addedVariants.map((value) => {
       const { color } = value;
@@ -137,12 +143,19 @@ function Index(props) {
     });
   };
 
+  // Submit product check if there is empty field
+  // Submiting to product table first because it is the main table
+  // Submiting categories and at last is variant
+  // Posting variant give a respond of the new variant id to upload the image
+  // to the specific id
   const submitNewProduct = async () => {
     try {
-      if (productName) {
+      if (addedProductName) {
         if (addedCategories.length) {
           if (addedVariants.length) {
-            const postProduct = await axios.post("/products", { productName });
+            const postProduct = await axios.post("/products", {
+              addedProductName,
+            });
             const newProductId = postProduct.data.id;
 
             addedCategories.map(async (value) => {
@@ -177,7 +190,7 @@ function Index(props) {
                 );
               }
             });
-            setProductName("");
+            setAddedProductName("");
             setAddedCategories([]);
             setAddedVariants([]);
             onHide();
@@ -199,7 +212,7 @@ function Index(props) {
     setAddedVariants(removeDeletedData);
   };
   const onCloseButton = () => {
-    setProductName("");
+    setAddedProductName("");
     setAddedCategories([]);
     setAddedVariants([]);
     onHide();
@@ -215,10 +228,10 @@ function Index(props) {
       </Modal.Header>
       <Modal.Body>
         <form>
-          <label className="label"> ProductName</label>
+          <label className="label"> addedProductName</label>
           <input
-            onChange={productNameChange}
-            name="productName"
+            onChange={onAddedProductName}
+            name="addedProductName"
             type="text"
             placeholder="Enter Product Name"
             className="input"
@@ -231,7 +244,7 @@ function Index(props) {
           <select
             name="category"
             className="form-control"
-            onChange={selectedCategory}
+            onChange={onSelectedCategory}
           >
             {categoryMapping()}
           </select>

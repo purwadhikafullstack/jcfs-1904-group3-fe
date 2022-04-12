@@ -11,10 +11,12 @@ import ProductListCategory from "./pages/user/productList/category";
 import ProductListSearch from "./pages/user/productList/search";
 import ProductDetail from "./pages/user/productDetail";
 import AdminModifyProducts from "./pages/admin/warehouseAdmin/modifyProducts";
+import SalesReport from "./pages/admin/warehouseAdmin/salesReport";
+
 function App() {
   return (
     <Router>
-      <MuiNavBar />
+      {/* <MuiNavBar /> */}
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -27,6 +29,7 @@ function App() {
           path="/product-list/search/:keyWord"
           element={<ProductListSearch />}
         />
+        <Route path="/admin/sales-report" element={<SalesReport />} />
         <Route path="/admin/products" element={<AdminModifyProducts />} />
         <Route path="product-detail/:id" element={<ProductDetail />} />
       </Routes>

@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import ProductList from "./component/productList";
 import EditProductModal from "./modal/editProduct";
 import AddProductModal from "./modal/addProduct/stepOne";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../../../../component/navigation/admin";
 import "./style.css";
 function Index(props) {
   const [selectedProduct, setSelectedProduct] = useState("");
@@ -112,7 +112,7 @@ function Index(props) {
             </tbody>
           </Table>
         </div>
-        <div className="d-flex flex-row justify-content-center button-container">
+        <div className="button-container">
           <Button
             onClick={btnPrevPageHandler}
             variant="contained"
