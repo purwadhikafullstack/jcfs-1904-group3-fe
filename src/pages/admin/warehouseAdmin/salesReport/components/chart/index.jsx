@@ -7,12 +7,23 @@ import {
   ResponsiveContainer,
   YAxis,
 } from "recharts";
+import { Select, MenuItem } from "@mui/material";
 import "./style.css";
 
 function Chart({ title, data, dataKeyLine, dataKeyX }) {
   return (
     <div className="chart">
-      <h3 className="chartTitle">{title}</h3>
+      <div className="chart-header">
+        <h3 className="chartTitle">{title}</h3>
+        <Select label="SortBy">
+          <MenuItem value="default">Default</MenuItem>
+          <MenuItem value="lowPrice">Lowest Price</MenuItem>
+          <MenuItem value="highPrice">Highest Price</MenuItem>
+          <MenuItem value="az">A-Z</MenuItem>
+          <MenuItem value="za">Z-A</MenuItem>
+        </Select>
+      </div>
+
       <ResponsiveContainer width="100%" aspect={4 / 1}>
         <LineChart data={data}>
           <XAxis dataKey={dataKeyX} stroke="#5550bd" />
