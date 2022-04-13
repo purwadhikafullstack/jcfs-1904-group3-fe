@@ -8,6 +8,13 @@
   display: flex;
 }
 
-.chartTitle {
+.chart-title {
   margin-bottom: 20px;
+  margin-right: 20px;
+}
+.chart-selector-form {
+  margin-bottom: 20px;
+}
+.chart-selector {
+  width: 180px;
 }

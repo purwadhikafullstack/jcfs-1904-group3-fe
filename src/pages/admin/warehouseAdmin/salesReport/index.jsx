@@ -7,9 +7,13 @@ import "./style.css";
 
 function SalesReport() {
   const [chartData, setChartData] = useState([]);
+  const [chartSortMethod, setChartsSortMethod] = useState("month");
+  const [chartDataSort, setChartDataSort] = useState("2022");
   const fetchChartData = async () => {
     try {
-      const res = await axios.get("/transactions/sum/per-month");
+      const res = await axios.get("/transactions/sum/per-month", {
+        params: { year: chartDataSort, method: chartSortMethod },
+      });
       const { result } = res.data;
       mappingChartData(result);
     } catch (error) {
@@ -19,33 +23,48 @@ function SalesReport() {
 
   const mappingChartData = (e) => {
     const mappingResult = [];
-    e.filter((value, index) => {
-      const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December ",
-      ];
-      const month = months[index];
+    if (chartSortMethod === "month") {
+      e.filter((value, index) => {
+        const months = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December ",
+        ];
+        const month = months[index];
 
-      const Rupiah = parseInt(value.totalAmount);
+        const Rupiah = parseInt(value.totalAmount);
 
-      mappingResult.push({ month, Rupiah });
-    });
+        mappingResult.push({ month, Rupiah });
+      });
+    } else {
+      e.filter((value) => {
+        const year = value.Date.split("-")[0];
+        console.log(year);
+        const Rupiah = parseInt(value.totalAmount);
+
+        mappingResult.push({ year, Rupiah });
+      });
+    }
+
     setChartData(mappingResult);
   };
 
   useEffect(() => {
     fetchChartData();
   }, []);
+
+  useEffect(() => {
+    fetchChartData();
+  }, [chartDataSort, chartSortMethod]);
 
   return (
     <div className="sales-report-wrapper">
@@ -56,7 +75,9 @@ function SalesReport() {
           data={chartData}
           title="Total Revenue"
           dataKeyLine="Rupiah"
-          dataKeyX="month"
+          dataKeyX={chartSortMethod == "month" ? "month" : "year"}
+          setChartDataSort={setChartDataSort}
+          setChartsSortMethod={setChartsSortMethod}
         />
       </div>
     </div>
