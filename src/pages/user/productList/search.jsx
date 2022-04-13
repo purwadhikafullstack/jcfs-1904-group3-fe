@@ -98,10 +98,7 @@ function Index() {
 
   useEffect(() => {
     fetchProducts();
-  }, [params, page, sortMethod]);
-  useEffect(() => {
-    console.log(sortMethod);
-  }, [sortMethod]);
+  }, [params, page, sortMethod])
 
   return (
     <div

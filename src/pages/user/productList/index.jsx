@@ -34,7 +34,6 @@ function Index() {
       });
       const { result, dataCount } = res.data;
       setProducts(result);
-
       setPaginationState({
         ...paginationState,
         maxPage: Math.ceil(dataCount[0].total / paginationState.itemsPerPage),
