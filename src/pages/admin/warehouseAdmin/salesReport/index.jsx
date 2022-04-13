@@ -1,29 +1,56 @@
 import React, { useState, useEffect } from "react";
-import FeaturedInfo from "./components/featuredInfo";
+import ChartProduct from "./components/chart/products";
 import Sidebar from "../../../../component/navigation/admin";
 import axios from "../../../../utils/axios";
-import Chart from "./components/chart";
+import ChartRevenue from "./components/chart/totalRevenue";
 import "./style.css";
 
 function SalesReport() {
-  const [chartData, setChartData] = useState([]);
-  const [chartSortMethod, setChartsSortMethod] = useState("month");
-  const [chartDataSort, setChartDataSort] = useState("2022");
-  const fetchChartData = async () => {
+  const [chartDataProduct, setChartDataProduct] = useState([]);
+  const [chartDataProductKeyword, setChartDataProductKeyword] = useState([]);
+  const [chartDataProductSortMethod, setChartsDataProductSortMethod] =
+    useState("month");
+  const [chartDataProductSort, setChartDataProductSort] = useState("2022");
+
+  const [chartDataRevenue, setChartDataRevenue] = useState([]);
+  const [chartDataRevenueSortMethod, setChartsDataRevenueSortMethod] =
+    useState("month");
+  const [chartDataRevenueSort, setChartDataRevenueSort] = useState("2022");
+
+  const fetchChartDataProducts = async () => {
     try {
-      const res = await axios.get("/transactions/sum/per-month", {
-        params: { year: chartDataSort, method: chartSortMethod },
-      });
+      const res = await axios.get("/products");
       const { result } = res.data;
-      mappingChartData(result);
+      mappingChartDataProduct(result);
     } catch (error) {
       throw error;
     }
   };
+  const fetchChartDataRevenue = async () => {
+    try {
+      const res = await axios.get("/transactions/sum/per-month", {
+        params: {
+          year: chartDataRevenueSort,
+          method: chartDataRevenueSortMethod,
+        },
+      });
+      const { result } = res.data;
+      mappingChartDataRevenue(result);
+    } catch (error) {
+      throw error;
+    }
+  };
+  const mappingChartDataProduct = (e) => {
+    const productNames = [];
+    e.filter((value) => {
+      productNames.push(value.productName);
+    });
+    // setProducts(productNames);
+  };
 
-  const mappingChartData = (e) => {
+  const mappingChartDataRevenue = (e) => {
     const mappingResult = [];
-    if (chartSortMethod === "month") {
+    if (chartDataRevenueSortMethod === "month") {
       e.filter((value, index) => {
         const months = [
           "January",
@@ -55,30 +82,23 @@ function SalesReport() {
       });
     }
 
-    setChartData(mappingResult);
+    setChartDataRevenue(mappingResult);
   };
 
   useEffect(() => {
-    fetchChartData();
+    fetchChartDataRevenue();
   }, []);
 
   useEffect(() => {
-    fetchChartData();
-  }, [chartDataSort, chartSortMethod]);
+    fetchChartDataRevenue();
+  }, [chartDataRevenueSort, chartDataRevenueSortMethod]);
 
   return (
     <div className="sales-report-wrapper">
       <Sidebar />
       <div className="sales-report-container">
-        <FeaturedInfo />
-        <Chart
-          data={chartData}
-          title="Total Revenue"
-          dataKeyLine="Rupiah"
-          dataKeyX={chartSortMethod == "month" ? "month" : "year"}
-          setChartDataSort={setChartDataSort}
-          setChartsSortMethod={setChartsSortMethod}
-        />
+        <ChartRevenue />
+        <ChartProduct />
       </div>
     </div>
   );

@@ -6,6 +6,10 @@
 }
 .chart-header {
   display: flex;
+  justify-content: space-between;
+}
+.chart-searchbar {
+  width: 300px;
 }
 
 .chart-title {
@@ -17,4 +21,7 @@
 }
 .chart-selector {
   width: 180px;
+}
+.chart-selector-container {
+  display: flex;
 }

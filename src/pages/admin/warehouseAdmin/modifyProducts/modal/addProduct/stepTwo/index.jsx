@@ -67,7 +67,7 @@ function Index(props) {
             name="price"
             onChange={formik.handleChange}
             type="number"
-            placeholder="Enter Product Name"
+            placeholder="Enter Product Price"
             className="input"
             value={formik.values.price}
             onBlur={formik.handleBlur}
@@ -81,7 +81,7 @@ function Index(props) {
             name="quantity"
             onChange={formik.handleChange}
             type="number"
-            placeholder="Enter Product Name"
+            placeholder="Enter Product Quantity"
             className="input"
             value={formik.values.quantity}
             onBlur={formik.handleBlur}
@@ -90,7 +90,7 @@ function Index(props) {
             <div className="error">{formik.errors.quantity}</div>
           ) : null}
 
-          <label className="label">Variant Size</label>
+          <label className="label">Variant Size (optional)</label>
           <select
             name="size"
             className="form-control"

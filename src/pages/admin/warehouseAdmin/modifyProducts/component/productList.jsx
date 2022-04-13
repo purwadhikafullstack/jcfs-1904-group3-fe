@@ -1,9 +1,11 @@
 import React from "react";
+import { IconButton } from "@mui/material";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import "./style.css";
 
 function Index(props) {
   const { productName, productId, image } = props.products;
-  const { onClickModalEditProducts } = props;
+  const { onClickModalEditProducts, setSelectedProduct } = props;
 
   return (
     <tr>
@@ -13,13 +15,16 @@ function Index(props) {
         <img className="product-image " src={image} />
       </td>
       <td className="table-data">
-        <button
+        <IconButton
           className="button"
-          value={productId}
-          onClick={onClickModalEditProducts}
+          onClick={(e) => {
+            onClickModalEditProducts(e);
+            setSelectedProduct(productId);
+          }}
         >
-          Edit
-        </button>
+          <ModeEditIcon />
+        </IconButton>
+
         <button className="button">🗑️</button>
       </td>
     </tr>

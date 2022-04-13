@@ -24,7 +24,7 @@ function Index() {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("/products", {
+      const res = await axios.get("/products/filtered", {
         params: {
           page: page,
           itemsPerPage: itemsPerPage,

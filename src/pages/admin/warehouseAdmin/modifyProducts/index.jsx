@@ -20,7 +20,7 @@ function Index(props) {
   const { page, itemsPerPage, maxPage } = paginationState;
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("/products", {
+      const res = await axios.get("/products/filtered", {
         params: {
           page: page,
           itemsPerPage: itemsPerPage,
@@ -43,8 +43,9 @@ function Index(props) {
     setPaginationState({ ...paginationState, page: page + 1 });
   };
   const onClickModalEditProducts = (e) => {
+    console.log("masuk");
+    console.log(selectedProduct);
     setModalShowEditProduct(true);
-    setSelectedProduct(e.target.value);
   };
   const renderProducts = () => {
     return products.map((value) => {
@@ -52,6 +53,7 @@ function Index(props) {
         <ProductList
           products={value}
           onClickModalEditProducts={onClickModalEditProducts}
+          setSelectedProduct={setSelectedProduct}
         />
       );
     });
