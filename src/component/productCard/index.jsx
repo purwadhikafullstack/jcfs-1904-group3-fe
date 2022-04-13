@@ -3,8 +3,9 @@ import { Card, Button } from "react-bootstrap";
 import "./style.css";
 function Index(props) {
   const { productName, productId, price, image } = props.product;
+  const { REACT_APP_CLIENT_URL } = process.env;
 
-  const link = `http://localhost:3000/product-detail/${productId}`;
+  const link = `${REACT_APP_CLIENT_URL}/product-detail/${productId}`;
   // useEffect(() => {
   //   console.log(productName, productId, price, image);
   // }, []);

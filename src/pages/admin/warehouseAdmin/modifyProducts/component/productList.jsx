@@ -1,6 +1,4 @@
 import React from "react";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./style.css";
 
 function Index(props) {

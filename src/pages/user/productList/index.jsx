@@ -119,7 +119,7 @@ function Index() {
             onClick={btnPrevPageHandler}
             variant="contained"
             sx={{ backgroundColor: "black" }}
-            disabled={page == 1 && true}
+            disabled={page === 1 && true}
           >
             {"<"}
           </Button>

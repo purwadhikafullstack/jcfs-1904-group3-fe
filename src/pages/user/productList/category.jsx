@@ -124,7 +124,7 @@ function Index() {
             onClick={btnPrevPageHandler}
             variant="contained"
             sx={{ backgroundColor: "black" }}
-            disabled={page == 1 && true}
+            disabled={page === 1 && true}
           >
             {"<"}
           </Button>
@@ -135,7 +135,7 @@ function Index() {
             onClick={btnNextPageHandler}
             variant="contained"
             sx={{ backgroundColor: "black" }}
-            disabled={page == maxPage && true}
+            disabled={page === maxPage && true}
           >
             {">"}
           </Button>

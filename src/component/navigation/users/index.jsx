@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Container, Button, Stack, InputBase } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Container, Button, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ProfileIcon from "@mui/icons-material/AccountCircle";
 import { TextField, InputAdornment } from "@mui/material";
-import { styled, alpha } from "@mui/material/styles";
-import { grey } from "@mui/material/colors";
 import "./style.css";
 
 function MuiNavBar() {
-  const location = useLocation();
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -38,49 +35,6 @@ function MuiNavBar() {
     const category = e.target.value;
     navigate(`/product-list/${category}`);
   };
-  const searchBarColor = grey[100];
-
-  const Search = styled("div")(({ theme }) => ({
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: searchBarColor,
-    "&:hover": {
-      backgroundColor: searchBarColor,
-    },
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
-      width: "auto",
-    },
-  }));
-
-  const SearchIconWrapper = styled("div")(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }));
-
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "inherit",
-    "& .MuiInputBase-input": {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
-      [theme.breakpoints.up("sm")]: {
-        width: "20ch",
-        "&:focus": {
-          width: "50ch",
-        },
-      },
-    },
-  }));
 
   return (
     <div className="navBar">
@@ -128,7 +82,6 @@ function MuiNavBar() {
             }}
             variant="standard"
           />
-          {/* <input type="text" onChange={handleSearch} onKeyPress={enterSearch} /> */}
         </Stack>
         <Stack direction="row" alignItems="center">
           <ShoppingCartIcon sx={{ m: 2 }} />

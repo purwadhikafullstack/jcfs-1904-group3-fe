@@ -29,10 +29,10 @@ function Index() {
     const result = [];
 
     copy.map((value, index) => {
-      if (index == 0) {
+      if (index === 0) {
         result.push("%");
       }
-      if (index == copy.length - 1) {
+      if (index === copy.length - 1) {
         result.push(value, "%");
       } else {
         result.push(value);
@@ -67,6 +67,8 @@ function Index() {
     const sortValue = e.target.value;
 
     switch (sortValue) {
+      case "":
+        break;
       case "default":
         setSortMethod({ sortBy: "", order: "" });
         break;
@@ -98,7 +100,7 @@ function Index() {
 
   useEffect(() => {
     fetchProducts();
-  }, [params, page, sortMethod])
+  }, [params, page, sortMethod]);
 
   return (
     <div
@@ -139,7 +141,7 @@ function Index() {
             onClick={btnPrevPageHandler}
             variant="contained"
             sx={{ backgroundColor: "black" }}
-            disabled={page == 1 && true}
+            disabled={page === 1 && true}
           >
             {"<"}
           </Button>
@@ -150,7 +152,7 @@ function Index() {
             onClick={btnNextPageHandler}
             variant="contained"
             sx={{ backgroundColor: "black" }}
-            disabled={page == maxPage && true}
+            disabled={page === maxPage && true}
           >
             {">"}
           </Button>

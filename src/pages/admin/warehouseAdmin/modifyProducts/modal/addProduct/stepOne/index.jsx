@@ -159,7 +159,7 @@ function Index(props) {
             const newProductId = postProduct.data.id;
 
             addedCategories.map(async (value) => {
-              const res = await axios.post("/products/category", {
+              await axios.post("/products/category", {
                 productId: newProductId,
                 categoryId: value.categoryId,
               });
@@ -184,10 +184,7 @@ function Index(props) {
               variantImage.append("image", value.image);
               variantImage.append("id", newVariantId);
               if (resData.data.message) {
-                const resImage = await axios.post(
-                  "/products/variant/image",
-                  variantImage
-                );
+                await axios.post("/products/variant/image", variantImage);
               }
             });
             setAddedProductName("");
@@ -205,7 +202,7 @@ function Index(props) {
     const color = e.target.value;
     const removeDeletedData = [];
     addedVariants.filter((value) => {
-      if (value.color != color) {
+      if (value.color !== color) {
         removeDeletedData.push(value);
       }
     });

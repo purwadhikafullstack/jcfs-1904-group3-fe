@@ -16,9 +16,6 @@ function Chart({ title, data, dataKeyLine, dataKeyX }) {
       <div className="chart-header">
         <h3 className="chartTitle">{title}</h3>
         <Select label="SortBy">
-          <MenuItem value="default">Default</MenuItem>
-          <MenuItem value="lowPrice">Lowest Price</MenuItem>
-          <MenuItem value="highPrice">Highest Price</MenuItem>
           <MenuItem value="az">A-Z</MenuItem>
           <MenuItem value="za">Z-A</MenuItem>
         </Select>
