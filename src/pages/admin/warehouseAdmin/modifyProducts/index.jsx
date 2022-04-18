@@ -7,6 +7,7 @@ import EditProductModal from "./modal/editProduct";
 import AddProductModal from "./modal/addProduct/stepOne";
 import Sidebar from "../../../../component/navigation/admin";
 import "./style.css";
+
 function Index(props) {
   const [selectedProduct, setSelectedProduct] = useState("");
   const [modalShowEditProduct, setModalShowEditProduct] = useState(false);
@@ -36,6 +37,19 @@ function Index(props) {
       console.log({ error });
     }
   };
+  const deleteProducts = async () => {
+    try {
+      const res = await axios.delete("/products", {
+        headers: {},
+        data: {
+          productId: selectedProduct,
+        },
+      });
+      alert("product berhasil di hapus");
+    } catch (error) {
+      throw error;
+    }
+  };
   const btnPrevPageHandler = () => {
     setPaginationState({ ...paginationState, page: page - 1 });
   };
@@ -43,8 +57,6 @@ function Index(props) {
     setPaginationState({ ...paginationState, page: page + 1 });
   };
   const onClickModalEditProducts = (e) => {
-    console.log("masuk");
-    console.log(selectedProduct);
     setModalShowEditProduct(true);
   };
   const renderProducts = () => {

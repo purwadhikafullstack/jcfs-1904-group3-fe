@@ -5,7 +5,6 @@ import {
   LineChart,
   Line,
   XAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
   YAxis,
@@ -125,7 +124,7 @@ function ChartProduct() {
 
   useEffect(() => {
     fetchChartData();
-  }, [setEnteredSearchValue, sortMethod, sortMethodValue]);
+  }, [enteredSearchValue, sortMethod, sortMethodValue]);
 
   return (
     <div className="chart">
