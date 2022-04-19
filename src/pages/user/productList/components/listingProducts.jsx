@@ -9,7 +9,15 @@ function listingProducts(props) {
     return products.map((product) => <ProductCard product={product} />);
   };
   return (
-    <div className="col-12 " style={{ display: "flex", flexWrap: "wrap" }}>
+    <div
+      className="col-12 "
+      style={{
+        paddingLeft: "5%",
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "2%",
+      }}
+    >
       {renderProducts()}
     </div>
   );

@@ -1,30 +1,34 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/user/landingPage";
-import MuiNavBar from "./component/navigation";
+import MuiNavBar from "./component/navigation/users";
 import ProductList from "./pages/user/productList";
 import ProductListCategory from "./pages/user/productList/category";
 import ProductListSearch from "./pages/user/productList/search";
-import ProductCard from "./component/productCard";
 import ProductDetail from "./pages/user/productDetail";
-import Test from "./pages/test";
+import AdminModifyProducts from "./pages/admin/warehouseAdmin/modifyProducts";
+import SalesReport from "./pages/admin/warehouseAdmin/salesReport";
+import Carts from "./pages/user/shoppingCart";
 
 function App() {
   return (
     <Router>
-      <MuiNavBar />
+      {/* <MuiNavBar /> */}
+
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/productList" element={<ProductList />} />
+        <Route path="/product-list" element={<ProductList />} />
         <Route
-          path="/productList/:category"
+          path="/product-list/:category"
           element={<ProductListCategory />}
         />
         <Route
-          path="/productList/search/:keyWord"
+          path="/product-list/search/:keyWord"
           element={<ProductListSearch />}
         />
-        <Route path="/test" element={<Test />} />
-        <Route path="productDetail/:id" element={<ProductDetail />} />
+        <Route path="/admin/sales-report" element={<SalesReport />} />
+        <Route path="/admin/products" element={<AdminModifyProducts />} />
+        <Route path="product-detail/:id" element={<ProductDetail />} />
+        <Route path="/carts" element={<Carts />} />
       </Routes>
     </Router>
   );

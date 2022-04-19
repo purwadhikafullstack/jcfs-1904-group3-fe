@@ -3,14 +3,15 @@ import { Card, Button } from "react-bootstrap";
 import "./style.css";
 function Index(props) {
   const { productName, productId, price, image } = props.product;
+  const { REACT_APP_CLIENT_URL } = process.env;
 
-  const link = `http://localhost:3000/productDetail/${productId}`;
+  const link = `${REACT_APP_CLIENT_URL}/product-detail/${productId}`;
   // useEffect(() => {
   //   console.log(productName, productId, price, image);
   // }, []);
   return (
     <div
-      style={{ width: 400, height: 300, border: 0, margin: 50 }}
+      style={{ width: "25%", height: 300, border: 0, margin: 50 }}
       className="card"
     >
       <Card>
