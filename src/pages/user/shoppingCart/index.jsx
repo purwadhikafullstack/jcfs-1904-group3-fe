@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -11,18 +11,84 @@ import {
 import { Button } from "@mui/material";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import "./style.css";
+import axios from "../../../utils/axios";
+import CartList from "./component/cartList";
 
 function Carts() {
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-  const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
-  ];
+  const [carts, setCarts] = useState([]);
+  const userId = 1;
+
+  const fetchCarts = async () => {
+    try {
+      const res = await axios.get("/carts", {
+        params: {
+          userId: 1,
+        },
+      });
+      const { result } = res.data;
+      if (result) {
+        const res = await axios.get("/products/cart", {
+          params: {
+            result,
+          },
+        });
+        const { carts } = res.data;
+
+        setCarts(carts);
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // add quantity function
+  const onAddQuantity = (e) => {
+    // finding the cart using the cartId
+    carts.map(async (value, index) => {
+      if (value.productQuantity < value.qtyAvailable) {
+        if (value.cartId == e) {
+          // copy cart for manipulation
+          var copiedCart = [...carts];
+          // add the quantity
+          const addedQuantity = value.productQuantity + 1;
+          // update the quantity
+          const res = await axios.put("/carts", {
+            cartId: e,
+            productQuantity: addedQuantity,
+          });
+          copiedCart[index].productQuantity = addedQuantity;
+          // set the cart with the updated quantity
+          setCarts(copiedCart);
+        }
+      }
+    });
+  };
+
+  const onSubtractQuantity = (e) => {
+    carts.map(async (value, index) => {
+      if (value.productQuantity > 1) {
+        if (value.cartId == e) {
+          var copiedCart = [...carts];
+          const addedQuantity = value.productQuantity - 1;
+          const res = await axios.put("/carts", {
+            cartId: e,
+            productQuantity: addedQuantity,
+          });
+          copiedCart[index].productQuantity = addedQuantity;
+          setCarts(copiedCart);
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchCarts();
+  }, []);
+
+  useEffect(() => {
+    console.log(carts);
+  }, [carts]);
+
   return (
     <div className="shoppingCart-container">
       <TableContainer component={Paper} className="shoppingCart-table">
@@ -44,46 +110,13 @@ function Carts() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="left">
-                  <div className="product-row">
-                    <div className="product-image-container">
-                      <img
-                        className="product-image"
-                        src="https://www.ikea.com/sg/en/images/products/vedbo-armchair-gunnared-dark-grey__0512767_pe638683_s5.jpg?f=xxxs"
-                        alt=""
-                      />
-                    </div>
-
-                    <div className="product-description-container">
-                      <h5>Poang</h5>
-                      <p> Variant : blue</p>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell align="center" sx={{ width: "200px" }}>
-                  {row.calories}
-                </TableCell>
-                <TableCell sx={{ width: "200px" }}>
-                  <div className="quantity-row">
-                    <Button variant="text" sx={{ color: "black" }}>
-                      <h5>-</h5>
-                    </Button>
-                    <p className="button-quantity-amount">{row.fat}</p>
-                    <Button variant="text" sx={{ color: "black" }}>
-                      <h5>+</h5>
-                    </Button>
-                  </div>
-                </TableCell>
-                <TableCell align="right" sx={{ width: "200px" }}>
-                  {row.carbs}
-                </TableCell>
-              </TableRow>
-            ))}
+            {carts.length && (
+              <CartList
+                carts={carts}
+                onAddQuantity={onAddQuantity}
+                onSubtractQuantity={onSubtractQuantity}
+              />
+            )}
           </TableBody>
         </Table>
       </TableContainer>
