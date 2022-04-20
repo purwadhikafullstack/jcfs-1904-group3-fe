@@ -8,6 +8,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import "./style.css";
@@ -15,7 +16,9 @@ import axios from "../../../utils/axios";
 import CartList from "./component/cartList";
 
 function Carts() {
+  const navigate = useNavigate();
   const [carts, setCarts] = useState([]);
+  const [totalToPay, setTotalToPay] = useState(0);
   const userId = 1;
 
   const fetchCarts = async () => {
@@ -33,12 +36,20 @@ function Carts() {
           },
         });
         const { carts } = res.data;
-
+        countTotalToPay(carts);
         setCarts(carts);
       }
     } catch (error) {
       throw error;
     }
+  };
+
+  const countTotalToPay = (e) => {
+    var allCartsAmount = 0;
+    e.map((value) => {
+      allCartsAmount += value.total;
+    });
+    setTotalToPay(allCartsAmount);
   };
 
   // add quantity function
@@ -81,14 +92,16 @@ function Carts() {
     });
   };
 
-  const onCheckoutCart = async (e) => {};
+  const onCheckoutCart = () => {
+    navigate("/checkout");
+  };
 
   useEffect(() => {
     fetchCarts();
   }, []);
 
   useEffect(() => {
-    console.log(carts);
+    fetchCarts();
   }, [carts]);
 
   return (
@@ -135,8 +148,13 @@ function Carts() {
         </div>
         <div className="shoppingCart-checkout-info-2">
           <div className="shoppingCart-checkout-total">
-            <p>Subtotal(1)</p>
-            <p>$Rp.500,000</p>
+            <p>Subtotal {carts.length}</p>
+            <p>
+              {Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              }).format(totalToPay)}
+            </p>
           </div>
           <div className="shoppingCart-checkout-button">
             <Button
@@ -144,6 +162,7 @@ function Carts() {
               sx={{
                 backgroundColor: "black",
               }}
+              onClick={onCheckoutCart}
             >
               Go to checkout
             </Button>
