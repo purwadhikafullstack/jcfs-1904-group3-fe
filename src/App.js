@@ -13,7 +13,7 @@ import Checkout from "./pages/user/checkout";
 function App() {
   return (
     <Router>
-      {/* <MuiNavBar /> */}
+      <MuiNavBar />
 
       <Routes>
         <Route path="/" element={<LandingPage />} />

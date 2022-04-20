@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "../../../../utils/axios";
 import { Button } from "@mui/material";
 import { width } from "@mui/system";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 
 function Index(props) {
+  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const { variants, setSelectedVariant } = props;
   const {
@@ -39,6 +41,7 @@ function Index(props) {
         productId,
         productQuantity: quantity,
       });
+      navigate("/carts");
     } catch (error) {
       throw error;
     }

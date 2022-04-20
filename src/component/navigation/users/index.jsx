@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Button, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -8,6 +8,8 @@ import { TextField, InputAdornment } from "@mui/material";
 import "./style.css";
 
 function MuiNavBar() {
+  const location = useLocation().pathname;
+
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -35,6 +37,9 @@ function MuiNavBar() {
     const category = e.target.value;
     navigate(`/product-list/${category}`);
   };
+  if (location == "/checkout") {
+    return null;
+  }
 
   return (
     <div className="navBar">

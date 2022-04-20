@@ -105,67 +105,70 @@ function Carts() {
   }, [carts]);
 
   return (
-    <div className="shoppingCart-container">
-      <TableContainer component={Paper} className="shoppingCart-table">
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="left">
-                <h5>Product</h5>
-              </TableCell>
-              <TableCell align="center">
-                <h5>Unit Price</h5>
-              </TableCell>
-              <TableCell align="center">
-                <h5>Quantity</h5>
-              </TableCell>
-              <TableCell align="right">
-                <h5>Total</h5>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {carts.length && (
-              <CartList
-                carts={carts}
-                onAddQuantity={onAddQuantity}
-                onSubtractQuantity={onSubtractQuantity}
-              />
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <div className="shoppingCart-checkout">
-        <div className="shoppingCart-checkout-info-1">
-          <div className="shoppingCart-delivery-info">
-            <div>
-              <p>
-                <LocalShippingOutlinedIcon className="icon" />
-                Home delivery available
-              </p>
+    <div className="shoppingCart">
+      <div className="shoppingCart-container">
+        <h1>Shopping Basket</h1>
+        <TableContainer component={Paper} className="shoppingCart-table">
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left">
+                  <h5>Product</h5>
+                </TableCell>
+                <TableCell align="center">
+                  <h5>Unit Price</h5>
+                </TableCell>
+                <TableCell align="center">
+                  <h5>Quantity</h5>
+                </TableCell>
+                <TableCell align="right">
+                  <h5>Total</h5>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {carts.length && (
+                <CartList
+                  carts={carts}
+                  onAddQuantity={onAddQuantity}
+                  onSubtractQuantity={onSubtractQuantity}
+                />
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div className="shoppingCart-checkout">
+          <div className="shoppingCart-checkout-info-1">
+            <div className="shoppingCart-delivery-info">
+              <div>
+                <p>
+                  <LocalShippingOutlinedIcon className="icon" />
+                  Home delivery available
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="shoppingCart-checkout-info-2">
-          <div className="shoppingCart-checkout-total">
-            <p>Subtotal {carts.length}</p>
-            <p>
-              {Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-              }).format(totalToPay)}
-            </p>
-          </div>
-          <div className="shoppingCart-checkout-button">
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "black",
-              }}
-              onClick={onCheckoutCart}
-            >
-              Go to checkout
-            </Button>
+          <div className="shoppingCart-checkout-info-2">
+            <div className="shoppingCart-checkout-total">
+              <p>Subtotal {carts.length}</p>
+              <p>
+                {Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                }).format(totalToPay)}
+              </p>
+            </div>
+            <div className="shoppingCart-checkout-button">
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "black",
+                }}
+                onClick={onCheckoutCart}
+              >
+                Go to checkout
+              </Button>
+            </div>
           </div>
         </div>
       </div>
