@@ -81,6 +81,8 @@ function Carts() {
     });
   };
 
+  const onCheckoutCart = async (e) => {};
+
   useEffect(() => {
     fetchCarts();
   }, []);

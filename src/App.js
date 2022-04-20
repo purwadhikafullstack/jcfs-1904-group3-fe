@@ -8,6 +8,7 @@ import ProductDetail from "./pages/user/productDetail";
 import AdminModifyProducts from "./pages/admin/warehouseAdmin/modifyProducts";
 import SalesReport from "./pages/admin/warehouseAdmin/salesReport";
 import Carts from "./pages/user/shoppingCart";
+import Checkout from "./pages/user/checkout";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/admin/products" element={<AdminModifyProducts />} />
         <Route path="product-detail/:id" element={<ProductDetail />} />
         <Route path="/carts" element={<Carts />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </Router>
   );
