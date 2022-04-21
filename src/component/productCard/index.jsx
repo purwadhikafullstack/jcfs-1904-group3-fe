@@ -11,10 +11,10 @@ function Index(props) {
   // }, []);
   return (
     <div
-      style={{ width: "25%", height: 300, border: 0, margin: 50 }}
+      style={{ width: 400, height: 300, border: 0, margin: 50 }}
       className="card"
     >
-      <Card>
+      <Card style={{ width: "100%" }}>
         <div style={{ width: 400, height: 300, border: 0 }}>
           <Card.Img variant="top" src={image} className="image" />
         </div>
@@ -29,7 +29,7 @@ function Index(props) {
           <Card.Text>Rp.{price}</Card.Text>
         </Card.Body>
         <Button href={link} variant="outline-dark">
-          Dark
+          Add to cart
         </Button>
       </Card>
     </div>
