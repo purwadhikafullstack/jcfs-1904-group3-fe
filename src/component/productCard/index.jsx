@@ -6,9 +6,7 @@ function Index(props) {
   const { REACT_APP_CLIENT_URL } = process.env;
 
   const link = `${REACT_APP_CLIENT_URL}/product-detail/${productId}`;
-  // useEffect(() => {
-  //   console.log(productName, productId, price, image);
-  // }, []);
+
   return (
     <div
       style={{ width: 400, height: 300, border: 0, margin: 50 }}
@@ -29,7 +27,7 @@ function Index(props) {
           <Card.Text>Rp.{price}</Card.Text>
         </Card.Body>
         <Button href={link} variant="outline-dark">
-          Add to cart
+          Product Detail
         </Button>
       </Card>
     </div>

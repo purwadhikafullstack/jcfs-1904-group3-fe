@@ -33,7 +33,7 @@ function CartList({ carts, onAddQuantity, onSubtractQuantity }) {
                 variant="text"
                 sx={{ color: "black" }}
                 onClick={() => {
-                  onSubtractQuantity(value.cartId);
+                  onSubtractQuantity(value.cartId, value.productQuantity);
                 }}
               >
                 <h5>-</h5>

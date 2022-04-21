@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "../../../utils/axios";
 import { Badge } from "react-bootstrap";
 import { Button, Checkbox } from "@mui/material";
+import CheckoutModal from "./modal";
 import "./style.css";
 
 function Checkout() {
+  const [modalShowCheckout, setModalShowCheckout] = useState(false);
   const [carts, setCarts] = useState([]);
   const [totalToPay, setTotalToPay] = useState(0);
   const fetchCarts = async () => {
@@ -61,10 +63,6 @@ function Checkout() {
   useEffect(() => {
     fetchCarts();
   }, []);
-  useEffect(() => {
-    console.log(carts);
-    console.log(mapCarts());
-  }, [carts]);
 
   return (
     <div className="checkout-container">
@@ -144,9 +142,18 @@ function Checkout() {
               backgroundColor: "black",
               width: "100%",
             }}
+            onClick={() => {
+              setModalShowCheckout(true);
+            }}
           >
             Finish Transaction
           </Button>
+          <CheckoutModal
+            show={modalShowCheckout}
+            onHide={() => {
+              setModalShowCheckout(false);
+            }}
+          />
         </div>
       </div>
     </div>

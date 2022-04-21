@@ -95,13 +95,13 @@ function ChartRevenue() {
               onChange={handleSortMethod}
             >
               <MenuItem value="month">Month</MenuItem>
-              <MenuItem value="MethodValue">MethodValue</MenuItem>
+              <MenuItem value="year">year</MenuItem>
             </Select>
           </FormControl>
 
           {sortMethod === "month" ? (
             <FormControl fullWidth className="chart-selector-form">
-              <InputLabel id="demo-simple-select-label">MethodValue</InputLabel>
+              <InputLabel id="demo-simple-select-label">Year</InputLabel>
               <Select
                 label="MethodValue"
                 onChange={handleMethodValueChange}

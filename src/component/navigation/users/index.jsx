@@ -40,7 +40,9 @@ function MuiNavBar() {
   if (location == "/checkout") {
     return null;
   }
-
+  if (location.includes("/admin")) {
+    return null;
+  }
   return (
     <div className="navBar">
       <Container

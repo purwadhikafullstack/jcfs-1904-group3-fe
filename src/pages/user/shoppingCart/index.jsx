@@ -39,6 +39,10 @@ function Carts() {
         countTotalToPay(carts);
         setCarts(carts);
       }
+      if (!carts) {
+        setCarts([]);
+        countTotalToPay(0);
+      }
     } catch (error) {
       throw error;
     }
@@ -75,19 +79,31 @@ function Carts() {
     });
   };
 
-  const onSubtractQuantity = (e) => {
+  const onSubtractQuantity = (cartId, qty) => {
     carts.map(async (value, index) => {
-      if (value.productQuantity > 1) {
-        if (value.cartId == e) {
-          var copiedCart = [...carts];
+      if (value.cartId == cartId) {
+        if (value.productQuantity > 1) {
           const addedQuantity = value.productQuantity - 1;
           const res = await axios.put("/carts", {
-            cartId: e,
+            cartId,
             productQuantity: addedQuantity,
           });
-          copiedCart[index].productQuantity = addedQuantity;
-          setCarts(copiedCart);
         }
+        if (qty == 1) {
+          var copiedCart = [...carts];
+          copiedCart.filter((value, dex) => {
+            if (dex != index) return value;
+          });
+
+          console.log(copiedCart);
+          const res = await axios.delete("/carts", {
+            headers: {},
+            data: {
+              cartId: value.cartId,
+            },
+          });
+        }
+        fetchCarts();
       }
     });
   };
@@ -99,10 +115,6 @@ function Carts() {
   useEffect(() => {
     fetchCarts();
   }, []);
-
-  useEffect(() => {
-    fetchCarts();
-  }, [carts]);
 
   return (
     <div className="shoppingCart">
