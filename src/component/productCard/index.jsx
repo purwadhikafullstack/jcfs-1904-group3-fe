@@ -9,7 +9,7 @@ function Index(props) {
 
   return (
     <div
-      style={{ width: 400, height: 300, border: 0, margin: 50 }}
+      style={{ width: "25%", height: 300, border: 0, margin: 50 }}
       className="card"
     >
       <Card style={{ width: "100%" }}>
