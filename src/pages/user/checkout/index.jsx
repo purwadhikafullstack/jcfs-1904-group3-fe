@@ -153,6 +153,8 @@ function Checkout() {
             onHide={() => {
               setModalShowCheckout(false);
             }}
+            carts={carts}
+            totalToPay={totalToPay}
           />
         </div>
       </div>

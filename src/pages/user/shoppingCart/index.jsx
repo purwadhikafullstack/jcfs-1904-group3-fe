@@ -39,10 +39,6 @@ function Carts() {
         countTotalToPay(carts);
         setCarts(carts);
       }
-      if (!carts) {
-        setCarts([]);
-        countTotalToPay(0);
-      }
     } catch (error) {
       throw error;
     }
@@ -82,6 +78,7 @@ function Carts() {
   const onSubtractQuantity = (cartId, qty) => {
     carts.map(async (value, index) => {
       if (value.cartId == cartId) {
+        // as long as the qunatity is above 1 you cannot delete the product
         if (value.productQuantity > 1) {
           const addedQuantity = value.productQuantity - 1;
           const res = await axios.put("/carts", {
@@ -89,19 +86,18 @@ function Carts() {
             productQuantity: addedQuantity,
           });
         }
+        // subtracting when the quantity is one will delete the product
         if (qty == 1) {
-          var copiedCart = [...carts];
-          copiedCart.filter((value, dex) => {
-            if (dex != index) return value;
-          });
-
-          console.log(copiedCart);
           const res = await axios.delete("/carts", {
             headers: {},
             data: {
               cartId: value.cartId,
             },
           });
+          if ((carts.length = 1)) {
+            setCarts([]);
+            setTotalToPay(0);
+          }
         }
         fetchCarts();
       }
