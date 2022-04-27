@@ -9,11 +9,12 @@ import AdminModifyProducts from "./pages/admin/warehouseAdmin/modifyProducts";
 import SalesReport from "./pages/admin/warehouseAdmin/salesReport";
 import Carts from "./pages/user/shoppingCart";
 import Checkout from "./pages/user/checkout";
+import TransactionStatus from "./pages/user/transactionStatus";
 
 function App() {
   return (
     <Router>
-      <MuiNavBar />
+      {/* <MuiNavBar /> */}
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -31,6 +32,7 @@ function App() {
         <Route path="product-detail/:id" element={<ProductDetail />} />
         <Route path="/carts" element={<Carts />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/transaction/status" element={<TransactionStatus />} />
       </Routes>
     </Router>
   );

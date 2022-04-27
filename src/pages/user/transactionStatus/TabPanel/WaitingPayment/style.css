@@ -1,0 +1,70 @@
+.transaction-container {
+  width: 60%;
+  margin: 20px auto;
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.transaction-status {
+  font-size: 0.8em;
+  background-color: #ebffef;
+  color: #208334;
+  font-weight: bold;
+  padding: 0.3em;
+  border-radius: 5px;
+}
+
+.transaction-item {
+  border: 1px solid #dfdfdf;
+  border-radius: 5px;
+  padding: 12px;
+  margin-bottom: 15px;
+}
+
+.transaction-item-info1 {
+  margin-bottom: 8px;
+}
+
+.transaction-img {
+  width: 50px;
+  border: 1px solid #dfdfdf;
+}
+
+.transaction-info2 p {
+  margin-bottom: 5px;
+}
+
+.transaction-info2 .support {
+  font-size: 0.8em;
+  color: gray;
+}
+
+.transaction-total-price {
+  border-left: 2.5px solid #dfdfdf;
+}
+
+.transaction-total-price,
+.transaction-detail-link {
+  width: 24%;
+  padding-left: 50px;
+}
+
+.transaction-detail-link {
+  margin-block: 20px;
+  margin-left: auto;
+}
+
+.transaction-total-price p {
+  margin-bottom: 3px;
+}
+
+.transaction-detail-link span {
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #03ac0e;
+}
+
+.transaction-detail-link span:hover {
+  cursor: pointer;
+}

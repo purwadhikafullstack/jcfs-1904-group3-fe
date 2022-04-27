@@ -4,7 +4,17 @@ import axios from "../../../../utils/axios";
 
 function CheckoutModal(props) {
   const userId = 1;
-  const { onHide, totalToPay, carts } = props;
+  const {
+    onHide,
+    totalToPay,
+    carts,
+    selectedProvince,
+    selectedCity,
+    selectedDistrict,
+    selectedUrbanVillage,
+    detailAddress,
+    postalCode,
+  } = props;
 
   const onClickContinue = async () => {
     const transactionId = await postTransaction();
