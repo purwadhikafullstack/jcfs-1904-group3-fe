@@ -17,7 +17,8 @@ function CheckoutModal(props) {
   } = props;
 
   const onClickContinue = async () => {
-    const transactionId = await postTransaction();
+    const addressId = await postAddress();
+    const transactionId = await postTransaction(addressId);
     postDetailTransaction(transactionId);
     deleteCarts();
   };
@@ -33,9 +34,22 @@ function CheckoutModal(props) {
     });
   };
 
-  const postTransaction = async () => {
+  const postAddress = async () => {
+    const res = await axios.post("/address", {
+      province: selectedProvince,
+      city: selectedCity,
+      district: selectedDistrict,
+      urban_village: selectedUrbanVillage,
+      postal_code: postalCode,
+      detail_address: detailAddress,
+    });
+    return res.data.addressId;
+  };
+
+  const postTransaction = async (e) => {
     const res = await axios.post("/transactions/waiting-payment", {
       userId: userId,
+      addressId: e,
       totalAmount: totalToPay,
     });
     return res.data.transactionId;

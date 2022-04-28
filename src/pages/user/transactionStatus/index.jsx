@@ -40,6 +40,12 @@ function TransactionStatus() {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          textColor="black"
+          TabIndicatorProps={{
+            sx: {
+              backgroundColor: "black",
+            },
+          }}
         >
           <Tab sx={{ width: "20%" }} label="Waiting for payment" />
           <Tab sx={{ width: "20%" }} label="packaging" />
