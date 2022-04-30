@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 import TabWaitingPayment from "./TabPanel/WaitingPayment";
+import TabWaitingConfirmation from "./TabPanel/waitingConfirmation";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,6 +49,7 @@ function TransactionStatus() {
           }}
         >
           <Tab sx={{ width: "20%" }} label="Waiting for payment" />
+          <Tab sx={{ width: "20%" }} label="Waiting for confirmation" />
           <Tab sx={{ width: "20%" }} label="packaging" />
           <Tab sx={{ width: "20%" }} label="delivering" />
           <Tab sx={{ width: "20%" }} label="completed" />
@@ -55,9 +57,7 @@ function TransactionStatus() {
         </Tabs>
       </Box>
       {value === 0 && <TabWaitingPayment />}
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
+      {value === 1 && <TabWaitingConfirmation />}
       <TabPanel value={value} index={2}>
         Item Three
       </TabPanel>
