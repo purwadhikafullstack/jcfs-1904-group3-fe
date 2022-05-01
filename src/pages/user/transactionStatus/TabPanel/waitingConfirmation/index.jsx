@@ -76,8 +76,13 @@ function TabWaitingConfirmation() {
                   );
               })}
               <div>
-                {province}-{city}-{district}-{urban_village}-{postal_code}-
-                {detail_address}
+                <p>
+                  <strong>Alamat :</strong>
+                </p>
+                <p>
+                  {province},{city},{district},{urban_village},{postal_code},
+                  {detail_address}
+                </p>
               </div>
             </div>
 

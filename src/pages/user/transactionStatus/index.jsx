@@ -6,6 +6,10 @@ import Box from "@mui/material/Box";
 
 import TabWaitingPayment from "./TabPanel/WaitingPayment";
 import TabWaitingConfirmation from "./TabPanel/waitingConfirmation";
+import TabPackaging from "./TabPanel/packaging";
+import TabDelivering from "./TabPanel/delivering";
+import TabCompleted from "./TabPanel/completed";
+import TabCanceled from "./TabPanel/packaging";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,25 +52,20 @@ function TransactionStatus() {
             },
           }}
         >
-          <Tab sx={{ width: "20%" }} label="Waiting for payment" />
-          <Tab sx={{ width: "20%" }} label="Waiting for confirmation" />
-          <Tab sx={{ width: "20%" }} label="packaging" />
-          <Tab sx={{ width: "20%" }} label="delivering" />
-          <Tab sx={{ width: "20%" }} label="completed" />
-          <Tab sx={{ width: "20%" }} label="canceled" />
+          <Tab sx={{ width: "16.6%" }} label="Waiting for payment" />
+          <Tab sx={{ width: "16.6%" }} label="Waiting for confirmation" />
+          <Tab sx={{ width: "16.6%" }} label="packaging" />
+          <Tab sx={{ width: "16.6%" }} label="delivering" />
+          <Tab sx={{ width: "16.6%" }} label="completed" />
+          <Tab sx={{ width: "16.6%" }} label="canceled" />
         </Tabs>
       </Box>
       {value === 0 && <TabWaitingPayment />}
       {value === 1 && <TabWaitingConfirmation />}
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        Item four
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item five
-      </TabPanel>
+      {value === 2 && <TabPackaging />}
+      {value === 3 && <TabDelivering />}
+      {value === 4 && <TabCompleted />}
+      {value === 5 && <TabCanceled />}
     </Box>
   );
 }

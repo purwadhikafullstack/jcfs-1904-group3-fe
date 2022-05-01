@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "../../../../utils/axios";
+import { useNavigate } from "react-router-dom";
 
 function CheckoutModal(props) {
+  const navigate = useNavigate();
   const userId = 1;
   const {
     onHide,
@@ -21,6 +23,7 @@ function CheckoutModal(props) {
     const transactionId = await postTransaction(addressId);
     postDetailTransaction(transactionId);
     deleteCarts();
+    navigate("/transaction/status");
   };
 
   const deleteCarts = async () => {
