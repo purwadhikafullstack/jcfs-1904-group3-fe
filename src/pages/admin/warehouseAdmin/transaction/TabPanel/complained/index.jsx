@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../../../../utils/axios";
+import axios from "../../../../../../utils/axios";
 
 import "./style.css";
 
-function TabDelivering() {
+function TabComplained() {
   const [transactionHistory, setTransactionHistory] = useState([]);
   const [detailTransaction, setDetailTransaction] = useState([]);
+
   const fetchTransactionHistory = async () => {
     try {
-      const res = await axios.get(`/transactions/status/delivering`, {
+      const res = await axios.get(`/transactions/status/complained`, {
         params: {
           userId: 1,
         },
@@ -47,7 +48,7 @@ function TabDelivering() {
           <div className="transaction-item-info1">
             <strong>Transactions</strong>
             <span className="mx-2">{trx.created_at.split("T")[0]}</span>
-            <span className="transaction-status">on the way</span>
+            <span className="transaction-status">complained</span>
           </div>
 
           <div className="transaction-detail">
@@ -102,4 +103,4 @@ function TabDelivering() {
   return <div>{renderTransaction()}</div>;
 }
 
-export default TabDelivering;
+export default TabComplained;

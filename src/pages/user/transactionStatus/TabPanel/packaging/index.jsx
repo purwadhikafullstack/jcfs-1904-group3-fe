@@ -3,12 +3,12 @@ import axios from "../../../../../utils/axios";
 
 import "./style.css";
 
-function TabCanceled() {
+function TabPackaging() {
   const [transactionHistory, setTransactionHistory] = useState([]);
   const [detailTransaction, setDetailTransaction] = useState([]);
   const fetchTransactionHistory = async () => {
     try {
-      const res = await axios.get(`/transactions/status/canceled`, {
+      const res = await axios.get(`/transactions/status/packaging`, {
         params: {
           userId: 1,
         },
@@ -47,7 +47,7 @@ function TabCanceled() {
           <div className="transaction-item-info1">
             <strong>Transactions</strong>
             <span className="mx-2">{trx.created_at.split("T")[0]}</span>
-            <span className="transaction-status">waiting confirmation</span>
+            <span className="transaction-status">packaging</span>
           </div>
 
           <div className="transaction-detail">
@@ -102,4 +102,4 @@ function TabCanceled() {
   return <div>{renderTransaction()}</div>;
 }
 
-export default TabCanceled;
+export default TabPackaging;

@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../../../../utils/axios";
-
+import axios from "../../../../../../utils/axios";
+import { Button } from "@mui/material";
+import ConfirmationModal from "./modal";
 import "./style.css";
 
-function TabDelivering() {
+function TabWaitingPayment() {
+  const [paymentEvidence, setPaymentEvidece] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [transactionHistory, setTransactionHistory] = useState([]);
   const [detailTransaction, setDetailTransaction] = useState([]);
   const fetchTransactionHistory = async () => {
     try {
-      const res = await axios.get(`/transactions/status/delivering`, {
+      const res = await axios.get(`/transactions/status/waiting-payment`, {
         params: {
           userId: 1,
         },
@@ -32,6 +36,12 @@ function TabDelivering() {
     }).format(e);
   };
 
+  const handleUploadPaymentEvidence = async (e) => {
+    setPaymentEvidece(e.target.files[0]);
+    setPreviewImage(URL.createObjectURL(e.target.files[0]));
+    setShowConfirmationModal(true);
+  };
+
   const renderTransaction = () => {
     return transactionHistory.map((trx) => {
       const {
@@ -47,7 +57,7 @@ function TabDelivering() {
           <div className="transaction-item-info1">
             <strong>Transactions</strong>
             <span className="mx-2">{trx.created_at.split("T")[0]}</span>
-            <span className="transaction-status">on the way</span>
+            <span className="transaction-status">waiting payment</span>
           </div>
 
           <div className="transaction-detail">
@@ -95,6 +105,30 @@ function TabDelivering() {
               </div>
             </div>
           </div>
+
+          <div className="transaction-detail-link">
+            <div class="file-input">
+              <input
+                name="image"
+                type="file"
+                id="file"
+                class="file"
+                onChange={handleUploadPaymentEvidence}
+              />
+              <label for="file">Upload Payment Evidece</label>
+            </div>
+          </div>
+          {paymentEvidence && (
+            <ConfirmationModal
+              onHide={() => {
+                setShowConfirmationModal(false);
+              }}
+              show={showConfirmationModal}
+              transactionId={trx.transactionId}
+              previewImage={previewImage}
+              paymentEvidence={paymentEvidence}
+            />
+          )}
         </div>
       );
     });
@@ -102,4 +136,4 @@ function TabDelivering() {
   return <div>{renderTransaction()}</div>;
 }
 
-export default TabDelivering;
+export default TabWaitingPayment;

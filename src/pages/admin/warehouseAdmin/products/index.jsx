@@ -7,6 +7,7 @@ import EditProductModal from "./modal/editProduct";
 import AddProductModal from "./modal/addProduct/stepOne";
 import Sidebar from "../../../../component/navigation/admin";
 import "./style.css";
+import "../style.css";
 
 function Index(props) {
   const [selectedProduct, setSelectedProduct] = useState("");
@@ -80,9 +81,9 @@ function Index(props) {
   }, [page]);
 
   return (
-    <div className="dashboard-container">
+    <div className="navigation-wrapper">
       <Sidebar />
-      <div className="dashboard">
+      <div className="page-container">
         <div className="table-header">
           <Button
             style={{ width: "290px" }}

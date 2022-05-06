@@ -47,7 +47,7 @@ function TabCompleted() {
           <div className="transaction-item-info1">
             <strong>Transactions</strong>
             <span className="mx-2">{trx.created_at.split("T")[0]}</span>
-            <span className="transaction-status">waiting confirmation</span>
+            <span className="transaction-status">completed</span>
           </div>
 
           <div className="transaction-detail">

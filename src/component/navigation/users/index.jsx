@@ -43,6 +43,9 @@ function MuiNavBar() {
   if (location.includes("/admin")) {
     return null;
   }
+  if (location == "/transaction/status") {
+    return null;
+  }
   return (
     <div className="navBar">
       <Container

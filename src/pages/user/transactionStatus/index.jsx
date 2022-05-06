@@ -9,7 +9,9 @@ import TabWaitingConfirmation from "./TabPanel/waitingConfirmation";
 import TabPackaging from "./TabPanel/packaging";
 import TabDelivering from "./TabPanel/delivering";
 import TabCompleted from "./TabPanel/completed";
-import TabCanceled from "./TabPanel/packaging";
+import TabComplained from "./TabPanel/complained";
+
+import "./style.css";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -39,34 +41,39 @@ function TransactionStatus() {
   };
 
   return (
-    <Box sx={{ width: "1000px" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-          textColor="black"
-          TabIndicatorProps={{
-            sx: {
-              backgroundColor: "black",
-            },
-          }}
-        >
-          <Tab sx={{ width: "16.6%" }} label="Waiting for payment" />
-          <Tab sx={{ width: "16.6%" }} label="Waiting for confirmation" />
-          <Tab sx={{ width: "16.6%" }} label="packaging" />
-          <Tab sx={{ width: "16.6%" }} label="delivering" />
-          <Tab sx={{ width: "16.6%" }} label="completed" />
-          <Tab sx={{ width: "16.6%" }} label="canceled" />
-        </Tabs>
+    <div className="status-container">
+      <div className="status-header">
+        <h1>Your Transaction Status</h1>
+      </div>
+      <Box sx={{ width: "1000px" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+            textColor="black"
+            TabIndicatorProps={{
+              sx: {
+                backgroundColor: "black",
+              },
+            }}
+          >
+            <Tab sx={{ width: "16.6%" }} label="Waiting for payment" />
+            <Tab sx={{ width: "16.6%" }} label="Waiting for confirmation" />
+            <Tab sx={{ width: "16.6%" }} label="packaging" />
+            <Tab sx={{ width: "16.6%" }} label="delivering" />
+            <Tab sx={{ width: "16.6%" }} label="completed" />
+            <Tab sx={{ width: "16.6%" }} label="complained" />
+          </Tabs>
+        </Box>
+        {value === 0 && <TabWaitingPayment />}
+        {value === 1 && <TabWaitingConfirmation />}
+        {value === 2 && <TabPackaging />}
+        {value === 3 && <TabDelivering />}
+        {value === 4 && <TabCompleted />}
+        {value === 5 && <TabComplained />}
       </Box>
-      {value === 0 && <TabWaitingPayment />}
-      {value === 1 && <TabWaitingConfirmation />}
-      {value === 2 && <TabPackaging />}
-      {value === 3 && <TabDelivering />}
-      {value === 4 && <TabCompleted />}
-      {value === 5 && <TabCanceled />}
-    </Box>
+    </div>
   );
 }
 export default TransactionStatus;
