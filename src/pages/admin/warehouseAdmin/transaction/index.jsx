@@ -9,7 +9,7 @@ import TabWaitingConfirmation from "./TabPanel/waitingConfirmation";
 import TabPackaging from "./TabPanel/packaging";
 import TabDelivering from "./TabPanel/delivering";
 import TabCompleted from "./TabPanel/completed";
-import TabComplained from "./TabPanel/complained";
+import TabRejected from "./TabPanel/rejected";
 import axios from "../../../../utils/axios";
 
 import "./style.css";
@@ -22,7 +22,7 @@ function TransactionStatus() {
   const [waitingPaymentPagination, setWaitingPaymentPagination] = useState({
     page: 1,
     maxPage: 0,
-    itemsPerPage: 1,
+    itemsPerPage: 5,
   });
 
   const [waitingConfirmationData, setWaitingConfirmationData] = useState([]);
@@ -30,14 +30,35 @@ function TransactionStatus() {
     useState({
       page: 1,
       maxPage: 0,
-      itemsPerPage: 1,
+      itemsPerPage: 5,
     });
 
   const [packagingData, setPackagingData] = useState([]);
   const [packagingPagination, setPackagingPagination] = useState({
     page: 1,
     maxPage: 0,
-    itemsPerPage: 1,
+    itemsPerPage: 5,
+  });
+
+  const [deliveringData, setDeliveringData] = useState([]);
+  const [deliveringPagination, setDeliveringPagination] = useState({
+    page: 1,
+    maxPage: 0,
+    itemsPerPage: 5,
+  });
+
+  const [completedData, setCompletedData] = useState([]);
+  const [completedPagination, setCompletedPagination] = useState({
+    page: 1,
+    maxPage: 0,
+    itemsPerPage: 5,
+  });
+
+  const [rejectedData, setRejectedData] = useState([]);
+  const [rejectedPagination, setRejectedPagination] = useState({
+    page: 1,
+    maxPage: 0,
+    itemsPerPage: 5,
   });
 
   const handleChange = (event, newValue) => {
@@ -46,7 +67,6 @@ function TransactionStatus() {
 
   const fetchTransactionHistory = async (
     status,
-
     setStateTransaction,
     setStatePagination,
     paginationState
@@ -95,11 +115,29 @@ function TransactionStatus() {
       setPackagingPagination,
       packagingPagination
     );
+    fetchTransactionHistory(
+      "delivering",
+      setDeliveringData,
+      setDeliveringPagination,
+      deliveringPagination
+    );
+    fetchTransactionHistory(
+      "completed",
+      setCompletedData,
+      setCompletedPagination,
+      completedPagination
+    );
+    fetchTransactionHistory(
+      "rejected",
+      setRejectedData,
+      setRejectedPagination,
+      rejectedPagination
+    );
   }, []);
 
-  useEffect(() => {
-    console.log(packagingData);
-  }, [packagingData]);
+  // useEffect(() => {
+  //   console.log(packagingData);
+  // }, [packagingData]);
 
   return (
     <div className="navigation-wrapper">
@@ -174,9 +212,51 @@ function TransactionStatus() {
                 setPackagingPagination={setPackagingPagination}
               />
             )}
-            {value === 3 && <TabDelivering />}
-            {value === 4 && <TabCompleted />}
-            {value === 5 && <TabComplained />}
+            {value === 3 && (
+              <TabDelivering
+                fetchTransactionHistory={() => {
+                  fetchTransactionHistory(
+                    "delivering",
+                    setDeliveringData,
+                    setDeliveringPagination,
+                    deliveringPagination
+                  );
+                }}
+                deliveringData={deliveringData}
+                deliveringPagination={deliveringPagination}
+                setDeliveringPagination={setDeliveringPagination}
+              />
+            )}
+            {value === 4 && (
+              <TabCompleted
+                fetchTransactionHistory={() => {
+                  fetchTransactionHistory(
+                    "completed",
+                    setCompletedData,
+                    setCompletedPagination,
+                    completedPagination
+                  );
+                }}
+                completedData={completedData}
+                completedPagination={completedPagination}
+                setCompletedPagination={setCompletedPagination}
+              />
+            )}
+            {value === 5 && (
+              <TabRejected
+                fetchTransactionHistory={() => {
+                  fetchTransactionHistory(
+                    "rejected",
+                    setRejectedData,
+                    setRejectedPagination,
+                    rejectedPagination
+                  );
+                }}
+                rejectedData={rejectedData}
+                rejectedPagination={rejectedPagination}
+                setRejectedPagination={setRejectedPagination}
+              />
+            )}
           </Box>
         </div>
       </div>

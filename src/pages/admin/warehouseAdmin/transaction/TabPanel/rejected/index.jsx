@@ -13,23 +13,23 @@ import TransactionList from "./component/TransactionList";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-function TabWaitingPayment({
+function TabRejectedPayment({
   fetchTransactionHistory,
-  deliveringData,
-  deliveringPagination,
-  setDeliveringPagination,
+  rejectedData,
+  rejectedPagination,
+  setRejectedPagination,
 }) {
-  const { page, maxPage, itemsPerPage } = deliveringPagination;
+  const { page, maxPage, itemsPerPage } = rejectedPagination;
 
   const btnPrevPageHandler = () => {
-    setDeliveringPagination({
-      ...deliveringPagination,
+    setRejectedPagination({
+      ...rejectedPagination,
       page: page - 1,
     });
   };
   const btnNextPageHandler = () => {
-    setDeliveringPagination({
-      ...deliveringPagination,
+    setRejectedPagination({
+      ...rejectedPagination,
       page: page + 1,
     });
   };
@@ -72,7 +72,7 @@ function TabWaitingPayment({
             </TableRow>
           </TableHead>
           <TableBody>
-            {TransactionList(deliveringData, fetchTransactionHistory)}
+            {TransactionList(rejectedData, fetchTransactionHistory)}
           </TableBody>
         </Table>
       </TableContainer>
@@ -103,4 +103,4 @@ function TabWaitingPayment({
   );
 }
 
-export default TabWaitingPayment;
+export default TabRejectedPayment;
