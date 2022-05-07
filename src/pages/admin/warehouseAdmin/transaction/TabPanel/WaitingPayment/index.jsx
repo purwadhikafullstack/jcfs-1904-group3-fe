@@ -14,45 +14,26 @@ import TransactionList from "./component/TransactionList";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-function TabWaitingPayment() {
-  const [transactionHistory, setTransactionHistory] = useState([]);
-  const [paginationState, setPaginationState] = useState({
-    page: 1,
-    maxPage: 0,
-    itemsPerPage: 4,
-  });
+function TabWaitingPayment({
+  fetchTransactionHistory,
+  waitingPaymentData,
+  waitingPaymentPagination,
+  setWaitingPaymentPagination,
+}) {
+  const { page, maxPage, itemsPerPage } = waitingPaymentPagination;
 
-  const { page, maxPage, itemsPerPage } = paginationState;
-
-  const fetchTransactionHistory = async () => {
-    try {
-      const res = await axios.get(`/transactions/admin/status/`, {
-        params: {
-          status: "waiting payment",
-          limit: parseInt(itemsPerPage),
-          offset: parseInt((page - 1) * itemsPerPage),
-        },
-      });
-      const { result, dataCount } = res.data;
-      setTransactionHistory(result);
-      setPaginationState({
-        ...paginationState,
-        maxPage: Math.ceil(dataCount[0].totalData / itemsPerPage),
-      });
-    } catch (error) {
-      throw error;
-    }
-  };
   const btnPrevPageHandler = () => {
-    setPaginationState({ ...paginationState, page: page - 1 });
+    setWaitingPaymentPagination({
+      ...waitingPaymentPagination,
+      page: page - 1,
+    });
   };
   const btnNextPageHandler = () => {
-    setPaginationState({ ...paginationState, page: page + 1 });
+    setWaitingPaymentPagination({
+      ...waitingPaymentPagination,
+      page: page + 1,
+    });
   };
-
-  useEffect(() => {
-    fetchTransactionHistory();
-  }, []);
 
   useEffect(() => {
     fetchTransactionHistory();
@@ -91,7 +72,7 @@ function TabWaitingPayment() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody> {TransactionList(transactionHistory)}</TableBody>
+          <TableBody> {TransactionList(waitingPaymentData)}</TableBody>
         </Table>
       </TableContainer>
       <div

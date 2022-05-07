@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../../../../../utils/axios";
 import {
   Table,
   TableBody,
@@ -14,46 +13,26 @@ import TransactionList from "./component/TransactionList";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-function TabWaitingPayment() {
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [transactionHistory, setTransactionHistory] = useState([]);
-  const [paginationState, setPaginationState] = useState({
-    page: 1,
-    maxPage: 0,
-    itemsPerPage: 4,
-  });
+function TabWaitingPayment({
+  fetchTransactionHistory,
+  waitingConfirmationData,
+  WaitingConfirmationPagination,
+  setWaitingConfirmationPagination,
+}) {
+  const { page, maxPage, itemsPerPage } = WaitingConfirmationPagination;
 
-  const { page, maxPage, itemsPerPage } = paginationState;
-
-  const fetchTransactionHistory = async () => {
-    try {
-      const res = await axios.get(`/transactions/admin/status/`, {
-        params: {
-          status: "waiting confirmation",
-          limit: parseInt(itemsPerPage),
-          offset: parseInt((page - 1) * itemsPerPage),
-        },
-      });
-      const { result, dataCount } = res.data;
-      setTransactionHistory(result);
-      setPaginationState({
-        ...paginationState,
-        maxPage: Math.ceil(dataCount[0].totalData / itemsPerPage),
-      });
-    } catch (error) {
-      throw error;
-    }
-  };
   const btnPrevPageHandler = () => {
-    setPaginationState({ ...paginationState, page: page - 1 });
+    setWaitingConfirmationPagination({
+      ...WaitingConfirmationPagination,
+      page: page - 1,
+    });
   };
   const btnNextPageHandler = () => {
-    setPaginationState({ ...paginationState, page: page + 1 });
+    setWaitingConfirmationPagination({
+      ...WaitingConfirmationPagination,
+      page: page + 1,
+    });
   };
-
-  useEffect(() => {
-    fetchTransactionHistory();
-  }, []);
 
   useEffect(() => {
     fetchTransactionHistory();
@@ -98,7 +77,10 @@ function TabWaitingPayment() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody> {TransactionList(transactionHistory)}</TableBody>
+          <TableBody>
+            {" "}
+            {TransactionList(waitingConfirmationData, fetchTransactionHistory)}
+          </TableBody>
         </Table>
       </TableContainer>
       <div

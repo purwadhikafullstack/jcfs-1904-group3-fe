@@ -3,18 +3,10 @@ import { TableCell, Button, TableRow } from "@mui/material";
 
 import FormatIdr from "../../../../../../../component/formatCurrency";
 
-import PreviewEvidenceModal from "../modal/PreviewEvidence";
-import {
-  AcceptWaitingPaymentModal,
-  RejectWaitingPaymentModal,
-} from "../modal/Confirmation";
+import ConfirmFinishPackagingModal from "../modal/Confirmation";
 
 function TransactionList(transactions, fetchTransactionHistory) {
-  const [showPreviewPaymentEvidence, setShowPreviewPaymentEvidence] =
-    useState(false);
-  const [showAcceptWaitingPaymentModal, setShowAcceptWaitingPaymentModal] =
-    useState(false);
-  const [showRejectWaitingPaymentModal, setShowRejectWaitingPaymentModal] =
+  const [showConfirmFinishPackagingModal, setShowConfirmFinishPackagingModal] =
     useState(false);
 
   const mapTransactions = () => {
@@ -70,61 +62,23 @@ function TransactionList(transactions, fetchTransactionHistory) {
               {detail_address}
             </p>
           </TableCell>
-          <TableCell align="center" sx={{ width: "200px" }}>
-            <p>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  setShowPreviewPaymentEvidence(true);
-                }}
-              >
-                Preview
-              </Button>
-            </p>
-            <PreviewEvidenceModal
-              show={showPreviewPaymentEvidence}
-              onHide={() => {
-                setShowPreviewPaymentEvidence(false);
-              }}
-              previewImage={value.paymentEvidence}
-            />
-          </TableCell>
+
           <TableCell align="center" sx={{ width: "200px" }}>
             <p>
               <Button
                 variant="contained"
                 color="success"
                 onClick={() => {
-                  setShowAcceptWaitingPaymentModal(true);
+                  setShowConfirmFinishPackagingModal(true);
                 }}
               >
-                accept
+                finish
               </Button>
             </p>
-            <AcceptWaitingPaymentModal
-              show={showAcceptWaitingPaymentModal}
+            <ConfirmFinishPackagingModal
+              show={showConfirmFinishPackagingModal}
               onHide={() => {
-                setShowAcceptWaitingPaymentModal(false);
-              }}
-              transactionId={value.transactionId}
-              fetchTransactionHistory={fetchTransactionHistory}
-            />
-            <p>
-              <Button
-                variant="contained"
-                color="warning"
-                onClick={() => {
-                  setShowRejectWaitingPaymentModal(true);
-                }}
-              >
-                reject
-              </Button>
-            </p>
-            <RejectWaitingPaymentModal
-              show={showRejectWaitingPaymentModal}
-              onHide={() => {
-                setShowRejectWaitingPaymentModal(false);
+                setShowConfirmFinishPackagingModal(false);
               }}
               transactionId={value.transactionId}
               fetchTransactionHistory={fetchTransactionHistory}

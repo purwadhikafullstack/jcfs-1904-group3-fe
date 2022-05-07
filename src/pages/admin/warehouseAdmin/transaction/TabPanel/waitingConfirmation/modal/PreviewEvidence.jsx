@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
-import axios from "../../../../../../utils/axios";
 
 function PreviewEvidenceModal(props) {
   const { onHide, previewImage } = props;
-
-  useEffect(() => {
-    console.log(paymentEvidence);
-  }, []);
 
   return (
     <Modal {...props} backdrop="static" keyboard={false} centered>
       <Modal.Header>
         <Modal.Title style={{ textAlign: "center" }}>
-          Confirm Payment Evidence
+          Payment Evidence
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
