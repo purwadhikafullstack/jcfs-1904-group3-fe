@@ -3,20 +3,23 @@ import axios from "../../../../../utils/axios";
 
 import "./style.css";
 
-function TabComplained() {
+function TabRejected() {
   const [transactionHistory, setTransactionHistory] = useState([]);
   const [detailTransaction, setDetailTransaction] = useState([]);
 
   const fetchTransactionHistory = async () => {
     try {
-      const res = await axios.get(`/transactions/status/complained`, {
+      const res = await axios.get(`/transactions/user/status`, {
         params: {
           userId: 1,
+          status: "rejected",
         },
       });
       const { resultTransactions, resultDetailTransactions } = res.data;
-      setTransactionHistory(resultTransactions);
-      setDetailTransaction(resultDetailTransactions);
+      if (resultTransactions.length) {
+        setTransactionHistory(resultTransactions);
+        setDetailTransaction(resultDetailTransactions);
+      }
     } catch (error) {
       throw error;
     }
@@ -48,7 +51,7 @@ function TabComplained() {
           <div className="transaction-item-info1">
             <strong>Transactions</strong>
             <span className="mx-2">{trx.created_at.split("T")[0]}</span>
-            <span className="transaction-status">complained</span>
+            <span className="transaction-status">rejected</span>
           </div>
 
           <div className="transaction-detail">
@@ -103,4 +106,4 @@ function TabComplained() {
   return <div>{renderTransaction()}</div>;
 }
 
-export default TabComplained;
+export default TabRejected;

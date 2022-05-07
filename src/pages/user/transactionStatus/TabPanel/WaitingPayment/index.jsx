@@ -12,14 +12,18 @@ function TabWaitingPayment() {
   const [detailTransaction, setDetailTransaction] = useState([]);
   const fetchTransactionHistory = async () => {
     try {
-      const res = await axios.get(`/transactions/status/waiting-payment`, {
+      const res = await axios.get(`/transactions/user/status`, {
         params: {
           userId: 1,
+          status: "waiting payment",
         },
       });
       const { resultTransactions, resultDetailTransactions } = res.data;
-      setTransactionHistory(resultTransactions);
-      setDetailTransaction(resultDetailTransactions);
+      if (resultTransactions.length) {
+        setTransactionHistory(resultTransactions);
+        setDetailTransaction(resultDetailTransactions);
+      } else {
+      }
     } catch (error) {
       throw error;
     }

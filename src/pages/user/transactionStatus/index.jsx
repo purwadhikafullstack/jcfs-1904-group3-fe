@@ -9,7 +9,7 @@ import TabWaitingConfirmation from "./TabPanel/waitingConfirmation";
 import TabPackaging from "./TabPanel/packaging";
 import TabDelivering from "./TabPanel/delivering";
 import TabCompleted from "./TabPanel/completed";
-import TabComplained from "./TabPanel/complained";
+import TabRejected from "./TabPanel/rejected";
 
 import "./style.css";
 
@@ -63,7 +63,7 @@ function TransactionStatus() {
             <Tab sx={{ width: "16.6%" }} label="packaging" />
             <Tab sx={{ width: "16.6%" }} label="delivering" />
             <Tab sx={{ width: "16.6%" }} label="completed" />
-            <Tab sx={{ width: "16.6%" }} label="complained" />
+            <Tab sx={{ width: "16.6%" }} label="Rejected" />
           </Tabs>
         </Box>
         {value === 0 && <TabWaitingPayment />}
@@ -71,7 +71,7 @@ function TransactionStatus() {
         {value === 2 && <TabPackaging />}
         {value === 3 && <TabDelivering />}
         {value === 4 && <TabCompleted />}
-        {value === 5 && <TabComplained />}
+        {value === 5 && <TabRejected />}
       </Box>
     </div>
   );

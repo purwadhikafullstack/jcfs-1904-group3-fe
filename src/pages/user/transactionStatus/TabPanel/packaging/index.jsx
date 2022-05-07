@@ -8,14 +8,18 @@ function TabPackaging() {
   const [detailTransaction, setDetailTransaction] = useState([]);
   const fetchTransactionHistory = async () => {
     try {
-      const res = await axios.get(`/transactions/status/packaging`, {
+      const res = await axios.get(`/transactions/user/status`, {
         params: {
           userId: 1,
+          status: "packaging",
         },
       });
       const { resultTransactions, resultDetailTransactions } = res.data;
-      setTransactionHistory(resultTransactions);
-      setDetailTransaction(resultDetailTransactions);
+      if (resultTransactions.length) {
+        setTransactionHistory(resultTransactions);
+        setDetailTransaction(resultDetailTransactions);
+      } else {
+      }
     } catch (error) {
       throw error;
     }
