@@ -3,7 +3,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
 import Sidebar from "../../../../component/navigation/admin";
 import TabWaitingPayment from "./TabPanel/WaitingPayment";
 import TabWaitingConfirmation from "./TabPanel/waitingConfirmation";
@@ -47,10 +46,7 @@ function TransactionStatus() {
       <Sidebar />
       <div className="page-container">
         <div className="status-container">
-          <div className="status-header">
-            <h1>Customer Transaction Status</h1>
-          </div>
-          <Box sx={{ width: "1000px" }}>
+          <Box sx={{ width: "100%" }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs
                 value={value}
