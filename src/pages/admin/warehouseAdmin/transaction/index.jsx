@@ -83,13 +83,20 @@ function TransactionStatus() {
       });
 
       const { result, dataCount } = res.data;
-      if (result.length) {
+      if (result) {
         setStateTransaction(result);
         setStatePagination({
           ...paginationState,
           maxPage: Math.ceil(dataCount[0].totalData / itemsPerPage),
         });
-      } else {
+      }
+      if (!result) {
+        setStateTransaction([]);
+        setStatePagination({
+          page: 1,
+          maxPage: 1,
+          itemsPerPage: 1,
+        });
       }
     } catch (error) {
       throw error;

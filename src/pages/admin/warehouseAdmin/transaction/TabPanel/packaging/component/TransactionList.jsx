@@ -10,6 +10,9 @@ function TransactionList(transactions, fetchTransactionHistory) {
     useState(false);
 
   const mapTransactions = () => {
+    if (transactions.length == 0) {
+      return null;
+    }
     return transactions.map((value) => {
       const {
         province,

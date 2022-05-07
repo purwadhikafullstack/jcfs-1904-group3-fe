@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../../../../utils/axios";
+import { Button } from "@mui/material";
 
+import FinishDeliveringPayment from "./modal/Confirmation";
 import "./style.css";
 
 function TabDelivering() {
+  const [showFinishDeliveringModal, setShowFinishDeliveringModal] =
+    useState(false);
   const [transactionHistory, setTransactionHistory] = useState([]);
   const [detailTransaction, setDetailTransaction] = useState([]);
   const fetchTransactionHistory = async () => {
@@ -15,10 +19,13 @@ function TabDelivering() {
         },
       });
       const { resultTransactions, resultDetailTransactions } = res.data;
-      if (resultTransactions.length) {
+      if (resultTransactions) {
         setTransactionHistory(resultTransactions);
         setDetailTransaction(resultDetailTransactions);
-      } else {
+      }
+      if (!resultTransactions) {
+        setTransactionHistory([]);
+        setDetailTransaction([]);
       }
     } catch (error) {
       throw error;
@@ -96,6 +103,23 @@ function TabDelivering() {
                 <p>
                   <strong> {formatIdr(trx.totalAmount)} </strong>
                 </p>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={() => {
+                    setShowFinishDeliveringModal(true);
+                  }}
+                >
+                  Finish transaction
+                </Button>
+                <FinishDeliveringPayment
+                  show={showFinishDeliveringModal}
+                  onHide={() => {
+                    setShowFinishDeliveringModal(false);
+                  }}
+                  transactionId={trx.transactionId}
+                  fetchTransactionHistory={fetchTransactionHistory}
+                />
               </div>
             </div>
           </div>

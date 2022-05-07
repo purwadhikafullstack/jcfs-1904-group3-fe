@@ -15,12 +15,18 @@ function AcceptWaitingPaymentModal(props) {
       });
       if (res.data) {
         setShowSuccesModal(true);
-        fetchTransactionHistory();
       }
     } catch (error) {
       throw error;
     }
   };
+
+  useEffect(() => {
+    // fetchtransaction history setelah user menutup success alert agar menghindari render ulang
+    if (!showSuccesModal) {
+      fetchTransactionHistory();
+    }
+  }, [showSuccesModal]);
 
   return (
     <Modal {...props} backdrop="static" keyboard={false}>
@@ -58,12 +64,17 @@ function RejectWaitingPaymentModal(props) {
       console.log(res.data);
       if (res.data) {
         setShowSuccesModal(true);
-        fetchTransactionHistory();
       }
     } catch (error) {
       throw error;
     }
   };
+  useEffect(() => {
+    // fetchtransaction history setelah user menutup success alert agar menghindari render ulang
+    if (!showSuccesModal) {
+      fetchTransactionHistory();
+    }
+  }, [showSuccesModal]);
   return (
     <Modal {...props} backdrop="static" keyboard={false}>
       <Modal.Header>

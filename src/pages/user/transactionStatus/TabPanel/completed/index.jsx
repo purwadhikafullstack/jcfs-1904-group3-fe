@@ -8,7 +8,7 @@ function TabCompleted() {
   const [detailTransaction, setDetailTransaction] = useState([]);
   const fetchTransactionHistory = async () => {
     try {
-      const res = await axios.get(`/transactions/users/status`, {
+      const res = await axios.get(`/transactions/user/status`, {
         params: {
           userId: 1,
           status: "completed",
