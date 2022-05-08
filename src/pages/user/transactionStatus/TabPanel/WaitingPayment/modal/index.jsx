@@ -11,11 +11,16 @@ function ConfirmationModal(props) {
       uploadPayment.append("image", paymentEvidence);
       uploadPayment.append("transactionId", transactionId);
 
-      await axios.post("/transactions/evidence/payment", uploadPayment, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post(
+        "/transactions/evidence/payment",
+        uploadPayment,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res);
       onHide();
     } catch (error) {
       throw error;
@@ -23,7 +28,7 @@ function ConfirmationModal(props) {
   };
 
   useEffect(() => {
-    console.log(paymentEvidence);
+    console.log(token);
   }, []);
 
   return (
