@@ -3,8 +3,12 @@ import axios from "../../../../../utils/axios";
 import { Button } from "@mui/material";
 import ConfirmationModal from "./modal";
 import "./style.css";
+import { useSelector } from "react-redux";
 
 function TabWaitingPayment() {
+  const userId = useSelector((state) => state.auth.id);
+  const token = useSelector((state) => state.auth.token);
+
   const [paymentEvidence, setPaymentEvidece] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -13,8 +17,11 @@ function TabWaitingPayment() {
   const fetchTransactionHistory = async () => {
     try {
       const res = await axios.get(`/transactions/user/status`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
         params: {
-          userId: 1,
+          userId: userId,
           status: "waiting payment",
         },
       });
@@ -131,6 +138,7 @@ function TabWaitingPayment() {
               transactionId={trx.transactionId}
               previewImage={previewImage}
               paymentEvidence={paymentEvidence}
+              token={token}
             />
           )}
         </div>

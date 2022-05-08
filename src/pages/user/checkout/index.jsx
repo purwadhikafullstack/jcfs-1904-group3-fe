@@ -14,7 +14,11 @@ import CheckoutModal from "./modal";
 import CheckError from "./component/erorr";
 import "./style.css";
 
+import { useSelector } from "react-redux";
+
 function Checkout() {
+  const userId = useSelector((state) => state.auth.id);
+  const token = useSelector((state) => state.auth.token);
   // Note :
   // Unshift digunakan untuk membuat value default pada select (ex : "Select Province")
   // Pengisiian address bertahap (ex : "akan muncul select city jika sudah terselect value pada tahap sebelumnya yaitu select province")
@@ -140,13 +144,19 @@ function Checkout() {
   const fetchCarts = async () => {
     try {
       const res = await warehouseAxios.get("/carts", {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
         params: {
-          userId: 1,
+          userId: userId,
         },
       });
       const { result } = res.data;
       if (result) {
         const res = await warehouseAxios.get("/products/cart", {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
           params: {
             result,
           },

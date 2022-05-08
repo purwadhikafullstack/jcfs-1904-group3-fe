@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import axios from "../../../../../../utils/axios";
 
 function ConfirmationModal(props) {
-  const { onHide, transactionId, previewImage, paymentEvidence } = props;
+  const { onHide, transactionId, previewImage, paymentEvidence, token } = props;
 
   const onClickContinue = async () => {
     try {
@@ -11,7 +11,11 @@ function ConfirmationModal(props) {
       uploadPayment.append("image", paymentEvidence);
       uploadPayment.append("transactionId", transactionId);
 
-      await axios.post("/transactions/evidence/payment", uploadPayment);
+      await axios.post("/transactions/evidence/payment", uploadPayment, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
       onHide();
     } catch (error) {
       throw error;

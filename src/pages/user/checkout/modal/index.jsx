@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "../../../../utils/axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function CheckoutModal(props) {
   const navigate = useNavigate();
-  const userId = 1;
+  const userId = useSelector((state) => state.auth.id);
+  const token = useSelector((state) => state.auth.token);
   const {
     onHide,
     totalToPay,
@@ -28,9 +30,10 @@ function CheckoutModal(props) {
 
   const deleteCarts = async () => {
     const idCarts = carts.map((value) => value.cartId);
-    console.log(idCarts);
     const res = await axios.delete("/carts/checkout", {
-      headers: {},
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
       data: {
         idCarts,
       },
@@ -38,31 +41,55 @@ function CheckoutModal(props) {
   };
 
   const postAddress = async () => {
-    const res = await axios.post("/address", {
-      province: selectedProvince,
-      city: selectedCity,
-      district: selectedDistrict,
-      urban_village: selectedUrbanVillage,
-      postal_code: postalCode,
-      detail_address: detailAddress,
-    });
+    const res = await axios.post(
+      "/address",
+      {
+        province: selectedProvince,
+        city: selectedCity,
+        district: selectedDistrict,
+        urban_village: selectedUrbanVillage,
+        postal_code: postalCode,
+        detail_address: detailAddress,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return res.data.addressId;
   };
 
   const postTransaction = async (e) => {
-    const res = await axios.post("/transactions/waiting-payment", {
-      userId: userId,
-      addressId: e,
-      totalAmount: totalToPay,
-    });
+    const res = await axios.post(
+      "/transactions/waiting-payment",
+      {
+        userId: userId,
+        addressId: e,
+        totalAmount: totalToPay,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return res.data.transactionId;
   };
 
   const postDetailTransaction = async (e) => {
-    const res = await axios.post("/transactions/detail", {
-      carts,
-      transactionId: e,
-    });
+    const res = await axios.post(
+      "/transactions/detail",
+      {
+        carts,
+        transactionId: e,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
   };
 
   return (

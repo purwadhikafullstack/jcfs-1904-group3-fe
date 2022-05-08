@@ -2,15 +2,22 @@ import React, { useState, useEffect } from "react";
 import axios from "../../../../../utils/axios";
 
 import "./style.css";
+import { useSelector } from "react-redux";
 
 function TabWaitingConfirmation() {
+  const userId = useSelector((state) => state.auth.id);
+  const token = useSelector((state) => state.auth.token);
+
   const [transactionHistory, setTransactionHistory] = useState([]);
   const [detailTransaction, setDetailTransaction] = useState([]);
   const fetchTransactionHistory = async () => {
     try {
       const res = await axios.get(`/transactions/user/status`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
         params: {
-          userId: 1,
+          userId: userId,
           status: "waiting confirmation",
         },
       });

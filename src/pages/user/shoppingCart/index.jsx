@@ -14,23 +14,31 @@ import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined
 import "./style.css";
 import axios from "../../../utils/axios";
 import CartList from "./component/cartList";
+import { useSelector } from "react-redux";
 
 function Carts() {
   const navigate = useNavigate();
   const [carts, setCarts] = useState([]);
   const [totalToPay, setTotalToPay] = useState(0);
-  const userId = 1;
+  const userId = useSelector((state) => state.auth.id);
+  const token = useSelector((state) => state.auth.token);
 
   const fetchCarts = async () => {
     try {
       const res = await axios.get("/carts", {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
         params: {
-          userId: 1,
+          userId: userId,
         },
       });
       const { result } = res.data;
       if (result) {
         const res = await axios.get("/products/cart", {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
           params: {
             result,
           },
@@ -63,10 +71,18 @@ function Carts() {
           // add the quantity
           const addedQuantity = value.productQuantity + 1;
           // update the quantity
-          const res = await axios.put("/carts", {
-            cartId: e,
-            productQuantity: addedQuantity,
-          });
+          const res = await axios.put(
+            "/carts",
+            {
+              cartId: e,
+              productQuantity: addedQuantity,
+            },
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
           copiedCart[index].productQuantity = addedQuantity;
           // set the cart with the updated quantity
           setCarts(copiedCart);
@@ -81,15 +97,25 @@ function Carts() {
         // as long as the qunatity is above 1 you cannot delete the product
         if (value.productQuantity > 1) {
           const addedQuantity = value.productQuantity - 1;
-          const res = await axios.put("/carts", {
-            cartId,
-            productQuantity: addedQuantity,
-          });
+          const res = await axios.put(
+            "/carts",
+            {
+              cartId,
+              productQuantity: addedQuantity,
+            },
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
         }
         // subtracting when the quantity is one will delete the product
         if (qty == 1) {
           const res = await axios.delete("/carts", {
-            headers: {},
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
             data: {
               cartId: value.cartId,
             },

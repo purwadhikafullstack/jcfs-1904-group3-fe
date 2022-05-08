@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 function Index(props) {
+  const navigate = useNavigate();
   const { productName, productId, price, image } = props.product;
-  const { REACT_APP_CLIENT_URL } = process.env;
-
-  const link = `${REACT_APP_CLIENT_URL}/product-detail/${productId}`;
 
   return (
     <div
@@ -26,7 +25,12 @@ function Index(props) {
           <Card.Text>{productName}</Card.Text>
           <Card.Text>Rp.{price}</Card.Text>
         </Card.Body>
-        <Button href={link} variant="outline-dark">
+        <Button
+          onClick={() => {
+            navigate(`/product-detail/${productId}`);
+          }}
+          variant="outline-dark"
+        >
           Product Detail
         </Button>
       </Card>

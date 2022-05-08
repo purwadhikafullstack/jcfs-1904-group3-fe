@@ -6,13 +6,21 @@ import SuccessModal from "../../../../../../component/modal/SuccessModal";
 
 function FinishDeliveringPayment(props) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const { onHide, transactionId, fetchTransactionHistory } = props;
+  const { onHide, transactionId, fetchTransactionHistory, token } = props;
 
   const onFinishPackaging = async () => {
     try {
-      const res = await axios.put("/transactions/finish/delivering", {
-        transactionId,
-      });
+      const res = await axios.put(
+        "/transactions/finish/delivering",
+        {
+          transactionId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setShowSuccessModal(true);
     } catch (error) {

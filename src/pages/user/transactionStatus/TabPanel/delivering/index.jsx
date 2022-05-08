@@ -4,8 +4,12 @@ import { Button } from "@mui/material";
 
 import FinishDeliveringPayment from "./modal/Confirmation";
 import "./style.css";
+import { useSelector } from "react-redux";
 
 function TabDelivering() {
+  const userId = useSelector((state) => state.auth.id);
+  const token = useSelector((state) => state.auth.token);
+
   const [showFinishDeliveringModal, setShowFinishDeliveringModal] =
     useState(false);
   const [transactionHistory, setTransactionHistory] = useState([]);
@@ -13,8 +17,11 @@ function TabDelivering() {
   const fetchTransactionHistory = async () => {
     try {
       const res = await axios.get(`/transactions/user/status`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
         params: {
-          userId: 1,
+          userId: userId,
           status: "delivering",
         },
       });
@@ -119,6 +126,7 @@ function TabDelivering() {
                   }}
                   transactionId={trx.transactionId}
                   fetchTransactionHistory={fetchTransactionHistory}
+                  token={token}
                 />
               </div>
             </div>

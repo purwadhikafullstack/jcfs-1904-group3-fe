@@ -5,9 +5,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ProfileIcon from "@mui/icons-material/AccountCircle";
 import { TextField, InputAdornment } from "@mui/material";
+import { Dropdown } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import "./style.css";
 
 function MuiNavBar() {
+  const username = useSelector((state) => state.auth.username);
   const location = useLocation().pathname;
 
   const navigate = useNavigate();
@@ -94,8 +97,52 @@ function MuiNavBar() {
           />
         </Stack>
         <Stack direction="row" alignItems="center">
-          <ShoppingCartIcon sx={{ m: 2 }} />
-          <ProfileIcon />
+          <Button
+            onClick={() => {
+              navigate("/carts");
+            }}
+            sx={{ color: "black" }}
+          >
+            <ShoppingCartIcon sx={{ m: 2 }} />
+          </Button>
+
+          <Dropdown>
+            <Dropdown.Toggle
+              style={{
+                backgroundColor: "inherit",
+                color: "black",
+                border: "0",
+              }}
+            >
+              <ProfileIcon />
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu variant="dark">
+              {username ? (
+                <Dropdown.Item>Hello {username}</Dropdown.Item>
+              ) : (
+                <Dropdown.Item
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                >
+                  Login
+                </Dropdown.Item>
+              )}
+              {username ? (
+                <Dropdown.Item
+                  onClick={() => {
+                    navigate("/transaction/status");
+                  }}
+                >
+                  Transaction History
+                </Dropdown.Item>
+              ) : (
+                ""
+              )}
+              <Dropdown.Item href="#/action-2">Logout</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Stack>
       </Container>
 
