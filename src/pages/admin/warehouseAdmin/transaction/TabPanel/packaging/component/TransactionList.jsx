@@ -9,6 +9,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
   const [showConfirmFinishPackagingModal, setShowConfirmFinishPackagingModal] =
     useState(false);
 
+  
   const mapTransactions = () => {
     if (transactions.length == 0) {
       return null;
@@ -83,7 +84,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
               onHide={() => {
                 setShowConfirmFinishPackagingModal(false);
               }}
-              transactionId={value.transactionId}
+              transactions={value}
               fetchTransactionHistory={fetchTransactionHistory}
             />
           </TableCell>

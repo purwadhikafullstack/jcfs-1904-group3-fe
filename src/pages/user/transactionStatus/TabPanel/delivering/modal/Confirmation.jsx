@@ -6,14 +6,21 @@ import SuccessModal from "../../../../../../component/modal/SuccessModal";
 
 function FinishDeliveringPayment(props) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const { onHide, transactionId, fetchTransactionHistory, token } = props;
+  const {
+    onHide,
+    transaction,
+    detailTransactions,
+    fetchTransactionHistory,
+    token,
+  } = props;
 
   const onFinishPackaging = async () => {
     try {
       const res = await axios.put(
         "/transactions/finish/delivering",
         {
-          transactionId,
+          transactionId: transaction.transactionId,
+          items: mapProductNameAndQuantity(),
         },
         {
           headers: {
@@ -27,15 +34,32 @@ function FinishDeliveringPayment(props) {
       throw error;
     }
   };
+  const mapProductNameAndQuantity = () => {
+    var array = [];
+    // this data will be used to subtract the quantity in backend
+    detailTransactions.filter((value) => {
+      if (value.transactionId == transaction.transactionId) {
+        array = [
+          ...array,
+          {
+            productName: value.productName,
+            quantity: value.quantity,
+            productColor: value.productColor,
+          },
+        ];
+      }
+    });
+    return array;
+  };
   useEffect(() => {
     // fetchtransaction history setelah user menutup success alert agar menghindari render ulang
     if (!showSuccessModal) {
       fetchTransactionHistory();
     }
   }, [showSuccessModal]);
-  useEffect(() => {
-    console.log(transactionId);
-  }, []);
+  // useEffect(() => {
+  //   console.log(transactionId);
+  // }, []);
 
   return (
     <Modal {...props} backdrop="static" keyboard={false}>

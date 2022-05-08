@@ -48,7 +48,7 @@ function Register() {
           var message = e.message;
           errors[path] = message;
         });
-        console.log(errors);
+        setErrors(errors);
       });
 
       const { username, email, password } = dataObject;
@@ -152,10 +152,6 @@ function Register() {
             Sign Up
             {/* {isLoading ? <CircularProgress color="secondary" /> : "Login"} */}
           </Button>
-
-          <Link href="#" variant="body2" sx={{ color: "black" }}>
-            {"Don't have an account? Sign Up"}
-          </Link>
         </Box>
       </Box>
       {success ? <SuccessAlert /> : ""}

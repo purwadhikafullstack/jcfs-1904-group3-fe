@@ -9,11 +9,13 @@ import { useSelector } from "react-redux";
 function TabDelivering() {
   const userId = useSelector((state) => state.auth.id);
   const token = useSelector((state) => state.auth.token);
+  const [selectedTransaction, setSelectedTransaction] = useState([]);
 
+  const [detailTransaction, setDetailTransaction] = useState([]);
   const [showFinishDeliveringModal, setShowFinishDeliveringModal] =
     useState(false);
   const [transactionHistory, setTransactionHistory] = useState([]);
-  const [detailTransaction, setDetailTransaction] = useState([]);
+
   const fetchTransactionHistory = async () => {
     try {
       const res = await axios.get(`/transactions/user/status`, {
@@ -114,20 +116,27 @@ function TabDelivering() {
                   variant="contained"
                   color="success"
                   onClick={() => {
+                    setSelectedTransaction(trx);
+
                     setShowFinishDeliveringModal(true);
                   }}
                 >
                   Finish transaction
                 </Button>
-                <FinishDeliveringPayment
-                  show={showFinishDeliveringModal}
-                  onHide={() => {
-                    setShowFinishDeliveringModal(false);
-                  }}
-                  transactionId={trx.transactionId}
-                  fetchTransactionHistory={fetchTransactionHistory}
-                  token={token}
-                />
+                {selectedTransaction.length != 0 ? (
+                  <FinishDeliveringPayment
+                    show={showFinishDeliveringModal}
+                    onHide={() => {
+                      setShowFinishDeliveringModal(false);
+                    }}
+                    transaction={selectedTransaction}
+                    detailTransactions={detailTransaction}
+                    fetchTransactionHistory={fetchTransactionHistory}
+                    token={token}
+                  />
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

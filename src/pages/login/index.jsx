@@ -24,8 +24,7 @@ function Login() {
   const [success, setSuccess] = useState(false);
 
   // const role = useSelector((state) => state.auth.role);
-  const [Alert, setAlert] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
@@ -108,7 +107,13 @@ function Login() {
             {/* {isLoading ? <CircularProgress color="secondary" /> : "Login"} */}
           </Button>
 
-          <Link href="#" variant="body2" sx={{ color: "black" }}>
+          <Link
+            onClick={() => {
+              navigate("/register");
+            }}
+            ariant="body2"
+            sx={{ color: "black" }}
+          >
             {"Don't have an account? Sign Up"}
           </Link>
         </Box>

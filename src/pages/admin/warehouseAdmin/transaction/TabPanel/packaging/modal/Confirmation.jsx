@@ -6,12 +6,13 @@ import SuccessModal from "../../../../../../../component/modal/SuccessModal";
 
 function ConfirmFinishPackagingModal(props) {
   const [showSuccesModal, setShowSuccesModal] = useState(false);
-  const { onHide, transactionId, fetchTransactionHistory } = props;
+  const { onHide, transactions, fetchTransactionHistory } = props;
 
   const onFinishPackaging = async () => {
     try {
       const res = await axios.put("/transactions/finish/packaging", {
-        transactionId,
+        transactionId: transactions.transactionId,
+        items: mapProductNameAndQuantity(transactions.detailTransactions),
       });
       if (res.data) {
         setShowSuccesModal(true);
@@ -19,6 +20,22 @@ function ConfirmFinishPackagingModal(props) {
     } catch (error) {
       throw error;
     }
+  };
+
+  const mapProductNameAndQuantity = (e) => {
+    // this data will be used to subtract the quantity in backend
+    var array = [];
+    e.filter((value) => {
+      array = [
+        ...array,
+        {
+          productName: value.productName,
+          quantity: value.quantity,
+          productColor: value.productColor,
+        },
+      ];
+    });
+    return array;
   };
 
   useEffect(() => {
