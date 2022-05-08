@@ -6,7 +6,7 @@
 }
 .chart-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
 .chart-title {
@@ -15,10 +15,4 @@
 }
 .chart-selector-form {
   margin-bottom: 20px;
-}
-.chart-selector {
-  width: 180px;
-}
-.chart-selector-container {
-  display: flex;
 }
