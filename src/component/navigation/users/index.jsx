@@ -46,9 +46,7 @@ function MuiNavBar() {
   if (location.includes("/admin")) {
     return null;
   }
-  if (location == "/transaction/status") {
-    return null;
-  }
+
   return (
     <div className="navBar">
       <Container
@@ -140,7 +138,7 @@ function MuiNavBar() {
               ) : (
                 ""
               )}
-              <Dropdown.Item href="#/action-2">Logout</Dropdown.Item>
+              <Dropdown.Item href="/login">Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Stack>

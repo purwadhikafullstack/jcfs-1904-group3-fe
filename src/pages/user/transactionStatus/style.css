@@ -10,6 +10,6 @@
 .status-header {
   text-align: center;
   border: 0.1px solid var(--lightGrey);
-  width: 1000px;
-  margin-top: 150px;
+  width: 1000px !important;
+  margin-top: 200px !important;
 }
