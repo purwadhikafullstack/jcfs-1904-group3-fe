@@ -1,5 +1,6 @@
 import React from "react";
 import { IconButton } from "@mui/material";
+import { TableCell, TableRow } from "@mui/material";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import "./style.css";
 
@@ -8,13 +9,16 @@ function Index(props) {
   const { onClickModalEditProducts, setSelectedProduct } = props;
 
   return (
-    <tr>
-      <td>{productId}</td>
-      <td>{productName}</td>
-      <td>
+    <TableRow
+      key={productId}
+      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+    >
+      <TableCell>{productId}</TableCell>
+      <TableCell>{productName}</TableCell>
+      <TableCell>
         <img className="product-image " src={image} />
-      </td>
-      <td className="table-data">
+      </TableCell>
+      <TableCell className="table-data">
         <IconButton
           className="button"
           onClick={(e) => {
@@ -26,8 +30,8 @@ function Index(props) {
         </IconButton>
 
         <button className="button">🗑️</button>
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 }
 

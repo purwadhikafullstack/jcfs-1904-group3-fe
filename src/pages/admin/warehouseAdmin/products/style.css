@@ -19,6 +19,7 @@
 }
 .button-container {
   display: flex;
+  justify-content: end;
 }
 .admin-product-button {
   width: 100%;

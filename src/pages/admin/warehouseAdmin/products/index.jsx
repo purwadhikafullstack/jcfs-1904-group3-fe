@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../../../utils/axios";
-import { Table } from "react-bootstrap";
-import { Button } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+} from "@mui/material";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ProductList from "./component/productList";
 import EditProductModal from "./modal/editProduct";
 import AddProductModal from "./modal/addProduct/stepOne";
@@ -84,18 +93,6 @@ function Index(props) {
     <div className="navigation-wrapper">
       <Sidebar />
       <div className="page-container">
-        <div className="table-header">
-          <Button
-            style={{ width: "290px" }}
-            variant="contained"
-            color="success"
-            onClick={() => {
-              setModalShowAddProduct(true);
-            }}
-          >
-            Add products
-          </Button>
-        </div>
         <AddProductModal
           show={modalShowAddProduct}
           onHide={() => {
@@ -112,40 +109,61 @@ function Index(props) {
         ) : (
           <></>
         )}
-        <div className="table-container">
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th className="row-1">id</th>
-                <th className="row-2">Products Name</th>
-                <th className="row-3">inspect</th>
-                <th className="row-4">Manage</th>
-              </tr>
-            </thead>
-            <tbody>
+        <TableContainer
+          component={Paper}
+          className="shoppingCart-table"
+          sx={{
+            marginTop: "50px",
+            width: "100%",
+            marginInline: "auto",
+          }}
+        >
+          <Table>
+            <TableRow>
+              <TableCell className="row-1">id</TableCell>
+              <TableCell className="row-2">Products Name</TableCell>
+              <TableCell className="row-3">inspect</TableCell>
+              <TableCell className="row-4">Manage</TableCell>
+            </TableRow>
+            <TableBody>
               {products.length ? renderProducts() : <h1>..Loading</h1>}
-            </tbody>
+            </TableBody>
           </Table>
-        </div>
+        </TableContainer>
         <div className="button-container">
           <Button
-            onClick={btnPrevPageHandler}
+            style={{
+              width: "200px",
+              backgroundColor: "lightgrey",
+              color: "black",
+            }}
             variant="contained"
-            sx={{ backgroundColor: "black" }}
+            onClick={() => {
+              setModalShowAddProduct(true);
+            }}
+          >
+            <span>Add Products</span>
+            <AddCircleIcon sx={{ marginLeft: "5px" }} />
+          </Button>
+
+          <Button
+            onClick={btnPrevPageHandler}
+            variant="text"
+            sx={{ color: "black" }}
             disabled={page == 1 && true}
           >
-            {"<"}
+            <h5>{"<"}</h5>
           </Button>
           <div className="text-center ml-3 mr-3">
             Page {page} of {maxPage}
           </div>
           <Button
             onClick={btnNextPageHandler}
-            variant="contained"
-            sx={{ backgroundColor: "black" }}
+            variant="text"
+            sx={{ color: "black" }}
             disabled={page === maxPage && true}
           >
-            {">"}
+            <h5>{">"}</h5>
           </Button>
         </div>
       </div>
