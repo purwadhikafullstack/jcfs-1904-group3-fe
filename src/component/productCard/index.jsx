@@ -1,20 +1,17 @@
 import React, { useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 function Index(props) {
+  const navigate = useNavigate();
   const { productName, productId, price, image } = props.product;
-  const { REACT_APP_CLIENT_URL } = process.env;
 
-  const link = `${REACT_APP_CLIENT_URL}/product-detail/${productId}`;
-  // useEffect(() => {
-  //   console.log(productName, productId, price, image);
-  // }, []);
   return (
     <div
       style={{ width: "25%", height: 300, border: 0, margin: 50 }}
       className="card"
     >
-      <Card>
+      <Card style={{ width: "100%" }}>
         <div style={{ width: 400, height: 300, border: 0 }}>
           <Card.Img variant="top" src={image} className="image" />
         </div>
@@ -28,8 +25,13 @@ function Index(props) {
           <Card.Text>{productName}</Card.Text>
           <Card.Text>Rp.{price}</Card.Text>
         </Card.Body>
-        <Button href={link} variant="outline-dark">
-          Dark
+        <Button
+          onClick={() => {
+            navigate(`/product-detail/${productId}`);
+          }}
+          variant="outline-dark"
+        >
+          Product Detail
         </Button>
       </Card>
     </div>

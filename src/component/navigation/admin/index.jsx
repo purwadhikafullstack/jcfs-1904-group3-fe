@@ -1,52 +1,42 @@
 import "./style.css";
-import {
-  LineStyle,
-  Timeline,
-  TrendingUp,
-  PermIdentity,
-  Storefront,
-  AttachMoney,
-  BarChart,
-  MailOutline,
-  DynamicFeed,
-  ChatBubbleOutline,
-  WorkOutline,
-  Report,
-} from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { TrendingUp, Storefront, AttachMoney } from "@mui/icons-material";
+import ProfileIcon from "@mui/icons-material/AccountCircle";
+import { Dropdown } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Sidebar() {
+  const username = useSelector((state) => state.auth.username);
+  const navigate = useNavigate();
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Dashboard</h3>
+          <Dropdown>
+            <Dropdown.Toggle
+              style={{
+                backgroundColor: "inherit",
+                color: "black",
+                border: "0",
+              }}
+            >
+              <ProfileIcon />
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu variant="dark">
+              <Dropdown.Item>Hello {username}</Dropdown.Item>
+
+              <Dropdown.Item href="/login">Logout</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <h3 className="sidebarTitle" style={{ marginTop: "10px" }}>
+            Dashboard
+          </h3>
           <ul className="sidebarList">
-            <Link to="/" className="link">
-              <li className="sidebarListItem active">
-                <LineStyle className="sidebarIcon" />
-                Home
-              </li>
-            </Link>
-            <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
-              Analytics
-            </li>
             <Link to="/admin/sales-report" className="link">
               <li className="sidebarListItem">
                 <TrendingUp className="sidebarIcon" />
                 Sales
-              </li>
-            </Link>
-          </ul>
-        </div>
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Quick Menu</h3>
-          <ul className="sidebarList">
-            <Link to="/users" className="link">
-              <li className="sidebarListItem">
-                <PermIdentity className="sidebarIcon" />
-                Users
               </li>
             </Link>
             <Link to="/admin/products" className="link">
@@ -55,48 +45,12 @@ function Sidebar() {
                 Products
               </li>
             </Link>
-            <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
-              Transactions
-            </li>
-            <li className="sidebarListItem">
-              <BarChart className="sidebarIcon" />
-              Reports
-            </li>
-          </ul>
-        </div>
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Notifications</h3>
-          <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <MailOutline className="sidebarIcon" />
-              Mail
-            </li>
-            <li className="sidebarListItem">
-              <DynamicFeed className="sidebarIcon" />
-              Feedback
-            </li>
-            <li className="sidebarListItem">
-              <ChatBubbleOutline className="sidebarIcon" />
-              Messages
-            </li>
-          </ul>
-        </div>
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Staff</h3>
-          <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <WorkOutline className="sidebarIcon" />
-              Manage
-            </li>
-            <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-              <Report className="sidebarIcon" />
-              Reports
-            </li>
+            <Link to="/admin/transactions" className="link">
+              <li className="sidebarListItem">
+                <AttachMoney className="sidebarIcon" />
+                Transactions
+              </li>
+            </Link>
           </ul>
         </div>
       </div>

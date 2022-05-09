@@ -8,6 +8,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "@mui/core": "^5.0.0-alpha.54",
     "@mui/icons-material": "^5.5.1",
     "@mui/lab": "^5.0.0-alpha.74",
     "@mui/material": "^5.5.2",
@@ -29,7 +30,8 @@
     "recharts": "^2.1.9",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

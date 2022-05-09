@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "../../../../utils/axios";
 import { Button } from "@mui/material";
 import { width } from "@mui/system";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
+import { useSelector } from "react-redux";
 
 function Index(props) {
+  const userId = useSelector((state) => state.auth.id);
+  const token = useSelector((state) => state.auth.token);
+  const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const { variants, setSelectedVariant } = props;
   const {
@@ -33,12 +38,21 @@ function Index(props) {
 
   const onAddToChart = async () => {
     try {
-      const res = await axios.post("/carts", {
-        userId: 1,
-        variantId,
-        productId,
-        productQuantity: quantity,
-      });
+      const res = await axios.post(
+        "/carts",
+        {
+          userId: userId,
+          variantId,
+          productId,
+          productQuantity: quantity,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      navigate("/carts");
     } catch (error) {
       throw error;
     }

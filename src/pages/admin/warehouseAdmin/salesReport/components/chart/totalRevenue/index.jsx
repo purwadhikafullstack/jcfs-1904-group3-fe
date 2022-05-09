@@ -84,28 +84,29 @@ function ChartRevenue() {
 
   return (
     <div className="chart">
-      <div className="chart-header">
+      <div className="chart-editor">
         <h3 className="chart-title">Total Revenue</h3>
-        <div className="chart-selector-container">
-          <FormControl fullWidth className="chart-selector-form">
+        <div className="chart-selector-form">
+          <FormControl>
             <InputLabel id="demo-simple-select-label">sortBy</InputLabel>
             <Select
               label="sortBy"
-              className="chart-selector"
+              sx={{ width: "350px" }}
               onChange={handleSortMethod}
             >
               <MenuItem value="month">Month</MenuItem>
-              <MenuItem value="MethodValue">MethodValue</MenuItem>
+              <MenuItem value="year">year</MenuItem>
             </Select>
           </FormControl>
-
+        </div>
+        <div className="chart-selector-form">
           {sortMethod === "month" ? (
             <FormControl fullWidth className="chart-selector-form">
-              <InputLabel id="demo-simple-select-label">MethodValue</InputLabel>
+              <InputLabel id="demo-simple-select-label">Year</InputLabel>
               <Select
                 label="MethodValue"
                 onChange={handleMethodValueChange}
-                className="chart-selector"
+                sx={{ width: "350px" }}
               >
                 <MenuItem value="2022">2022</MenuItem>
                 <MenuItem value="2021">2021</MenuItem>
@@ -117,7 +118,7 @@ function ChartRevenue() {
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" aspect={4 / 1}>
+      <ResponsiveContainer maxWidth="1100px" aspect={4 / 2}>
         <LineChart data={chartData}>
           <XAxis
             dataKey={sortMethod == "month" ? "month" : "year"}

@@ -19,6 +19,7 @@ function ChartProduct() {
   const [sortMethodValue, setSortMethodValue] = useState("2022");
   const [enteredSearchValue, setEnteredSearchValue] = useState("Poang");
   const [searchValue, setSearchValue] = useState("");
+  const [products, setProducts] = useState([]);
 
   const fetchProductNames = async () => {
     try {
@@ -38,7 +39,15 @@ function ChartProduct() {
           sortMethodValue,
         },
       });
-      const { result } = res.data;
+      const { result, productId } = res.data;
+
+      const resProduct = await axios.get("/products/productDetail", {
+        params: {
+          id: productId[0].id,
+        },
+      });
+
+      setProducts(resProduct.data.result);
       mappingChart(result);
     } catch (error) {
       throw error;
@@ -117,10 +126,31 @@ function ChartProduct() {
       }
     }
   };
+
+  const mapProducts = () => {
+    return products.map((value) => {
+      return (
+        <div style={{ display: "flex" }}>
+          <div>
+            <img style={{ width: "50px" }} src={value.image} />
+          </div>
+          <div>
+            <p>{value.variant}</p>
+            <p>quantity available : {value.qtyAvailable}</p>
+            <p>price : {value.price}</p>
+          </div>
+        </div>
+      );
+    });
+  };
   useEffect(() => {
     fetchProductNames();
     fetchChartData();
   }, []);
+
+  useEffect(() => {
+    console.log(products);
+  }, [products]);
 
   useEffect(() => {
     fetchChartData();
@@ -128,18 +158,15 @@ function ChartProduct() {
 
   return (
     <div className="chart">
-      <div className="chart-header">
-        <div>
-          <h3 className="chart-title">Products Sales</h3>
-          <h5 className="chart-title">Product: {enteredSearchValue}</h5>
-        </div>
+      <div className="chart-editor">
+        <h3 className="chart-title">Products Sales</h3>
 
-        <div className="chart-selector-container">
+        <div>
           <Autocomplete
             disablePortal
             id="combo-box-demo"
             options={productNames}
-            sx={{ width: 700 }}
+            sx={{ width: "350px" }}
             renderInput={(params) => (
               <TextField {...params} label="Search Products" />
             )}
@@ -148,25 +175,30 @@ function ChartProduct() {
             onInputChange={handleSearch}
             onKeyPress={enterSearch}
           />
-          ;
-          <FormControl fullWidth className="chart-selector-form">
-            <InputLabel id="demo-simple-select-label">sortBy</InputLabel>
+        </div>
+        <h5 className="chart-title">Product: {enteredSearchValue}</h5>
+        <div>{mapProducts()}</div>
+        <div className="chart-selector-form">
+          <FormControl>
+            <InputLabel>sortBy</InputLabel>
             <Select
               label="sortBy"
-              className="chart-selector"
               onChange={handleSortMethod}
+              sx={{ width: "350px" }}
             >
               <MenuItem value="month">Month</MenuItem>
               <MenuItem value="year">Year</MenuItem>
             </Select>
           </FormControl>
+        </div>
+        <div className="chart-selector-form">
           {sortMethod === "month" ? (
-            <FormControl fullWidth className="chart-selector-form">
-              <InputLabel id="demo-simple-select-label">year</InputLabel>
+            <FormControl>
+              <InputLabel>year</InputLabel>
               <Select
                 label="year"
                 onChange={handleSortMethodValue}
-                className="chart-selector"
+                sx={{ width: "350px" }}
               >
                 <MenuItem value="2022">2022</MenuItem>
                 <MenuItem value="2021">2021</MenuItem>
@@ -178,7 +210,7 @@ function ChartProduct() {
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" aspect={4 / 1}>
+      <ResponsiveContainer width="90%" aspect={4 / 2}>
         <LineChart data={chartData}>
           <XAxis
             dataKey={sortMethod == "month" ? "month" : "year"}
