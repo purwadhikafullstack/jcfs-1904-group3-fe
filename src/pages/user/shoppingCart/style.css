@@ -1,3 +1,15 @@
+:root {
+  --lightGrey: #dadcdc;
+}
+
+.header-custom {
+  padding-block: 20px;
+  text-align: center;
+  margin-left: 25px;
+  width: 93%;
+  border-block: 0.1px solid var(--lightGrey);
+}
+
 .shoppingCart {
   display: flex;
   flex-direction: column;
