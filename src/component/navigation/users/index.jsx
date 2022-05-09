@@ -65,6 +65,9 @@ function MuiNavBar() {
             alt="Logo"
             height={50}
             style={{ marginRight: 50 }}
+            onClick={() => {
+              navigate("/");
+            }}
           />
           <Button
             onClick={() => handleChange("cat")}

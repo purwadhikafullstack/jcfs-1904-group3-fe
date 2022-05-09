@@ -21,7 +21,7 @@ function Index() {
   const [paginationState, setPaginationState] = useState({
     page: 1,
     maxPage: 0,
-    itemsPerPage: 9,
+    itemsPerPage: 12,
   });
   const { page, maxPage, itemsPerPage } = paginationState;
   const keyWordModify = () => {

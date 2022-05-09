@@ -2,37 +2,33 @@ import React, { useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
+import FormatIdr from "../formatCurrency";
 function Index(props) {
   const navigate = useNavigate();
-  const { productName, productId, price, image } = props.product;
+  const { productName, productId, qtyAvailable, price, image } = props.product;
 
   return (
     <div
-      style={{ width: "25%", height: 300, border: 0, margin: 50 }}
       className="card"
+      style={{ width: "400px" }}
+      onClick={() => {
+        navigate(`/product-detail/${productId}`);
+      }}
     >
-      <Card style={{ width: "100%" }}>
-        <div style={{ width: 400, height: 300, border: 0 }}>
-          <Card.Img variant="top" src={image} className="image" />
+      <Card>
+        <div style={{ padding: "20px" }}>
+          <Card.Img
+            style={{ width: "350px" }}
+            variant="top"
+            src={image}
+            className="image"
+          />
         </div>
-        <Card.Body
-          style={{
-            padding: 0,
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
+        <Card.Body>
           <Card.Text>{productName}</Card.Text>
-          <Card.Text>Rp.{price}</Card.Text>
+
+          <Card.Text>{FormatIdr(price)}</Card.Text>
         </Card.Body>
-        <Button
-          onClick={() => {
-            navigate(`/product-detail/${productId}`);
-          }}
-          variant="outline-dark"
-        >
-          Product Detail
-        </Button>
       </Card>
     </div>
   );
