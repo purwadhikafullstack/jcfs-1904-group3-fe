@@ -11,9 +11,11 @@ function Index(props) {
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
-  const { variants, setSelectedVariant } = props;
+  const { variants, setSelectedVariant, selectedVariant, setSelectedSize } =
+    props;
   const {
     productId,
+    size,
     image,
     price,
     productName,
@@ -24,6 +26,10 @@ function Index(props) {
 
   const variantSelection = (e) => {
     setSelectedVariant(e.target.value);
+  };
+
+  const sizeSelection = (e) => {
+    setSelectedSize(e.target.value);
   };
 
   const onQuantityIncrement = (e) => {
@@ -60,12 +66,13 @@ function Index(props) {
 
   const imageButtonMapping = () => {
     return variants.map((value) => {
-      const colorLowerCased = value.toLowerCase();
+      // console.log(value);
+      const colorLowerCased = value.variant.toLowerCase();
 
       return (
         <button
           className="roundButton"
-          value={value}
+          value={value.variant}
           onClick={variantSelection}
           style={{ backgroundColor: colorLowerCased }}
         ></button>
@@ -73,9 +80,26 @@ function Index(props) {
     });
   };
 
-  useEffect(() => {
-    console.log(props);
-  }, []);
+  const sizeButtonMapping = () => {
+    return variants.map((value) => {
+      if (value.variant === selectedVariant)
+        return value.size.map((value) => {
+          return (
+            <button
+              value={value}
+              onClick={sizeSelection}
+              style={{ backgroundColor: "white", marginRight: "5px" }}
+            >
+              {value}
+            </button>
+          );
+        });
+    });
+  };
+
+  // useEffect(() => {
+  //   console.log(size);
+  // }, []);
 
   return (
     <div>
@@ -104,8 +128,14 @@ function Index(props) {
               </button>
             </div>
             <h6>quantity available : {qtyAvailable}</h6>
-            <p>{variant}</p>
+            <h6>selected color : {variant} </h6>
+
+            <h6>selected size : {size}</h6>
             <div className="d-flex flex-row">{imageButtonMapping()}</div>
+
+            <div className="d-flex flex-row" style={{ marginBlock: "10px" }}>
+              {sizeButtonMapping()}
+            </div>
             <button onClick={onAddToChart} className="btn btn-success mt-3">
               Add to cart
             </button>
