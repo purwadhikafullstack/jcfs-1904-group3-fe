@@ -3,8 +3,9 @@ import { Modal, Button } from "react-bootstrap";
 import axios from "../../../../utils/axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import FailedAlert from "../../../../component/alert/failed";
 function CheckoutModal(props) {
+  const [failedAlert, setFailedAlert] = useState(false);
   const navigate = useNavigate();
   const userId = useSelector((state) => state.auth.id);
   const token = useSelector((state) => state.auth.token);
@@ -23,9 +24,20 @@ function CheckoutModal(props) {
   const onClickContinue = async () => {
     const addressId = await postAddress();
     const transactionId = await postTransaction(addressId);
-    postDetailTransaction(transactionId);
-    deleteCarts();
-    navigate("/transaction/status");
+    if (!transactionId) {
+      setFailedAlert(true);
+      setTimeout(() => {
+        onHide();
+        setFailedAlert(false);
+        deleteCarts();
+        navigate("/product-list");
+      }, 2000);
+    }
+    if (transactionId) {
+      postDetailTransaction(transactionId);
+      deleteCarts();
+      navigate("/transaction/status");
+    }
   };
 
   const deleteCarts = async () => {
@@ -61,20 +73,29 @@ function CheckoutModal(props) {
   };
 
   const postTransaction = async (e) => {
-    const res = await axios.post(
-      "/transactions/waiting-payment",
-      {
-        userId: userId,
-        addressId: e,
-        totalAmount: totalToPay,
-      },
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
+    try {
+      const res = await axios.post(
+        "/transactions/waiting-payment",
+        {
+          userId: userId,
+          addressId: e,
+          totalAmount: totalToPay,
+          carts,
         },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.data.transactionId) {
+        return res.data.transactionId;
+      } else {
+        return false;
       }
-    );
-    return res.data.transactionId;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const postDetailTransaction = async (e) => {
@@ -107,6 +128,11 @@ function CheckoutModal(props) {
           Continue
         </Button>
       </Modal.Footer>
+      {failedAlert ? (
+        <FailedAlert message={"Oops your late,the product is unavailable"} />
+      ) : (
+        ""
+      )}
     </Modal>
   );
 }
