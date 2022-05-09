@@ -187,6 +187,7 @@ function Checkout() {
             <p>Product Name : {value.productName}</p>
             <p>Variant : {value.variant}</p>
             <p>qty : {value.productQuantity}</p>
+            <p>size : {value.size}</p>
           </div>
           <div className="item-total">
             <p>

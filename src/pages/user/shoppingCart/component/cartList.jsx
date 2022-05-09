@@ -18,6 +18,7 @@ function CartList({ carts, onAddQuantity, onSubtractQuantity }) {
               <div className="product-description-container">
                 <h5>{value.productName}</h5>
                 <p> Variant : {value.variant}</p>
+                <p>Size:{value.size}</p>
               </div>
             </div>
           </TableCell>

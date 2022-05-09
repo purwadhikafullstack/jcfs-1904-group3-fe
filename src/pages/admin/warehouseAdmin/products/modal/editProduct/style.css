@@ -34,3 +34,12 @@
   border: 1px solid black;
   height: 30%;
 }
+
+.quantity-row {
+  padding: 0px;
+  width: 100px;
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+  border: 0.1px solid black;
+}
