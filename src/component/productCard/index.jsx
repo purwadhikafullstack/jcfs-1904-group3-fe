@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Card, Button } from "react-bootstrap";
+import React from "react";
+import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 import FormatIdr from "../formatCurrency";

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Alert, Snackbar } from "@mui/material";
+import { Snackbar } from "@mui/material";
 
 const SuccessAlert = () => {
   const [open, setOpen] = useState(true);
