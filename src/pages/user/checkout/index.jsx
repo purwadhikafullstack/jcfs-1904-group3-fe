@@ -269,9 +269,6 @@ function Checkout() {
 
   return (
     <div className="checkout-container">
-      <div className="checkout-header">
-        <h1>The Warehouse</h1>
-      </div>
       <div className="checkout-form-container">
         <div className="checkout-form">
           <h4 className="checkout-form-address-header">Fill In The Address</h4>

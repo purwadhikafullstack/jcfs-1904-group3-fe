@@ -40,9 +40,7 @@ function MuiNavBar() {
     const category = e.target.value;
     navigate(`/product-list/${category}`);
   };
-  if (location == "/checkout") {
-    return null;
-  }
+
   if (location.includes("/admin")) {
     return null;
   }

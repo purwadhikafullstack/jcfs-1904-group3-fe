@@ -7,16 +7,24 @@ function listingProducts(props) {
 
   const renderProducts = () => {
     return products.map((product) => (
-      <Grid item xs={3}>
+      <Grid item xs={3} style={{ paddingInline: "80px" }}>
         <ProductCard product={product} />
       </Grid>
     ));
   };
   return (
+    // <Grid
+    //   sx={{ width: "100%" }}
+    //   container
+    //   wrap="true"
+    //   spacing={{ xs: 2, sm: 5, md: 18 }}
+    //   columns={{ xs: 4, sm: 5, md: 12 }}
+    // >
+    //   {renderProducts()}
+    // </Grid>
     <Grid
       container
-      sx={{ width: "100%", paddingLeft: "50px", marginTop: "10px" }}
-      spacing={5}
+      sx={{ width: "100%", paddingRight: "100px", marginTop: "10px" }}
     >
       {renderProducts()}
     </Grid>
