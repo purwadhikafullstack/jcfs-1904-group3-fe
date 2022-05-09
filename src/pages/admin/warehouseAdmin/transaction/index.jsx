@@ -142,10 +142,6 @@ function TransactionStatus() {
     );
   }, []);
 
-  // useEffect(() => {
-  //   console.log(packagingData);
-  // }, [packagingData]);
-
   return (
     <div className="navigation-wrapper">
       <Sidebar />

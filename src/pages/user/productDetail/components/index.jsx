@@ -66,7 +66,6 @@ function Index(props) {
 
   const imageButtonMapping = () => {
     return variants.map((value) => {
-      // console.log(value);
       const colorLowerCased = value.variant.toLowerCase();
 
       return (
@@ -96,10 +95,6 @@ function Index(props) {
         });
     });
   };
-
-  // useEffect(() => {
-  //   console.log(size);
-  // }, []);
 
   return (
     <div>

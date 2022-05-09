@@ -26,17 +26,17 @@ function Index() {
             ...variantMap,
             { variant: value.variant, size: [value.size] },
           ];
-          console.log("1");
+        
         }
 
         if (index > 0) {
           variantMap.map((vM, i) => {
             if (vM.variant === value.variant) {
-              console.log("2");
+            
               variantMap[i].size = [...variantMap[i].size, value.size];
             }
             if (variantMap[variantMap.length - 1].variant != value.variant) {
-              console.log("3");
+           
               variantMap = [
                 ...variantMap,
                 { variant: value.variant, size: [value.size] },

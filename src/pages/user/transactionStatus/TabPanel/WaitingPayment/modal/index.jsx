@@ -20,16 +20,12 @@ function ConfirmationModal(props) {
           },
         }
       );
-      console.log(res);
+
       onHide();
     } catch (error) {
       throw error;
     }
   };
-
-  useEffect(() => {
-    console.log(token);
-  }, []);
 
   return (
     <Modal {...props} backdrop="static" keyboard={false} centered>

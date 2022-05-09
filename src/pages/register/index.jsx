@@ -126,6 +126,7 @@ function Register() {
             id="password"
             label="Password"
             name="password"
+            type="password"
             autoComplete="password"
             autoFocus
           />
@@ -137,7 +138,7 @@ function Register() {
             fullWidth
             name="re-enter password"
             label="Re-enter Password"
-            type="re-enter password"
+            type="password"
             id="re-enter password"
             autoComplete="re-enter password"
           />

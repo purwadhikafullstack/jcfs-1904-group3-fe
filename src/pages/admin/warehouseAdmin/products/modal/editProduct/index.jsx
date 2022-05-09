@@ -180,7 +180,6 @@ function Index(props) {
   };
 
   const handleQuantityIncrement = () => {
-    console.log(qtyAvailable);
     setProducts({
       ...product,
       qtyAvailable: qtyAvailable + 1,
