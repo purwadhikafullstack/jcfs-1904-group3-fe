@@ -20,7 +20,6 @@ function ConfirmationModal(props) {
           },
         }
       );
-
       onHide();
     } catch (error) {
       throw error;

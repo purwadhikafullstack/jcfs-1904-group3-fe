@@ -57,7 +57,6 @@ function FinishDeliveringPayment(props) {
       fetchTransactionHistory();
     }
   }, [showSuccessModal]);
- 
 
   return (
     <Modal {...props} backdrop="static" keyboard={false}>
