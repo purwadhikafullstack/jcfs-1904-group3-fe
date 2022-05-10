@@ -3,7 +3,14 @@ import { Modal, Button } from "react-bootstrap";
 import axios from "../../../../../../utils/axios";
 
 function ConfirmationModal(props) {
-  const { onHide, transactionId, previewImage, paymentEvidence, token } = props;
+  const {
+    onHide,
+    transactionId,
+    previewImage,
+    paymentEvidence,
+    token,
+    handleChange,
+  } = props;
 
   const onClickContinue = async () => {
     try {
@@ -21,6 +28,7 @@ function ConfirmationModal(props) {
         }
       );
       onHide();
+      handleChange("event", 1);
     } catch (error) {
       throw error;
     }

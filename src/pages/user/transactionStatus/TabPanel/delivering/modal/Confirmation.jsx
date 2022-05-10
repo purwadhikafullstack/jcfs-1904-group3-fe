@@ -5,6 +5,7 @@ import axios from "../../../../../../utils/axios";
 import SuccessModal from "../../../../../../component/modal/SuccessModal";
 
 function FinishDeliveringPayment(props) {
+  const { handleChange } = props;
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const {
     onHide,
@@ -30,6 +31,7 @@ function FinishDeliveringPayment(props) {
       );
 
       setShowSuccessModal(true);
+      handleChange("event", 4);
     } catch (error) {
       throw error;
     }
