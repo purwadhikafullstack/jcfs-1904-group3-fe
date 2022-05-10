@@ -5,7 +5,7 @@ import ConfirmationModal from "./modal";
 import "./style.css";
 import { useSelector } from "react-redux";
 
-function TabWaitingPayment() {
+function TabWaitingPayment({handleChange}) {
   const userId = useSelector((state) => state.auth.id);
   const token = useSelector((state) => state.auth.token);
 
@@ -139,6 +139,7 @@ function TabWaitingPayment() {
               previewImage={previewImage}
               paymentEvidence={paymentEvidence}
               token={token}
+              handleChange={handleChange}
             />
           )}
         </div>

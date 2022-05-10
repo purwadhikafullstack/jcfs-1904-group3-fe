@@ -6,7 +6,7 @@ import FinishDeliveringPayment from "./modal/Confirmation";
 import "./style.css";
 import { useSelector } from "react-redux";
 
-function TabDelivering() {
+function TabDelivering({ handleChange }) {
   const userId = useSelector((state) => state.auth.id);
   const token = useSelector((state) => state.auth.token);
   const [selectedTransaction, setSelectedTransaction] = useState([]);
@@ -133,6 +133,7 @@ function TabDelivering() {
                     detailTransactions={detailTransaction}
                     fetchTransactionHistory={fetchTransactionHistory}
                     token={token}
+                    handleChange={handleChange}
                   />
                 ) : (
                   ""

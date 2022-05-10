@@ -66,10 +66,10 @@ function TransactionStatus() {
             <Tab sx={{ width: "16.6%" }} label="Rejected" />
           </Tabs>
         </Box>
-        {value === 0 && <TabWaitingPayment />}
+        {value === 0 && <TabWaitingPayment handleChange={handleChange} />}
         {value === 1 && <TabWaitingConfirmation />}
         {value === 2 && <TabPackaging />}
-        {value === 3 && <TabDelivering />}
+        {value === 3 && <TabDelivering handleChange={handleChange} />}
         {value === 4 && <TabCompleted />}
         {value === 5 && <TabRejected />}
       </Box>
