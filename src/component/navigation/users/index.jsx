@@ -47,6 +47,10 @@ function MuiNavBar() {
     return null;
   }
 
+  if (location.includes("/admin")) {
+    return null;
+  }
+
   return (
     <div className="navBar">
       <Container
@@ -65,6 +69,9 @@ function MuiNavBar() {
             alt="Logo"
             height={50}
             style={{ marginRight: 50 }}
+            onClick={() => {
+              navigate("/");
+            }}
           />
           <Button
             onClick={() => handleChange("cat")}
@@ -156,7 +163,8 @@ function MuiNavBar() {
         >
           <Button
             variant="text"
-            value="sofa"
+            value="Sofa"
+            onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
@@ -165,6 +173,7 @@ function MuiNavBar() {
           <Button
             variant="text"
             value="Chairs"
+            onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
@@ -172,6 +181,7 @@ function MuiNavBar() {
           </Button>
           <Button
             variant="text"
+            value="Tables"
             onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
@@ -180,35 +190,31 @@ function MuiNavBar() {
           </Button>
           <Button
             variant="text"
+            value="Storages"
             onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
-            Storage
+            Storages
           </Button>
           <Button
             variant="text"
+            value="Beds"
             onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
             Beds
           </Button>
+
           <Button
             variant="text"
+            value="Desks"
             onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
-            wardrobe
-          </Button>
-          <Button
-            variant="text"
-            onClick={categoryNavigate}
-            style={{ color: "black", marginRight: 10, fontSize: 12 }}
-            className="categoryButton"
-          >
-            lighting
+            Desks
           </Button>
         </Container>
       ) : (
@@ -241,14 +247,16 @@ function MuiNavBar() {
           </Button>
           <Button
             variant="text"
+            value="Kitchen"
             onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"
           >
-            School
+            Kitchen
           </Button>
           <Button
             variant="text"
+            value="Kids"
             onClick={categoryNavigate}
             style={{ color: "black", marginRight: 10, fontSize: 12 }}
             className="categoryButton"

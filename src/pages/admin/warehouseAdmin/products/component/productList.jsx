@@ -2,11 +2,17 @@ import React from "react";
 import { IconButton } from "@mui/material";
 import { TableCell, TableRow } from "@mui/material";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import "./style.css";
 
 function Index(props) {
   const { productName, productId, image } = props.products;
-  const { onClickModalEditProducts, setSelectedProduct } = props;
+  const {
+    onClickModalEditProducts,
+    setSelectedProduct,
+    deleteProducts,
+    onClickModalDeleteProducts,
+  } = props;
 
   return (
     <TableRow
@@ -28,8 +34,14 @@ function Index(props) {
         >
           <ModeEditIcon />
         </IconButton>
-
-        <button className="button">🗑️</button>
+        <IconButton
+          className="button"
+          onClick={() => {
+            onClickModalDeleteProducts(productId);
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>
       </TableCell>
     </TableRow>
   );

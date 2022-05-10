@@ -64,7 +64,6 @@ function ChartRevenue() {
     } else {
       e.filter((value) => {
         const year = value.Date.split("-")[0];
-        console.log(year);
         const Rupiah = parseInt(value.totalAmount);
 
         mappingResult.push({ year, Rupiah });

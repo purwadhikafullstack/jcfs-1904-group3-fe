@@ -14,12 +14,15 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ProductList from "./component/productList";
 import EditProductModal from "./modal/editProduct";
 import AddProductModal from "./modal/addProduct/stepOne";
+import ConfirmDeleteModal from "./modal/deleteProduct/Confirmation";
 import Sidebar from "../../../../component/navigation/admin";
 import "./style.css";
 import "../style.css";
 
 function Index(props) {
+  const [selectedDeleteProduct, setSelectedDeleteProduct] = useState("");
   const [selectedProduct, setSelectedProduct] = useState("");
+  const [modalShowDeleteProduct, setModalShowDeleteProduct] = useState(false);
   const [modalShowEditProduct, setModalShowEditProduct] = useState(false);
   const [modalShowAddProduct, setModalShowAddProduct] = useState(false);
   const [products, setProducts] = useState([]);
@@ -47,15 +50,15 @@ function Index(props) {
       console.log({ error });
     }
   };
-  const deleteProducts = async () => {
+  const deleteProducts = async (e) => {
     try {
       const res = await axios.delete("/products", {
         headers: {},
         data: {
-          productId: selectedProduct,
+          productId: e,
         },
       });
-      alert("product berhasil di hapus");
+      return true;
     } catch (error) {
       throw error;
     }
@@ -76,6 +79,11 @@ function Index(props) {
           products={value}
           onClickModalEditProducts={onClickModalEditProducts}
           setSelectedProduct={setSelectedProduct}
+          deleteProducts={deleteProducts}
+          onClickModalDeleteProducts={(e) => {
+            setModalShowDeleteProduct(true);
+            setSelectedDeleteProduct(e);
+          }}
         />
       );
     });
@@ -97,13 +105,27 @@ function Index(props) {
           show={modalShowAddProduct}
           onHide={() => {
             setModalShowAddProduct(false);
+            fetchProducts();
           }}
         />
+        {selectedDeleteProduct ? (
+          <ConfirmDeleteModal
+            axiosFunction={deleteProducts}
+            show={modalShowDeleteProduct}
+            onHide={() => setModalShowDeleteProduct(false)}
+            selectedDeleteProduct={selectedDeleteProduct}
+          />
+        ) : (
+          " "
+        )}
 
         {selectedProduct ? (
           <EditProductModal
             show={modalShowEditProduct}
-            onHide={() => setModalShowEditProduct(false)}
+            onHide={() => {
+              setModalShowEditProduct(false);
+              setSelectedProduct("");
+            }}
             selectedProduct={selectedProduct}
           />
         ) : (

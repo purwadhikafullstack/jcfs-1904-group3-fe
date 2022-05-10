@@ -141,8 +141,8 @@ function Carts() {
   return (
     <div className="shoppingCart">
       <div className="shoppingCart-container">
-        <h1>Shopping Basket</h1>
-        <TableContainer component={Paper} className="shoppingCart-table">
+        <h1 className="header-custom">Shopping Basket</h1>
+        <TableContainer component={Paper} sx={{ height: "500px" }}>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>

@@ -187,6 +187,7 @@ function Checkout() {
             <p>Product Name : {value.productName}</p>
             <p>Variant : {value.variant}</p>
             <p>qty : {value.productQuantity}</p>
+            <p>size : {value.size}</p>
           </div>
           <div className="item-total">
             <p>
@@ -269,9 +270,7 @@ function Checkout() {
 
   return (
     <div className="checkout-container">
-      <div className="checkout-header">
-        <h1>The Warehouse</h1>
-      </div>
+      <h1 className="header-custom">Checkout Your Items</h1>
       <div className="checkout-form-container">
         <div className="checkout-form">
           <h4 className="checkout-form-address-header">Fill In The Address</h4>

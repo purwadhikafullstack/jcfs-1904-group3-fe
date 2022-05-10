@@ -28,6 +28,7 @@ function Index(props) {
     image,
     variant,
     qtyTotal,
+    qtyAvailable,
     size,
     variantId,
   } = product;
@@ -59,6 +60,7 @@ function Index(props) {
       });
       setSelectedProductCategory(resGetCategory.data.result);
       const { result, dataCount } = resGetProducts.data;
+
       setProducts(result[0]);
       setPaginationState({
         ...paginationState,
@@ -76,6 +78,7 @@ function Index(props) {
           color: variant,
           price,
           qtyTotal,
+          qtyAvailable,
         },
         productId,
         variantId,
@@ -168,6 +171,22 @@ function Index(props) {
     setProducts({ ...product, [e.target.name]: e.target.value });
   };
 
+  const handleQuantityDecrement = () => {
+    setProducts({
+      ...product,
+      qtyAvailable: qtyAvailable - 1,
+      qtyTotal: qtyTotal - 1,
+    });
+  };
+
+  const handleQuantityIncrement = () => {
+    setProducts({
+      ...product,
+      qtyAvailable: qtyAvailable + 1,
+      qtyTotal: qtyTotal + 1,
+    });
+  };
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -226,15 +245,25 @@ function Index(props) {
               placeholder="Enter Product Name"
               className="Input"
             />
+
             <label>Product Quantity</label>
-            <input
-              name="qtyTotal"
-              value={qtyTotal}
-              onChange={handleChange}
-              type="text"
-              placeholder="Enter Product Name"
-              className="Input"
-            />
+            <div className="quantity-row">
+              <Button
+                variant="text"
+                sx={{ color: "black" }}
+                onClick={handleQuantityDecrement}
+              >
+                <h5>-</h5>
+              </Button>
+              <p className="button-quantity-amount">{qtyTotal}</p>
+              <Button
+                variant="text"
+                sx={{ color: "black" }}
+                onClick={handleQuantityIncrement}
+              >
+                <h5>+</h5>
+              </Button>
+            </div>
           </div>
           <div className="editor-form-content-two">
             <label>Category List</label>

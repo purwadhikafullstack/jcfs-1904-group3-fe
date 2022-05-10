@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -7,15 +6,11 @@ import {
   Button,
   CssBaseline,
   TextField,
-  Link,
   Box,
   Typography,
   Container,
-  Snackbar,
-  Alert,
 } from "@mui/material/";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import CircularProgress from "@mui/material/CircularProgress";
 
 import RegisterSchema from "../../component/validation/register";
 import SuccessAlert from "../../component/alert/success";
@@ -126,6 +121,7 @@ function Register() {
             id="password"
             label="Password"
             name="password"
+            type="password"
             autoComplete="password"
             autoFocus
           />
@@ -137,7 +133,7 @@ function Register() {
             fullWidth
             name="re-enter password"
             label="Re-enter Password"
-            type="re-enter password"
+            type="password"
             id="re-enter password"
             autoComplete="re-enter password"
           />

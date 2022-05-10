@@ -9,6 +9,7 @@ function Index() {
   const [slicedProducts, setSlicedProducts] = useState({});
   const [variants, setVariants] = useState([]);
   const [selectedVariant, setSelectedVariant] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
 
   const fetchProducts = async () => {
     try {
@@ -17,11 +18,37 @@ function Index() {
       });
       const { data } = res;
       setProducts(data.result);
-      const variantMap = data.result.map((value) => {
-        return value.variant;
+
+      var variantMap = [];
+      data.result.map((value, index) => {
+        if (index == 0) {
+          variantMap = [
+            ...variantMap,
+            { variant: value.variant, size: [value.size] },
+          ];
+        
+        }
+
+        if (index > 0) {
+          variantMap.map((vM, i) => {
+            if (vM.variant === value.variant) {
+            
+              variantMap[i].size = [...variantMap[i].size, value.size];
+            }
+            if (variantMap[variantMap.length - 1].variant != value.variant) {
+           
+              variantMap = [
+                ...variantMap,
+                { variant: value.variant, size: [value.size] },
+              ];
+            }
+          });
+        }
       });
+
       setVariants(variantMap);
-      setSelectedVariant(variantMap[0]);
+      setSelectedVariant(variantMap[0].variant);
+      setSelectedSize(variantMap[0].size[0]);
     } catch (error) {
       console.log({ error });
     }
@@ -33,12 +60,18 @@ function Index() {
 
   useEffect(() => {
     sliceData();
-  }, [selectedVariant]);
+  }, [selectedVariant, selectedSize]);
 
   const sliceData = () => {
     products.forEach((value) => {
       if (value.variant === selectedVariant) {
-        setSlicedProducts(value);
+        if (value.size) {
+          if (value.size === selectedSize) {
+            setSlicedProducts(value);
+          }
+        } else {
+          setSlicedProducts(value);
+        }
       }
     });
   };
@@ -49,7 +82,9 @@ function Index() {
         <ProductDetailCard
           variants={variants}
           slicedProducts={slicedProducts}
+          selectedVariant={selectedVariant}
           setSelectedVariant={setSelectedVariant}
+          setSelectedSize={setSelectedSize}
         />
       )}
     </div>

@@ -57,9 +57,6 @@ function FinishDeliveringPayment(props) {
       fetchTransactionHistory();
     }
   }, [showSuccessModal]);
-  // useEffect(() => {
-  //   console.log(transactionId);
-  // }, []);
 
   return (
     <Modal {...props} backdrop="static" keyboard={false}>

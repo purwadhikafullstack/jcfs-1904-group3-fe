@@ -2,10 +2,19 @@
   --lightGrey: #dadcdc;
 }
 
+.header-custom {
+  padding-block: 20px;
+  text-align: center;
+  margin-left: 25px;
+  width: 60%;
+  border-block: 0.1px solid var(--lightGrey);
+}
+
 .checkout-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 200px;
 }
 .checkout-header {
   text-align: center;
@@ -13,7 +22,6 @@
 .checkout-form-container {
   display: flex;
   width: 60%;
-  margin-top: 100px;
 }
 .checkout-form {
   padding: 20px;

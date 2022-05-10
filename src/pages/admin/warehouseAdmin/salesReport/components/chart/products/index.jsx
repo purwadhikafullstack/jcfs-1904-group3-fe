@@ -110,10 +110,7 @@ function ChartProduct() {
     if (e.code === "Enter") {
       var checker = "";
       productNames.filter((value, index) => {
-        console.log({
-          value: value.toLowerCase(),
-          searchValue: searchValue.toLowerCase(),
-        });
+        
 
         if (value.toLowerCase() == searchValue.toLowerCase()) {
           checker = true;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import "./productList.css";
 import {
   Select,
   Button,
@@ -9,6 +9,8 @@ import {
   InputLabel,
 } from "@mui/material";
 import axios from "../../../utils/axios";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ListingProducts from "./components/listingProducts";
 
 function Index() {
@@ -22,7 +24,7 @@ function Index() {
   const [paginationState, setPaginationState] = useState({
     page: 1,
     maxPage: 0,
-    itemsPerPage: 9,
+    itemsPerPage: 12,
   });
   const { page, maxPage, itemsPerPage } = paginationState;
 
@@ -95,7 +97,7 @@ function Index() {
         alignItems: "center",
       }}
     >
-      <h1>{params.category}</h1>
+      <h1 className="header-custom">{params.category}</h1>
       <div>
         <FormControl style={{ width: 220 }}>
           <InputLabel id="demo-simple-select-label">SortBy</InputLabel>
@@ -118,26 +120,26 @@ function Index() {
           <h1>Loading......</h1>
         )}
       </div>
-      <div style={{ marginTop: 50 }}>
+      <div style={{ padding: "50px" }}>
         <div className="d-flex flex-row justify-content-between align-items-center">
           <Button
             onClick={btnPrevPageHandler}
-            variant="contained"
-            sx={{ backgroundColor: "black" }}
+            variant="text"
+            sx={{ color: "black" }}
             disabled={page === 1 && true}
           >
-            {"<"}
+            <ArrowBackIosIcon />
           </Button>
           <div className="text-center">
             Page {page} of {maxPage}
           </div>
           <Button
             onClick={btnNextPageHandler}
-            variant="contained"
-            sx={{ backgroundColor: "black" }}
+            variant="text"
+            sx={{ color: "black" }}
             disabled={page === maxPage && true}
           >
-            {">"}
+            <ArrowForwardIosIcon />
           </Button>
         </div>
       </div>
