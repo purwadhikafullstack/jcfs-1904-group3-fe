@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import "./productList.css";
 import {
   Select,
   Button,
@@ -9,32 +9,38 @@ import {
   InputLabel,
 } from "@mui/material";
 import axios from "../../../utils/axios";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ListingProducts from "./components/listingProducts";
 
 function Index() {
   const params = useParams();
   const [products, setProducts] = useState([]);
-  const [sortedProducts, setSortedProducts] = useState([]);
+  const [sortMethod, setSortMethod] = useState({
+    sortBy: "",
+    order: "",
+  });
+
   const [paginationState, setPaginationState] = useState({
     page: 1,
     maxPage: 0,
-    itemsPerPage: 9,
+    itemsPerPage: 12,
   });
   const { page, maxPage, itemsPerPage } = paginationState;
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("/products", {
+      const res = await axios.get("/products/filtered", {
         params: {
           category: params.category,
           page: page,
           itemsPerPage: itemsPerPage,
+          sortBy: sortMethod.sortBy,
+          order: sortMethod.order,
         },
       });
       const { result, dataCount } = res.data;
-      console.log(dataCount);
       setProducts(result);
-      setSortedProducts(result);
       setPaginationState({
         ...paginationState,
         maxPage: Math.ceil(dataCount[0].total / paginationState.itemsPerPage),
@@ -46,46 +52,24 @@ function Index() {
 
   const sortProducts = (e) => {
     const sortValue = e.target.value;
-    const rawData = [...products];
 
     switch (sortValue) {
       case "default":
+        setSortMethod({ sortBy: "", order: "" });
         break;
       case "lowPrice":
-        rawData.sort((a, b) => a.price - b.price);
+        setSortMethod({ sortBy: "price", order: "asc" });
         break;
       case "highPrice":
-        rawData.sort((a, b) => b.price - a.price);
+        setSortMethod({ sortBy: "price", order: "desc" });
         break;
       case "az":
-        rawData.sort((a, b) => {
-          // a : Kaos
-          // b : Celana
-          // b --> a
-
-          if (a.productName < b.productName) {
-            return -1;
-          } else if (a.productName > b.productName) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
+        setSortMethod({ sortBy: "productName", order: "asc" });
         break;
       case "za":
-        rawData.sort((a, b) => {
-          if (a.productName < b.productName) {
-            return 1;
-          } else if (a.productName > b.productName) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
+        setSortMethod({ sortBy: "productName", order: "desc" });
         break;
     }
-
-    setSortedProducts(rawData);
   };
 
   const btnPrevPageHandler = () => {
@@ -101,11 +85,7 @@ function Index() {
 
   useEffect(() => {
     fetchProducts();
-  }, [params]);
-
-  useEffect(() => {
-    fetchProducts();
-  }, [page]);
+  }, [params, page, sortMethod]);
 
   return (
     <div
@@ -117,7 +97,7 @@ function Index() {
         alignItems: "center",
       }}
     >
-      <h1>{params.category}</h1>
+      <h1 className="header-custom">{params.category}</h1>
       <div>
         <FormControl style={{ width: 220 }}>
           <InputLabel id="demo-simple-select-label">SortBy</InputLabel>
@@ -131,35 +111,35 @@ function Index() {
         </FormControl>
       </div>
       <div>
-        {sortedProducts.length ? (
+        {products.length ? (
           <ListingProducts
-            products={sortedProducts}
+            products={products}
             paginationState={paginationState}
           />
         ) : (
           <h1>Loading......</h1>
         )}
       </div>
-      <div style={{ marginTop: 50 }}>
+      <div style={{ padding: "50px" }}>
         <div className="d-flex flex-row justify-content-between align-items-center">
           <Button
             onClick={btnPrevPageHandler}
-            variant="contained"
-            sx={{ backgroundColor: "black" }}
-            disabled={page == 1 && true}
+            variant="text"
+            sx={{ color: "black" }}
+            disabled={page === 1 && true}
           >
-            {"<"}
+            <ArrowBackIosIcon />
           </Button>
           <div className="text-center">
             Page {page} of {maxPage}
           </div>
           <Button
             onClick={btnNextPageHandler}
-            variant="contained"
-            sx={{ backgroundColor: "black" }}
-            disabled={page == maxPage && true}
+            variant="text"
+            sx={{ color: "black" }}
+            disabled={page === maxPage && true}
           >
-            {">"}
+            <ArrowForwardIosIcon />
           </Button>
         </div>
       </div>
