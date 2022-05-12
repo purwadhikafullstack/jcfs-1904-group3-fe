@@ -74,6 +74,13 @@ function MuiNavBar() {
             }}
           />
           <Button
+            onClick={() => navigate(`/product-list/`)}
+            className="btnNavbar btn-effect"
+            style={{ color: "black", marginRight: 10 }}
+          >
+            All
+          </Button>
+          <Button
             onClick={() => handleChange("cat")}
             className="btnNavbar btn-effect"
             style={{ color: "black", marginRight: 10 }}
