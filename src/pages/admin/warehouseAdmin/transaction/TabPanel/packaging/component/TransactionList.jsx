@@ -6,10 +6,10 @@ import FormatIdr from "../../../../../../../component/formatCurrency";
 import ConfirmFinishPackagingModal from "../modal/Confirmation";
 
 function TransactionList(transactions, fetchTransactionHistory) {
+  const [selectedTransactions, setSelectedTransactions] = useState({});
   const [showConfirmFinishPackagingModal, setShowConfirmFinishPackagingModal] =
     useState(false);
 
-  
   const mapTransactions = () => {
     if (transactions.length == 0) {
       return null;
@@ -74,6 +74,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
                 color="success"
                 onClick={() => {
                   setShowConfirmFinishPackagingModal(true);
+                  setSelectedTransactions(value);
                 }}
               >
                 finish
@@ -84,7 +85,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
               onHide={() => {
                 setShowConfirmFinishPackagingModal(false);
               }}
-              transactions={value}
+              transactions={selectedTransactions}
               fetchTransactionHistory={fetchTransactionHistory}
             />
           </TableCell>

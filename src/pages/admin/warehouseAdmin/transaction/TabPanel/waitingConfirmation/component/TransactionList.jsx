@@ -10,6 +10,9 @@ import {
 } from "../modal/Confirmation";
 
 function TransactionList(transactions, fetchTransactionHistory) {
+  const [selectedTransactionId, setSelectedTransactionId] = useState("");
+  const [selectedPaymentEvidence, setSelectedPaymentEvidence] = useState("");
+
   const [showPreviewPaymentEvidence, setShowPreviewPaymentEvidence] =
     useState(false);
   const [showAcceptWaitingPaymentModal, setShowAcceptWaitingPaymentModal] =
@@ -77,6 +80,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
                 color="primary"
                 onClick={() => {
                   setShowPreviewPaymentEvidence(true);
+                  setSelectedPaymentEvidence(value.paymentEvidence);
                 }}
               >
                 Preview
@@ -87,7 +91,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
               onHide={() => {
                 setShowPreviewPaymentEvidence(false);
               }}
-              previewImage={value.paymentEvidence}
+              previewImage={selectedPaymentEvidence}
             />
           </TableCell>
           <TableCell align="center" sx={{ width: "200px" }}>
@@ -97,6 +101,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
                 color="success"
                 onClick={() => {
                   setShowAcceptWaitingPaymentModal(true);
+                  setSelectedTransactionId(value.transactionId);
                 }}
               >
                 accept
@@ -107,7 +112,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
               onHide={() => {
                 setShowAcceptWaitingPaymentModal(false);
               }}
-              transactionId={value.transactionId}
+              transactionId={selectedTransactionId}
               fetchTransactionHistory={fetchTransactionHistory}
             />
             <p>
@@ -116,6 +121,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
                 color="warning"
                 onClick={() => {
                   setShowRejectWaitingPaymentModal(true);
+                  setSelectedTransactionId(value.transactionId);
                 }}
               >
                 reject
@@ -126,7 +132,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
               onHide={() => {
                 setShowRejectWaitingPaymentModal(false);
               }}
-              transactionId={value.transactionId}
+              transactionId={selectedTransactionId}
               fetchTransactionHistory={fetchTransactionHistory}
             />
           </TableCell>
