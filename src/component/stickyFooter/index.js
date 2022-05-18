@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
+import { useLocation } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -19,6 +20,12 @@ function Copyright() {
 }
 
 export default function StickyFooter() {
+  const location = useLocation().pathname;
+
+  if (location.includes("/admin")) {
+    return null;
+  }
+
   return (
     <Box
       sx={{
