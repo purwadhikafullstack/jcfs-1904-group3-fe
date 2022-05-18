@@ -111,7 +111,7 @@ function TabCompleted() {
       );
     });
   };
-  return <div>{renderTransaction()}</div>;
+  return <div style={{ minHeight: "500px" }}>{renderTransaction()}</div>;
 }
 
 export default TabCompleted;
