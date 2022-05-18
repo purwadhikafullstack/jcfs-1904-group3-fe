@@ -48,16 +48,14 @@ function TabWaitingPayment({
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="left" sx={{ width: "5%" }}>
-                <p>UserId</p>
+              <TableCell align="left" sx={{ width: "10%" }}>
+                <p>Transaction Date</p>
               </TableCell>
-              <TableCell align="center" sx={{ width: "5%" }}>
-                <p>TransactionId</p>
-              </TableCell>
+
               <TableCell align="center" sx={{ width: "5%" }}>
                 <p>Username</p>
               </TableCell>
-              <TableCell align="center" sx={{ width: "14%" }}>
+              <TableCell align="center" sx={{ width: "10%" }}>
                 <p>Email</p>
               </TableCell>
               <TableCell align="center" sx={{ width: "14%" }}>
