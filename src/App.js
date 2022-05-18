@@ -17,6 +17,7 @@ import Register from "./pages/register";
 import AdminModifyProducts from "./pages/admin/warehouseAdmin/products";
 import AdminSalesReport from "./pages/admin/warehouseAdmin/salesReport";
 import AdminTransactions from "./pages/admin/warehouseAdmin/transaction";
+import StickyFooter from "./component/stickyFooter";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
         <Route path="/admin/products" element={<AdminModifyProducts />} />
         <Route path="/admin/transactions" element={<AdminTransactions />} />
       </Routes>
+      <StickyFooter />
     </Router>
   );
 }
