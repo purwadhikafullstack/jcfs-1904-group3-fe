@@ -11,7 +11,7 @@ function AcceptWaitingPaymentModal(props) {
   const onAcceptPayment = async () => {
     try {
       const res = await axios.put("/transactions/approve/waiting-payment", {
-        transactionId,
+        transactionId: parseInt(transactionId),
       });
       if (res.data) {
         setShowSuccesModal(true);

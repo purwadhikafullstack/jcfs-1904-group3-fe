@@ -10,6 +10,9 @@ import {
 } from "../modal/Confirmation";
 
 function TransactionList(transactions, fetchTransactionHistory) {
+  const [selectedTransactionId, setSelectedTransactionId] = useState("");
+  const [selectedPaymentEvidence, setSelectedPaymentEvidence] = useState("");
+
   const [showPreviewPaymentEvidence, setShowPreviewPaymentEvidence] =
     useState(false);
   const [showAcceptWaitingPaymentModal, setShowAcceptWaitingPaymentModal] =
@@ -27,13 +30,21 @@ function TransactionList(transactions, fetchTransactionHistory) {
         postal_code,
         detail_address,
       } = value;
+      const formatTime = () => {
+        var splitTime = value.created_at.split("T");
+        var day = splitTime[0];
+        var dotPosition = splitTime[1].indexOf(".");
+        var hour = splitTime[1].substring(0, dotPosition);
+        var result = day + " " + hour;
+        return result;
+      };
       return (
         <TableRow
           key={value.productId}
           sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
         >
-          <TableCell align="left">{value.userId}</TableCell>
-          <TableCell align="center">{value.transactionId}</TableCell>
+          <TableCell align="left">{formatTime()}</TableCell>
+
           <TableCell align="center">{value.username}</TableCell>
           <TableCell align="center">{value.email}</TableCell>
           <TableCell align="center">
@@ -77,6 +88,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
                 color="primary"
                 onClick={() => {
                   setShowPreviewPaymentEvidence(true);
+                  setSelectedPaymentEvidence(value.paymentEvidence);
                 }}
               >
                 Preview
@@ -87,7 +99,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
               onHide={() => {
                 setShowPreviewPaymentEvidence(false);
               }}
-              previewImage={value.paymentEvidence}
+              previewImage={selectedPaymentEvidence}
             />
           </TableCell>
           <TableCell align="center" sx={{ width: "200px" }}>
@@ -97,6 +109,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
                 color="success"
                 onClick={() => {
                   setShowAcceptWaitingPaymentModal(true);
+                  setSelectedTransactionId(value.transactionId);
                 }}
               >
                 accept
@@ -107,7 +120,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
               onHide={() => {
                 setShowAcceptWaitingPaymentModal(false);
               }}
-              transactionId={value.transactionId}
+              transactionId={selectedTransactionId}
               fetchTransactionHistory={fetchTransactionHistory}
             />
             <p>
@@ -116,6 +129,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
                 color="warning"
                 onClick={() => {
                   setShowRejectWaitingPaymentModal(true);
+                  setSelectedTransactionId(value.transactionId);
                 }}
               >
                 reject
@@ -126,7 +140,7 @@ function TransactionList(transactions, fetchTransactionHistory) {
               onHide={() => {
                 setShowRejectWaitingPaymentModal(false);
               }}
-              transactionId={value.transactionId}
+              transactionId={selectedTransactionId}
               fetchTransactionHistory={fetchTransactionHistory}
             />
           </TableCell>

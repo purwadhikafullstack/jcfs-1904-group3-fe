@@ -5,10 +5,10 @@ import ConfirmationModal from "./modal";
 import "./style.css";
 import { useSelector } from "react-redux";
 
-function TabWaitingPayment({handleChange}) {
+function TabWaitingPayment({ handleChange }) {
   const userId = useSelector((state) => state.auth.id);
   const token = useSelector((state) => state.auth.token);
-
+  const [selectedTransactionId, setSelectedTransactionId] = useState("");
   const [paymentEvidence, setPaymentEvidece] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -51,6 +51,10 @@ function TabWaitingPayment({handleChange}) {
     setPaymentEvidece(e.target.files[0]);
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
     setShowConfirmationModal(true);
+  };
+
+  const handleSelectedTransaction = (e) => {
+    setSelectedTransactionId(e);
   };
 
   const renderTransaction = () => {
@@ -126,7 +130,12 @@ function TabWaitingPayment({handleChange}) {
                 class="file"
                 onChange={handleUploadPaymentEvidence}
               />
-              <label for="file">Upload Payment Evidece</label>
+              <label
+                for="file"
+                onClick={() => handleSelectedTransaction(trx.transactionId)}
+              >
+                Upload Payment Evidece
+              </label>
             </div>
           </div>
           {paymentEvidence && (
@@ -135,7 +144,7 @@ function TabWaitingPayment({handleChange}) {
                 setShowConfirmationModal(false);
               }}
               show={showConfirmationModal}
-              transactionId={trx.transactionId}
+              transactionId={selectedTransactionId}
               previewImage={previewImage}
               paymentEvidence={paymentEvidence}
               token={token}
@@ -146,7 +155,7 @@ function TabWaitingPayment({handleChange}) {
       );
     });
   };
-  return <div>{renderTransaction()}</div>;
+  return <div style={{ minHeight: "500px" }}>{renderTransaction()}</div>;
 }
 
 export default TabWaitingPayment;

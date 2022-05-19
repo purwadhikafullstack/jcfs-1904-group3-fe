@@ -16,7 +16,7 @@ function ConfirmationModal(props) {
     try {
       const uploadPayment = new FormData();
       uploadPayment.append("image", paymentEvidence);
-      uploadPayment.append("transactionId", transactionId);
+      uploadPayment.append("transactionId", parseInt(transactionId));
 
       const res = await axios.post(
         "/transactions/evidence/payment",

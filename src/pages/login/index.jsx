@@ -59,8 +59,11 @@ function Login() {
   // }
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ marginTop: "200px" }}>
-      <CssBaseline />
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{ marginTop: "250px", marginBottom: "150px" }}
+    >
       <Box
         sx={{
           marginTop: 8,
